@@ -16,3 +16,6 @@ Cidade::~Cidade() {
 	// TODO Auto-generated destructor stub
 }
 
+vector<Ponto *> Cidade::getPontos(){
+	return pontos;
+}

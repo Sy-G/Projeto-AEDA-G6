@@ -9,43 +9,56 @@
  *      se não for, nem tem que definir um tempo porque a sua mensalidade cobre os custos de qualquer maneira.
  */
 
+/*
 #ifndef UTENTE_H_
 #define UTENTE_H_
 
 #include "Coordenadas.h"
 #include "Bicicleta.h"
+#include "Cidade.h"
 #include "Hora.h"
+#include <vector>
 #include <string>
 
 using namespace std;
 
+
 class Utente {
 protected:
 	Bicicleta* bicicleta;
+	Cidade* cidade;
 	string nome;
 	Coordenadas coordenada;
 	Hora horainicial;
 	Hora horafinal;
 	double tempouso;
 public:
-	Utente(int cordX, int cordY);
+	Utente(string nome,Cidade* cidade,int cordX, int cordY);
 	virtual ~Utente();
 	virtual double getPagamento();
+	void levantaBicicleta(string nome);
+	virtual void devolveBicicleta(string nome);
 	double subtraiHora();
+	string getNome();
 };
 
 class Regulares: public Utente{
 public:
-	Regulares(string none, Bicicleta* bicicleta, Coordenadas coordenada);
+	Regulares(string nome,Cidade* cidade, int cordX, int cordY);
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
+	void levantaBicicleta(string nome);
+	void devolveBicicleta(string nome);
 };
 
 class Socio: public Utente{
 protected:
 	static double mensalidade; //mensalidade dos Socios
+	vector<double> horasaccumuladas;
 public:
-	Socio(string nome, Bicicleta* bicicleta, Coordenadas coordenada);
+	Socio(string nome,Cidade* cidade, int cordX, int cordY);
 	double getPagamento();
+	void levantaBicicleta(string nome);
+	void devolveBicicleta(string nome);
 };
 
 

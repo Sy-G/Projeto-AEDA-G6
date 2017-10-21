@@ -5,17 +5,14 @@
  *      Author: Work
  */
 
-#include "Bicicleta.h"
+#include "Cidade.h"
 
 double  Infantil::preco_hora = 0.30;
 double  Urbana::preco_hora = 0.75;
 double  Urbana_Simples::preco_hora = 0.50;
 double  Corrida::preco_hora = 0.80;
 
-Bicicleta::Bicicleta() {
-	// TODO Auto-generated constructor stub
-
-}
+Bicicleta::Bicicleta() {}
 
 Bicicleta::~Bicicleta() {
 	// TODO Auto-generated destructor stub
@@ -23,6 +20,10 @@ Bicicleta::~Bicicleta() {
 
 double Bicicleta::getPrecoportipo(){
 	return 0;
+}
+
+string Bicicleta::getTipo(){
+	return "";
 }
 
 double Infantil::getPrecoportipo(){
@@ -56,4 +57,20 @@ Urbana_Simples::Urbana_Simples(unsigned int ID, int velocidade){
 
 Corrida::Corrida(unsigned int ID){
 	this->ID = ID;
+}
+
+string Corrida::getTipo(){
+	return "Corrida";
+}
+
+string Urbana::getTipo(){
+	return "Urbana";
+}
+
+string Urbana_Simples::getTipo(){
+	return "Urbana Simples";
+}
+
+string Infantil::getTipo(){
+	return "Infantil";
 }
