@@ -9,7 +9,6 @@
 
 Cidade::Cidade() {
 	// TODO Auto-generated constructor stub
-
 }
 
 Cidade::~Cidade() {
