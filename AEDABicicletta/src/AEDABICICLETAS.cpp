@@ -17,7 +17,7 @@
 #include "Hora.h"
 using namespace std;
 
-void testAddBicicletas()
+void testAddAndRmBicicletas()
 {
 	Ponto p1("Ponto 1", 4);
 	ASSERT_EQUAL(0,p1.getnumbicicletasDisponiveis() );
@@ -68,7 +68,7 @@ void testAddBicicletas()
 void runSuite()
 {
 	cute::suite s;
-	s.push_back(CUTE(testAddBicicletas));
+	s.push_back(CUTE(testAddAndRmBicicletas));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }
