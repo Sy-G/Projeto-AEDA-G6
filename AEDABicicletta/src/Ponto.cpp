@@ -7,10 +7,11 @@
 
 #include "Cidade.h"
 
-Ponto::Ponto(string nome, unsigned int capacidade)
+Ponto::Ponto(string nome, unsigned int capacidade, Coordenadas coord)
 {
 	this->nome = nome;
 	this->capacidade = capacidade;
+	this->coord = coord;
 }
 
 Ponto::~Ponto()

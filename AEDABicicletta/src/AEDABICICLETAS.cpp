@@ -19,7 +19,7 @@ using namespace std;
 
 void testAddAndRmBicicletas()
 {
-	Ponto p1("Ponto 1", 4);
+	Ponto p1("Ponto 1", 4, Coordenadas(0,0));
 	ASSERT_EQUAL(0,p1.getnumbicicletasDisponiveis() );
 	ASSERT_EQUAL(4, p1.getCapacidade());
 

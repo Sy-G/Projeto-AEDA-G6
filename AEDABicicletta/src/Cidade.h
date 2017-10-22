@@ -14,6 +14,8 @@
 
 using namespace std;
 
+class Coordenadas;
+
 class Bicicleta {
 protected:
 	unsigned int ID;
@@ -77,6 +79,10 @@ protected:
 	 * @brief Name of the point
 	 */
 	string nome;
+	/**
+	 * @brief Location of the point
+	 */
+	Coordenadas coord;
 public:
 	/**
 	 * @brief Creates a point with no bicycles attached to it
@@ -84,7 +90,7 @@ public:
 	 * @param nome Name of the point
 	 * @param capacidade Max number of bicycles a point can hold
 	 */
-	Ponto(string nome, unsigned int capacidade);
+	Ponto(string nome, unsigned int capacidade, Coordenadas coord);
 	/**
 	 * @brief Destructor
 	 */
