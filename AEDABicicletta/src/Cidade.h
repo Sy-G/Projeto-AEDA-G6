@@ -27,7 +27,7 @@ public:
 
 class Urbana: public Bicicleta{
 protected:
-	static  double preco_hora; //Preco por hora, em função do tipo.
+	static  double preco_hora; //Preco por hora, em funï¿½ï¿½o do tipo.
 public:
 	Urbana(unsigned int ID);
 	double getPrecoportipo();
@@ -37,7 +37,7 @@ public:
 class Urbana_Simples: public Bicicleta{
 protected:
 	static  double preco_hora;
-	/*int velocidade; //velocidade única em (m/s)*/
+	/*int velocidade; //velocidade ï¿½nica em (m/s)*/
 public:
 	Urbana_Simples(unsigned int ID);
 	double getPrecoportipo();
@@ -65,16 +65,70 @@ public:
 
 class Ponto {
 protected:
+	/**
+	 * @brief Holds pointers to the bicycles that are currently in the point
+	 */
 	vector<Bicicleta *> bicicletas;
+	/**
+	 * @brief Max number of bicycles a point can hold
+	 */
 	unsigned int capacidade;
+	/**
+	 * @brief Name of the point
+	 */
 	string nome;
 public:
-	Ponto();
+	/**
+	 * @brief Creates a point with no bicycles attached to it
+	 *
+	 * @param nome Name of the point
+	 * @param capacidade Max number of bicycles a point can hold
+	 */
+	Ponto(string nome, unsigned int capacidade);
+	/**
+	 * @brief Destructor
+	 */
 	virtual ~Ponto();
-	vector<Bicicleta *> getBicicletas(); //bicletas existentes
-	unsigned int getnumbicicletasDisponiveis(); //número de bicicletas disponiveis.
+	/**
+	 * @brief
+	 *
+	 * @return Pointer to the vector of bicycles of the point
+	 */
+	vector<Bicicleta *> getBicicletas();
+	/**
+	 * @brief
+	 *
+	 * @return Number of bicycles available
+	 */
+	unsigned int getnumbicicletasDisponiveis();
+	/**
+	 * @return Name of the point
+	 */
 	string getNome();
+	/**
+	 * @return Capacity
+	 */
 	unsigned int getCapacidade();
+
+	/**
+	 * @return True if there is at least one "Urbana" in the point
+	 */
+	bool isThereUrbana();
+
+	/**
+	 * @return True if there is at least one "Urbana Simples" in the point
+	 */
+	bool isThereUranaSimbles();
+
+	/**
+	 * @return True if there is at least one "Corrida" in the point
+	 */
+	bool isThereCorrida();
+
+	/**
+	 * @return True if there is at least one "Infantil" in the point
+	 */
+	bool isThereInfantil();
 };
 
 class Coordenadas {
