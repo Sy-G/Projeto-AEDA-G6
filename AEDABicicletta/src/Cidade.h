@@ -18,7 +18,7 @@ class Bicicleta {
 protected:
 	unsigned int ID;
 public:
-	Bicicleta();
+	Bicicleta(unsigned int id);
 	virtual ~Bicicleta();
 	virtual double getPrecoportipo();
 	virtual string getTipo();
@@ -163,6 +163,16 @@ class Bicicleta_Inexistente
 public:
 	unsigned int id;
 	Bicicleta_Inexistente(int i):id(i){};
+};
+
+/**
+ * @brief Exception
+ */
+class NoSpace
+{
+public:
+	unsigned int capacidade;
+	NoSpace(int i):capacidade(i){};
 };
 
 class Coordenadas {

@@ -6,6 +6,9 @@
 //============================================================================
 
 #include <iostream>
+#include "cute.h"
+#include "ide_listener.h"
+#include "cute_runner.h"
 #include "Bicicleta.h"
 #include "Cidade.h"
 #include "Coordenadas.h"
@@ -14,11 +17,69 @@
 #include "Hora.h"
 using namespace std;
 
+void testAddBicicletas()
+{
+	Ponto p1("Ponto 1", 4);
+	ASSERT_EQUAL(0,p1.getnumbicicletasDisponiveis() );
+	ASSERT_EQUAL(4, p1.getCapacidade());
+
+	Bicicleta b1(1), b2(2),b3(3), b4(3), b5(4), b6(5);
+	p1.addBicicleta(&b1);
+	p1.addBicicleta(&b2);
+	p1.addBicicleta(&b3);
+
+	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
+
+	ASSERT_THROWS(p1.addBicicleta(&b4), Bicicleta_Existente);
+	try
+	{
+		p1.addBicicleta(&b4);
+	}
+	catch(Bicicleta_Existente &e)
+	{
+		ASSERT_EQUAL(3, e.id);
+		//cout << e.id << endl;
+	}
+
+	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
+
+	p1.addBicicleta(&b5);
+
+	ASSERT_EQUAL(4,p1.getnumbicicletasDisponiveis() );
+
+	ASSERT_THROWS(p1.addBicicleta(&b6), NoSpace);
+
+	ASSERT_THROWS(p1.rmBicicleta(5), Bicicleta_Inexistente);
+	try
+	{
+		p1.rmBicicleta(5);
+	}
+	catch(Bicicleta_Inexistente &e)
+	{
+		ASSERT_EQUAL(e.id, 5);
+		//cout << e.id << endl;
+	}
+
+	p1.rmBicicleta(1);
+
+	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
+}
+
+void runSuite()
+{
+	cute::suite s;
+	s.push_back(CUTE(testAddBicicletas));
+	cute::ide_listener<> lis;
+	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
+}
+
+
 int main() {
+	runSuite();
 	/*Cidade c1;
-	Utente *a1 = new Regular("João",&c1,1,-4);
+	Utente *a1 = new Regular("Joï¿½o",&c1,1,-4);
 	Utente *b1 = new Socio("Rui",&c1,10,-2);
-	Utente *c1 = new Regular("Lourenço",&c1,13,-7);
+	Utente *c1 = new Regular("Lourenï¿½o",&c1,13,-7);
 	(...)
 
 	c1.addUtente(a1);
@@ -28,7 +89,7 @@ int main() {
 	menu Utente:
 	==================================================================
 	string nomeutente;
-	Utente *u1; <- este é o utente que está a ser tratado de momento.
+	Utente *u1; <- este ï¿½ o utente que estï¿½ a ser tratado de momento.
 
 	u1 = NULL <- inicializado com nada;
 
@@ -42,15 +103,15 @@ int main() {
 	}
 
 	if(*u1 == NULL){
-	se ainda não tem nada depois do for, não foi encontrado, não existe! EXEÇÃO UTENE NÃO EXISTENTE
+	se ainda nï¿½o tem nada depois do for, nï¿½o foi encontrado, nï¿½o existe! EXEï¿½ï¿½O UTENE Nï¿½O EXISTENTE
 	}
 
 	se foi encontrado continua sem problemas ...
 
-	||OPÇÕES||:
+	||OPï¿½ï¿½ES||:
 
 	- levanta bicicleta.
-	- devolve bicicleta (pagamento imediato no caso de ser regular, accumulação/checkout no caso de sócio).
+	- devolve bicicleta (pagamento imediato no caso de ser regular, accumulaï¿½ï¿½o/checkout no caso de sï¿½cio).
 	==================================================================
 
 	se levanta:
@@ -65,13 +126,13 @@ int main() {
 		}
 	}
 
-	se esse ciclo for não dá, é necessário implementar EXCEÇÃO PONTO INEXISTENTE.
+	se esse ciclo for nï¿½o dï¿½, ï¿½ necessï¿½rio implementar EXCEï¿½ï¿½O PONTO INEXISTENTE.
 	==================================================================
 
 	se devolve:
 	==================================================================
 	string nomepontodev;
-	cout << "qual o nome do ponto de devolução?"
+	cout << "qual o nome do ponto de devoluï¿½ï¿½o?"
 	cin >> nomepontodev;
 
 	for(unsigned int i = 0; i < c1.pontos.size(); i++){
@@ -80,9 +141,9 @@ int main() {
 		}
 	}
 
-	se esse ciclo for não dá, é necessário implementar EXCEÇÃO PONTO INEXISTENTE.
+	se esse ciclo for nï¿½o dï¿½, ï¿½ necessï¿½rio implementar EXCEï¿½ï¿½O PONTO INEXISTENTE.
 	==================================================================
-	*/
+	 */
 
 	return 0;
 }

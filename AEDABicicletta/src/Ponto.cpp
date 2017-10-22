@@ -15,10 +15,10 @@ Ponto::Ponto(string nome, unsigned int capacidade)
 
 Ponto::~Ponto()
 {
-	for(size_t i = 0; i < bicicletas.size(); i++)
+	/*for(size_t i = 0; i < bicicletas.size(); i++)
 	{
 		delete bicicletas.at(i);
-	}
+	}*/
 }
 
 vector<Bicicleta *> Ponto::getBicicletas()
@@ -83,6 +83,9 @@ bool Ponto::isThereInfantil()
 
 void Ponto::addBicicleta(Bicicleta* b1)
 {
+	if(bicicletas.size() == capacidade)
+		throw NoSpace(capacidade);
+
 	for(size_t i = 0; i < bicicletas.size(); i++)
 	{
 		if(bicicletas.at(i)->getID() == b1->getID())

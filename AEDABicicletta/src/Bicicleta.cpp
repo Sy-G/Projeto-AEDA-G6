@@ -12,7 +12,7 @@ double  Urbana::preco_hora = 0.75;
 double  Urbana_Simples::preco_hora = 0.50;
 double  Corrida::preco_hora = 0.80;
 
-Bicicleta::Bicicleta() {}
+Bicicleta::Bicicleta(unsigned int id):ID(id) {}
 
 Bicicleta::~Bicicleta() {
 	// TODO Auto-generated destructor stub
@@ -42,21 +42,16 @@ double Corrida::getPrecoportipo(){
 	return preco_hora;
 }
 
-Urbana::Urbana(unsigned int ID){
-	this->ID = ID;
+Urbana::Urbana(unsigned int ID):Bicicleta(ID){
 }
 
-Infantil::Infantil(unsigned int ID){
-	this->ID = ID;
+Infantil::Infantil(unsigned int ID):Bicicleta(ID){
 }
 
-Urbana_Simples::Urbana_Simples(unsigned int ID){
-	this->ID = ID;
-	/*this->velocidade = velocidade;*/
+Urbana_Simples::Urbana_Simples(unsigned int ID):Bicicleta(ID){
 }
 
-Corrida::Corrida(unsigned int ID){
-	this->ID = ID;
+Corrida::Corrida(unsigned int ID):Bicicleta(ID){
 }
 
 string Corrida::getTipo(){
