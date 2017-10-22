@@ -129,6 +129,40 @@ public:
 	 * @return True if there is at least one "Infantil" in the point
 	 */
 	bool isThereInfantil();
+
+	/**
+	 * @brief Adds a "bicicleta" to the vector throws an exeception with already exists one with the same id
+	 *
+	 * @param b1 "Bicicleta to add to the vector
+	 */
+	void addBicicleta(Bicicleta* b1);
+
+	/**
+	 * @brief Removes a "bicicleta" from the vector with that "bicicleta" doesn't exist throws an exception
+	 *
+	 * @param id Id of the bicycle to remove
+	 */
+	void rmBicicleta(unsigned int id);
+};
+
+/**
+ * @brief Exception
+ */
+class Bicicleta_Existente
+{
+public:
+	unsigned int id;
+	Bicicleta_Existente(int i):id(i){};
+};
+
+/**
+ * @brief Exception
+ */
+class Bicicleta_Inexistente
+{
+public:
+	unsigned int id;
+	Bicicleta_Inexistente(int i):id(i){};
 };
 
 class Coordenadas {
