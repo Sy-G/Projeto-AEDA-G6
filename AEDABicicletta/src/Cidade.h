@@ -22,6 +22,7 @@ public:
 	virtual ~Bicicleta();
 	virtual double getPrecoportipo();
 	virtual string getTipo();
+	unsigned int getID();
 };
 
 class Urbana: public Bicicleta{
@@ -36,10 +37,11 @@ public:
 class Urbana_Simples: public Bicicleta{
 protected:
 	static  double preco_hora;
-	int velocidade; //velocidade única em (m/s)
+	/*int velocidade; //velocidade única em (m/s)*/
 public:
-	Urbana_Simples(unsigned int ID, int velocidade);
+	Urbana_Simples(unsigned int ID);
 	double getPrecoportipo();
+	/*int getVelocidade();*/
 	string getTipo();
 };
 
@@ -63,13 +65,13 @@ public:
 
 class Ponto {
 protected:
-	vector<Bicicleta> bicicletas;
+	vector<Bicicleta *> bicicletas;
 	unsigned int capacidade;
 	string nome;
 public:
 	Ponto();
 	virtual ~Ponto();
-	vector<Bicicleta> getBicicletas(); //bicletas existentes
+	vector<Bicicleta *> getBicicletas(); //bicletas existentes
 	unsigned int getnumbicicletasDisponiveis(); //número de bicicletas disponiveis.
 	string getNome();
 	unsigned int getCapacidade();

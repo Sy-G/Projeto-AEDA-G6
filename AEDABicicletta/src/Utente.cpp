@@ -43,10 +43,34 @@ void Utente::levantaBicicleta(Ponto *p1){
 	cin >> tipo;
 
 	for(unsigned int i = 0; i < p1->getBicicletas().size(); i++){
-		if(p1->getBicicletas().at(i).getTipo() == tipo){
+		if(p1->getBicicletas().at(i)->getTipo() == tipo){
 
-			this->bicicleta = &(p1->getBicicletas().at(i));
-			//associa a bicicleta ao utente.
+			//agora vamos associar a bicicleta ao utente em função do seu tipo.
+
+			if(tipo == "Urbana")
+			{
+				this->bicicleta = new Urbana(p1->getBicicletas().at(i)->getID());
+				break;
+			};
+
+			if(tipo == "Urbana_Simples")
+			{
+				this->bicicleta = new Urbana_Simples(p1->getBicicletas().at(i)->getID());
+				break;
+			}
+
+			if(tipo == "Infantil")
+			{
+				this->bicicleta = new Infantil(p1->getBicicletas().at(i)->getID());
+				break;
+			}
+
+			if(tipo == "Corrida")
+			{
+				this->bicicleta = new Corrida(p1->getBicicletas().at(i)->getID());
+				break;
+			}
+		}
 
 			p1->getBicicletas().erase(p1->getBicicletas().begin()+i);
 			//agora retira-se essa bicicleta do vetor de bicicletas disponiveis desse ponto.
@@ -61,7 +85,6 @@ void Utente::levantaBicicleta(Ponto *p1){
 
 			this->horainicial = Hora(hora);
 		}
-	}
 
 	if(sucesso == false){
 		cout << "Não há bicicletas desse tipo neste ponto." << endl;
@@ -86,7 +109,7 @@ void Regulares::devolveBicicleta(Ponto *p1){
 
 	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
 
-	p1->getBicicletas().push_back(*bicicleta);
+	p1->getBicicletas().push_back(bicicleta);
 	//adciona-se ao ponto
 
 	//retira-se ao cliente a bicicleta devolvida
@@ -132,7 +155,7 @@ void Socio::devolveBicicleta(Ponto *p1){
 
 	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
 
-	p1->getBicicletas().push_back(*bicicleta);
+	p1->getBicicletas().push_back(bicicleta);
 	//adciona-se ao ponto
 
 	//retira-se ao cliente

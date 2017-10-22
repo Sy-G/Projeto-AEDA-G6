@@ -16,7 +16,7 @@ Ponto::~Ponto() {
 	// TODO Auto-generated destructor stub
 }
 
-vector<Bicicleta> Ponto::getBicicletas(){
+vector<Bicicleta *> Ponto::getBicicletas(){
 	return bicicletas;
 }
 

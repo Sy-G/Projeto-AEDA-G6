@@ -50,9 +50,9 @@ Infantil::Infantil(unsigned int ID){
 	this->ID = ID;
 }
 
-Urbana_Simples::Urbana_Simples(unsigned int ID, int velocidade){
+Urbana_Simples::Urbana_Simples(unsigned int ID){
 	this->ID = ID;
-	this->velocidade = velocidade;
+	/*this->velocidade = velocidade;*/
 }
 
 Corrida::Corrida(unsigned int ID){
@@ -74,3 +74,11 @@ string Urbana_Simples::getTipo(){
 string Infantil::getTipo(){
 	return "Infantil";
 }
+
+unsigned int Bicicleta::getID(){
+	return ID;
+}
+
+/*int Urbana_Simples::getVelocidade(){
+	return velocidade;
+}*/
