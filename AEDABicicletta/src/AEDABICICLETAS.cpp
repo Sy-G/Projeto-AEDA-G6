@@ -23,17 +23,20 @@ void testAddAndRmBicicletas()
 	ASSERT_EQUAL(0,p1.getnumbicicletasDisponiveis() );
 	ASSERT_EQUAL(4, p1.getCapacidade());
 
-	Bicicleta b1(1), b2(2),b3(3), b4(3), b5(4), b6(5);
-	p1.addBicicleta(&b1);
-	p1.addBicicleta(&b2);
-	p1.addBicicleta(&b3);
+	Bicicleta* b = new Bicicleta { 1 };
+	p1.addBicicleta(b);
+	b = new Bicicleta(2);
+	p1.addBicicleta(b);
+	b = new Bicicleta(3);
+	p1.addBicicleta(b);
 
 	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
+	b = new Bicicleta(3);
 
-	ASSERT_THROWS(p1.addBicicleta(&b4), Bicicleta_Existente);
+	ASSERT_THROWS(p1.addBicicleta(b), Bicicleta_Existente);
 	try
 	{
-		p1.addBicicleta(&b4);
+		p1.addBicicleta(b);
 	}
 	catch(Bicicleta_Existente &e)
 	{
@@ -41,13 +44,15 @@ void testAddAndRmBicicletas()
 		//cout << e.id << endl;
 	}
 
+	b = new Bicicleta(4);
 	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
 
-	p1.addBicicleta(&b5);
+	p1.addBicicleta(b);
 
 	ASSERT_EQUAL(4,p1.getnumbicicletasDisponiveis() );
 
-	ASSERT_THROWS(p1.addBicicleta(&b6), NoSpace);
+	b = new Bicicleta(5);
+	ASSERT_THROWS(p1.addBicicleta(b), NoSpace);
 
 	ASSERT_THROWS(p1.rmBicicleta(5), Bicicleta_Inexistente);
 	try
@@ -92,12 +97,47 @@ void testHoraSub()
 	ASSERT_EQUAL(0.5, Hora(1,30) - Hora(1,0));
 }
 
+void testIsThereBicycle()
+{
+	Cidade c1;
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(0,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(1,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(2,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(3,0)));
+
+	ASSERT_EQUAL(c1.getPontos().end(), c1.isThereBicycle("Corrida"));
+
+	Corrida* bike = new Corrida(1);
+	c1.getPontos().at(1).addBicicleta(bike);
+
+	ASSERT_EQUAL(c1.getPontos().begin() + 1, c1.isThereBicycle("Corrida"));
+
+	ASSERT_THROWS(c1.isThereBicycle("ABC"),NotAType);
+}
+
+void testClosestType()
+{
+	Cidade c1;
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(0,0)));
+	c1.addPoint(Ponto("Ponto 2", 4, Coordenadas(1,0)));
+	c1.addPoint(Ponto("Ponto 3", 4, Coordenadas(2,0)));
+	c1.addPoint(Ponto("Ponto 4", 4, Coordenadas(3,0)));
+
+	Corrida* bike = new Corrida(1);
+	c1.getPontos().at(1).addBicicleta(bike);
+	c1.getPontos().at(2).addBicicleta(bike);
+
+	ASSERT_EQUAL(c1.closestType(Coordenadas(4,0), "Corrida")->getNome(), "Ponto 3");
+}
+
 void runSuite()
 {
 	cute::suite s;
 	s.push_back(CUTE(testAddAndRmBicicletas));
 	s.push_back(CUTE(testSortByDistance));
 	s.push_back(CUTE(testHoraSub));
+	s.push_back(CUTE(testIsThereBicycle));
+	s.push_back(CUTE(testClosestType));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }

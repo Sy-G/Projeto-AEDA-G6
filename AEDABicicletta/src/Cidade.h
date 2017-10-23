@@ -16,56 +16,6 @@
 
 using namespace std;
 
-class Coordenadas;
-/*
-class Bicicleta {
-protected:
-	unsigned int ID;
-public:
-	Bicicleta(unsigned int id);
-	virtual ~Bicicleta();
-	virtual double getPrecoportipo();
-	virtual string getTipo();
-	unsigned int getID();
-};
-
-class Urbana: public Bicicleta{
-protected:
-	static  double preco_hora; //Preco por hora, em fun��o do tipo.
-public:
-	Urbana(unsigned int ID);
-	double getPrecoportipo();
-	string getTipo();
-};
-
-class Urbana_Simples: public Bicicleta{
-protected:
-	static  double preco_hora;
-	/*int velocidade; //velocidade �nica em (m/s)
-public:
-	Urbana_Simples(unsigned int ID);
-	double getPrecoportipo();
-	/*int getVelocidade();
-	string getTipo();
-};
-
-class Infantil: public Bicicleta{
-protected:
-	static  double preco_hora;
-public:
-	Infantil(unsigned int ID);
-	double getPrecoportipo();
-	string getTipo();
-};
-
-class Corrida: public Bicicleta{
-protected:
-	static  double preco_hora;
-public:
-	Corrida(unsigned int ID);
-	double getPrecoportipo();
-	string getTipo();
-};*/
 
 class Ponto {
 protected:
@@ -253,6 +203,17 @@ public:
 	NoSpace(int i):capacidade(i){};
 };
 
+/**
+ * @brief Exception
+ */
+class NotAType
+{
+public:
+	string type;
+	NotAType(string i):type(i){};
+};
+
+
 class Utente {
 protected:
 	Bicicleta* bicicleta;
@@ -296,7 +257,7 @@ protected:
 	vector<Utente *> utentes;
 	string nome;
 public:
-	vector<Ponto> getPontos();
+	vector<Ponto>& getPontos();
 	/**
 	 * @brief Sorts point from the closer to farthest point according to some given coordinate.
 	 *
@@ -321,6 +282,16 @@ public:
 	 * @return iterator to the bicycle, or vector<Ponto>.end() se não encontrar
 	 */
 	vector<Ponto>::iterator isThereBicycle(string bicycle);
+
+	/**
+	 * @brief calculates the closest point with a certain kind of bicycle
+	 *
+	 * @param coord Closest to this coordinates
+	 * @param type Name of the type
+	 *
+	 * @return iterator to the point
+	 */
+	vector<Ponto>::iterator closestType(Coordenadas coord, string type);
 	Cidade();
 	virtual ~Cidade();
 };

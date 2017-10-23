@@ -17,7 +17,7 @@ Cidade::~Cidade() {
 	// TODO Auto-generated destructor stub
 }
 
-vector<Ponto> Cidade::getPontos(){
+vector<Ponto>& Cidade::getPontos(){
 	return pontos;
 }
 
@@ -62,8 +62,14 @@ vector<Ponto>::iterator Cidade::isThereBicycle(string bicycle)
 		if((iter = find_if(pontos.begin(), pontos.end(), isThereCorrida)) != pontos.end())
 			return iter;
 	}
-	/*else
-		throw;*/
+	else
+		throw NotAType(bicycle);
 
 	return pontos.end();
+}
+
+vector<Ponto>::iterator Cidade::closestType(Coordenadas coord, string type)
+{
+	sortPointsByDistance(coord);
+	return isThereBicycle(type);
 }
