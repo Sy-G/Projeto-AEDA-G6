@@ -4,20 +4,25 @@
  *  Created on: 18/10/2017
  *      Author: Work
  */
+#ifndef COORDENADAS_H
+#define COORDENADAS_H
 
-/*
-#ifndef COORDENADAS_H_
-#define COORDENADAS_H_
-
-class Coordenadas {
+class Coordenadas
+{
 public:
-	int cordX;
-	int cordY;
+	double cordX;
+	double cordY;
 
-	Coordenadas(int cordX, int cordY){
-		this->cordX = cordX;
-		this->cordY = cordY;
-	}
+	Coordenadas(double cordX, double cordY);
+	Coordenadas();
+	/**
+	 * @brief Verifies if they are equal
+	 *
+	 * @param c1 second coordinate
+	 */
+	bool operator==(const Coordenadas c1) const;
 };
+
+double distance_between_coordinates(Coordenadas c1, Coordenadas c2);
 
 #endif /* COORDENADAS_H_ */

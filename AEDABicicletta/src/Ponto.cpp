@@ -6,12 +6,15 @@
  */
 
 #include "Cidade.h"
+#include "Coordenadas.h"
 
 Ponto::Ponto(string nome, unsigned int capacidade, Coordenadas coord)
 {
 	this->nome = nome;
 	this->capacidade = capacidade;
 	this->coord = coord;
+	this->distance = 0;
+	this->distance_coords = coord;
 }
 
 Ponto::~Ponto()
@@ -27,56 +30,56 @@ vector<Bicicleta *> Ponto::getBicicletas()
 	return bicicletas;
 }
 
-unsigned int Ponto::getnumbicicletasDisponiveis()
+unsigned int Ponto::getnumbicicletasDisponiveis() const
 {
 	return bicicletas.size();
 }
 
-string Ponto::getNome()
+string Ponto::getNome() const
 {
 	return nome;
 }
 
-unsigned int Ponto::getCapacidade()
+unsigned int Ponto::getCapacidade() const
 {
 	return capacidade;
 }
 
-bool Ponto::isThereUrbana()
+bool isThereUrbana( Ponto &p1)
 {
-	for(size_t i = 0; i < bicicletas.size(); i++)
+	for(size_t i = 0; i < p1.getBicicletas().size(); i++)
 	{
-		if(bicicletas.at(i)->getTipo() == "Urbana")
+		if(p1.getBicicletas().at(i)->getTipo() == "Urbana")
 			return true;
 	}
 	return false;
 }
 
-bool Ponto::isThereUranaSimbles()
+bool isThereUrbanaSimples( Ponto &p1)
 {
-	for(size_t i = 0; i < bicicletas.size(); i++)
+	for(size_t i = 0; i < p1.getBicicletas().size(); i++)
 	{
-		if(bicicletas.at(i)->getTipo() == "Urbana_Simples")
+		if(p1.getBicicletas().at(i)->getTipo() == "Urbana_Simples")
 			return true;
 	}
 	return false;
 }
 
-bool Ponto::isThereCorrida()
+bool isThereCorrida( Ponto &p1)
 {
-	for(size_t i = 0; i < bicicletas.size(); i++)
+	for(size_t i = 0; i < p1.getBicicletas().size(); i++)
 	{
-		if(bicicletas.at(i)->getTipo() == "Corrida")
+		if(p1.getBicicletas().at(i)->getTipo() == "Corrida")
 			return true;
 	}
 	return false;
 }
 
-bool Ponto::isThereInfantil()
+bool isThereInfantil( Ponto &p1)
 {
-	for(size_t i = 0; i < bicicletas.size(); i++)
+	for(size_t i = 0; i < p1.getBicicletas().size(); i++)
 	{
-		if(bicicletas.at(i)->getTipo() == "Infantil")
+		if(p1.getBicicletas().at(i)->getTipo() == "Infantil")
 			return true;
 	}
 	return false;
@@ -106,4 +109,51 @@ void Ponto::rmBicicleta(unsigned int id)
 		}
 	}
 	throw Bicicleta_Inexistente(id);
+}
+
+
+bool Ponto::operator <(Ponto p1)
+{
+	return this->distance < p1.distance;
+}
+
+
+void Ponto::setCapacidade(unsigned int capacidade)
+{
+	this->capacidade = capacidade;
+}
+
+const Coordenadas& Ponto::getCoord() const
+{
+	return this->coord;
+}
+
+void Ponto::setCoord(const Coordenadas& coord)
+{
+	this->coord = coord;
+}
+
+double Ponto::getDistance() const
+{
+	return distance;
+}
+
+void Ponto::setDistance(double distance)
+{
+	this->distance = distance;
+}
+
+const Coordenadas& Ponto::getDistanceCoords() const
+{
+	return distance_coords;
+}
+
+void Ponto::setDistanceCoords(const Coordenadas& distanceCoords)
+{
+	distance_coords = distanceCoords;
+}
+
+void Ponto::setNome(const string& nome)
+{
+	this->nome = nome;
 }

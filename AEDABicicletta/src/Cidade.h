@@ -10,6 +10,7 @@
 
 
 #include "Hora.h"
+#include "Coordenadas.h"
 #include <vector>
 
 using namespace std;
@@ -83,6 +84,16 @@ protected:
 	 * @brief Location of the point
 	 */
 	Coordenadas coord;
+
+	/**
+	 * @brief Distance to a given coordinate
+	 */
+	double distance;
+
+	/**
+	 * @brief Coordinates that the distance corresponds to
+	 */
+	Coordenadas distance_coords;
 public:
 	/**
 	 * @brief Creates a point with no bicycles attached to it
@@ -106,35 +117,15 @@ public:
 	 *
 	 * @return Number of bicycles available
 	 */
-	unsigned int getnumbicicletasDisponiveis();
+	unsigned int getnumbicicletasDisponiveis() const;
 	/**
 	 * @return Name of the point
 	 */
-	string getNome();
+	string getNome() const;
 	/**
 	 * @return Capacity
 	 */
-	unsigned int getCapacidade();
-
-	/**
-	 * @return True if there is at least one "Urbana" in the point
-	 */
-	bool isThereUrbana();
-
-	/**
-	 * @return True if there is at least one "Urbana Simples" in the point
-	 */
-	bool isThereUranaSimbles();
-
-	/**
-	 * @return True if there is at least one "Corrida" in the point
-	 */
-	bool isThereCorrida();
-
-	/**
-	 * @return True if there is at least one "Infantil" in the point
-	 */
-	bool isThereInfantil();
+	unsigned int getCapacidade() const;
 
 	/**
 	 * @brief Adds a "bicicleta" to the vector throws an exeception with already exists one with the same id
@@ -149,7 +140,87 @@ public:
 	 * @param id Id of the bicycle to remove
 	 */
 	void rmBicicleta(unsigned int id);
+
+	/**
+	 * @brief True if the object that its applied to is closer to distance_coords than p1, assumes distance_coords is equal in both.
+	 *
+	 * @param p1 Point to compare to
+	 *
+	 * @return Boolean
+	 */
+	bool operator<(Ponto p1);
+
+	/**
+	 * @brief Change "capacidade"
+	 *
+	 * @param capacidade New "capacidade"
+	 */
+	void setCapacidade(unsigned int capacidade);
+
+	/**
+	 * @return coord
+	 */
+	const Coordenadas& getCoord() const;
+
+	/**
+	 * @brief Change "coord"
+	 *
+	 * @param coord New "coord"
+	 */
+	void setCoord(const Coordenadas& coord);
+
+	/**
+	 * @return distance
+	 */
+	double getDistance() const;
+
+	/**
+	 * @brief Change "distance"
+	 *
+	 * @param distance New "distance"
+	 */
+	void setDistance(double distance);
+
+	/**
+	 * @return distance_coords
+	 */
+	const Coordenadas& getDistanceCoords() const;
+
+	/**
+	 * @brief Change "distance_coords"
+	 *
+	 * @param distanceCoords New "distance_coords"
+	 */
+	void setDistanceCoords(const Coordenadas& distanceCoords);
+
+	/**
+	 * @brief Change "nome"
+	 *
+	 * @param nome New "nome"
+	 */
+	void setNome(const string& nome);
 };
+
+/**
+ * @return True if there is at least one "Urbana" in the point
+ */
+bool isThereUrbana( Ponto &p1);
+
+/**
+ * @return True if there is at least one "Urbana Simples" in the point
+ */
+bool isThereUrbanaSimples( Ponto &p1);
+
+/**
+ * @return True if there is at least one "Corrida" in the point
+ */
+bool isThereCorrida(Ponto &p1) ;
+
+/**
+ * @return True if there is at least one "Infantil" in the point
+ */
+bool isThereInfantil(Ponto &p1) ;
+
 
 /**
  * @brief Exception
@@ -179,17 +250,6 @@ class NoSpace
 public:
 	unsigned int capacidade;
 	NoSpace(int i):capacidade(i){};
-};
-
-class Coordenadas {
-public:
-	int cordX;
-	int cordY;
-
-	Coordenadas(int cordX, int cordY){
-		this->cordX = cordX;
-		this->cordY = cordY;
-	}
 };
 
 class Utente {
@@ -231,11 +291,35 @@ public:
 
 class Cidade {
 protected:
-	vector<Ponto *> pontos;
+	vector<Ponto> pontos;
 	vector<Utente *> utentes;
 	string nome;
 public:
-	vector<Ponto *> getPontos();
+	vector<Ponto> getPontos();
+	/**
+	 * @brief Sorts point from the closer to farthest point according to some given coordinate.
+	 *
+	 * @param c1 Coordinates to sort by.
+	 *
+	 * @return reference to the new point vector
+	 */
+	Cidade& sortPointsByDistance(Coordenadas c1);
+
+	/**
+	 * @brief Adds a point ro the array
+	 *
+	 * @param p1 Point to add
+	 */
+	Cidade& addPoint(Ponto p1);
+
+	/**
+	 * @brief If the vector is ordered by distance, finds the closer bicycle of a certain type, else  finds the first it can.
+	 *
+	 * @param bicycle Type of bike
+	 *
+	 * @return iterator to the bicycle, or vector<Ponto>.end() se não encontrar
+	 */
+	vector<Ponto>::iterator isThereBicycle(string bicycle);
 	Cidade();
 	virtual ~Cidade();
 };

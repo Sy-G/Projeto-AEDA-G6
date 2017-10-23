@@ -65,10 +65,33 @@ void testAddAndRmBicicletas()
 	ASSERT_EQUAL(3,p1.getnumbicicletasDisponiveis() );
 }
 
+void testSortByDistance()
+{
+	Cidade c1;
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(0,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(1,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(2,0)));
+	c1.addPoint(Ponto("Ponto 1", 4, Coordenadas(3,0)));
+	c1.sortPointsByDistance(Coordenadas(4,0));
+	ASSERT_EQUAL(c1.getPontos().size(), 4);
+
+	ASSERT_EQUAL(Coordenadas(3,0), c1.getPontos().at(0).getCoord());
+	ASSERT_EQUAL(Coordenadas(2,0), c1.getPontos().at(1).getCoord());
+	ASSERT_EQUAL(Coordenadas(1,0), c1.getPontos().at(2).getCoord());
+	ASSERT_EQUAL(Coordenadas(0,0), c1.getPontos().at(3).getCoord());
+
+	ASSERT_EQUAL(1,c1.getPontos().at(0).getDistance());
+	ASSERT_EQUAL(2,c1.getPontos().at(1).getDistance());
+	ASSERT_EQUAL(3,c1.getPontos().at(2).getDistance());
+	ASSERT_EQUAL(4,c1.getPontos().at(3).getDistance());
+
+}
+
 void runSuite()
 {
 	cute::suite s;
 	s.push_back(CUTE(testAddAndRmBicicletas));
+	s.push_back(CUTE(testSortByDistance));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }
