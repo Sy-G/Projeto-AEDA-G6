@@ -23,7 +23,7 @@ void testAddAndRmBicicletas()
 	ASSERT_EQUAL(0,p1.getnumbicicletasDisponiveis() );
 	ASSERT_EQUAL(4, p1.getCapacidade());
 
-	Bicicleta* b = new Bicicleta { 1 };
+	Bicicleta* b = new Bicicleta(1);
 	p1.addBicicleta(b);
 	b = new Bicicleta(2);
 	p1.addBicicleta(b);
