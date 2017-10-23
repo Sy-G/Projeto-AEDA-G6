@@ -70,6 +70,14 @@ bool operator== (Hora hora1, Hora hora2)
 	return equal;
 }
 
+bool operator< (Hora hora1,Hora hora2)
+{
+	 unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
+	 unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
+	 return totalminuteshora2 < totalminutes;
+
+}
+
 
 HoraInexistente::HoraInexistente(unsigned int horas, unsigned int minutos)
 {

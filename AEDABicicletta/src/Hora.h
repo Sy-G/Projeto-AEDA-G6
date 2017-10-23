@@ -31,6 +31,7 @@ public:
 
 double operator-(Hora hora1, Hora hora2);
 bool operator== (Hora hora1,Hora hora2);
+bool operator< (Hora hora1,Hora hora2);
 
 
 class HoraInexistente
@@ -41,6 +42,7 @@ public:
 	HoraInexistente(unsigned int horas, unsigned int minutos);
 
 };
+
 
 
 #endif /* SRC_HORA_H_ */
