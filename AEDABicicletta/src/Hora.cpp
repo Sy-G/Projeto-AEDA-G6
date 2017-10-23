@@ -12,7 +12,7 @@
 
 
 
-/*Hora::Hora(string horas)
+Hora::Hora(string horas)
 {
 	istringstream is;
 	char delim = ':';
@@ -21,15 +21,15 @@
 
 	is >> this->hora >> delim >> this->minutos;
 
-	 por no menu; assim o construtor nao tem de ser com string.....
+	/* por no menu; assim o construtor nao tem de ser com string.....
 	cout << "hora?" << endl;
 	int horas, minutos;
 	char c;
 	cin >> horas >> c >> minutos;
 	cout << horas << endl;
 	cout << c << endl;
-	cout << minutos << endl;
-}*/
+	cout << minutos << endl;*/
+}
 
 
 Hora::Hora() {

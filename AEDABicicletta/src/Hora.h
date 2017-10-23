@@ -21,6 +21,7 @@ public:
 	unsigned int minutos;
 
 	//Hora(string horas);
+	Hora(string horas);
 	Hora();
 	Hora(unsigned int horas, unsigned int minutos);
 	virtual ~Hora();

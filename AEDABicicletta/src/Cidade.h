@@ -11,12 +11,13 @@
 
 #include "Hora.h"
 #include "Coordenadas.h"
+#include "Bicicleta.h"
 #include <vector>
 
 using namespace std;
 
 class Coordenadas;
-
+/*
 class Bicicleta {
 protected:
 	unsigned int ID;
@@ -40,11 +41,11 @@ public:
 class Urbana_Simples: public Bicicleta{
 protected:
 	static  double preco_hora;
-	/*int velocidade; //velocidade �nica em (m/s)*/
+	/*int velocidade; //velocidade �nica em (m/s)
 public:
 	Urbana_Simples(unsigned int ID);
 	double getPrecoportipo();
-	/*int getVelocidade();*/
+	/*int getVelocidade();
 	string getTipo();
 };
 
@@ -64,7 +65,7 @@ public:
 	Corrida(unsigned int ID);
 	double getPrecoportipo();
 	string getTipo();
-};
+};*/
 
 class Ponto {
 protected:

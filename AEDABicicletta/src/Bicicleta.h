@@ -20,6 +20,7 @@ public:
 	virtual double getPrecoportipo() const;
 	unsigned int getID() const;
 	virtual void setPrecoportipo(double newprice);
+	virtual string getTipo();
 
 };
 
@@ -31,6 +32,7 @@ public:
 	Urbana(unsigned int ID);
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
+	string getTipo() ;
 
 };
 
@@ -42,6 +44,7 @@ public:
 	Urbana_Simples(unsigned int ID);
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
+	string getTipo() ;
 
 };
 
@@ -53,6 +56,7 @@ public:
 	Infantil(unsigned int ID);
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
+	string getTipo() ;
 
 };
 
@@ -64,6 +68,7 @@ public:
 	Corrida(unsigned int ID);
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
+	string getTipo() ;
 
 };
 

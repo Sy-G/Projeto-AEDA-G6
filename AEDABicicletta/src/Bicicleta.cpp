@@ -6,6 +6,8 @@
  */
 
 #include "Bicicleta.h"
+#include <string>
+using namespace std;
 
 
 double  Infantil::preco_hora = 0.30;
@@ -36,6 +38,10 @@ void Bicicleta::setPrecoportipo(double newprice)
 {
 }
 
+string Bicicleta::getTipo()
+{
+	return "";
+}
 
 /* Urbana */
 
@@ -53,6 +59,11 @@ void Urbana::setPrecoportipo(double newprice)
 	this->preco_hora= newprice;
 }
 
+string Urbana::getTipo()
+{
+	return "Urbana";
+}
+
 /* Urbana Simples */
 
 Urbana_Simples::Urbana_Simples(unsigned int ID): Bicicleta(ID)
@@ -68,6 +79,10 @@ void Urbana_Simples::setPrecoportipo(double newprice)
 {this->preco_hora= newprice;
 }
 
+string Urbana_Simples::getTipo()
+{
+	return "Urbana_Simples";
+}
 
 
 
@@ -88,7 +103,10 @@ void Infantil::setPrecoportipo(double newprice)
 	 this->preco_hora= newprice;
 }
 
-
+string Infantil::getTipo()
+{
+	return "Infantil";
+}
 
 /* Corrida */
 
@@ -107,4 +125,7 @@ void Corrida::setPrecoportipo(double newprice)
 	this->preco_hora= newprice;
 }
 
-
+string Corrida::getTipo()
+{
+	return "Corrida";
+}
