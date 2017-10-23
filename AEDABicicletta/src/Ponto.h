@@ -59,7 +59,7 @@ public:
 	 *
 	 * @return Pointer to the vector of bicycles of the point
 	 */
-	vector<Bicicleta *> getBicicletas();
+	vector<Bicicleta *>& getBicicletas();
 	/**
 	 * @brief
 	 *
@@ -169,6 +169,10 @@ bool isThereCorrida(Ponto &p1) ;
  */
 bool isThereInfantil(Ponto &p1) ;
 
+/**
+ * @return True if there is an empty space
+ */
+bool isThereSpaceInPoint(Ponto &p1);
 
 /**
  * @brief Exception

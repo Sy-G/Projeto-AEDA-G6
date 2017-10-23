@@ -6,11 +6,22 @@
  */
 
 #include "Cidade.h"
+#include "Ponto.h"
 #include <algorithm>
 #include <vector>
 
 Cidade::Cidade() {
 	// TODO Auto-generated constructor stub
+}
+
+vector<Ponto>::iterator Cidade::isThereSpace()
+{
+	vector<Ponto>::iterator iter = find_if(pontos.begin(), pontos.end(), isThereSpaceInPoint);
+
+	if(iter == pontos.end())
+		throw NoSpace(0);
+	else
+		return iter;
 }
 
 Cidade::~Cidade() {
@@ -72,4 +83,10 @@ vector<Ponto>::iterator Cidade::closestType(Coordenadas coord, string type)
 {
 	sortPointsByDistance(coord);
 	return isThereBicycle(type);
+}
+
+vector<Ponto>::iterator Cidade::closestSpace(Coordenadas coord)
+{
+	sortPointsByDistance(coord);
+	return isThereSpace();
 }

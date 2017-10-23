@@ -25,7 +25,7 @@ Ponto::~Ponto()
 	}*/
 }
 
-vector<Bicicleta *> Ponto::getBicicletas()
+vector<Bicicleta *>& Ponto::getBicicletas()
 {
 	return bicicletas;
 }
@@ -83,6 +83,11 @@ bool isThereInfantil( Ponto &p1)
 			return true;
 	}
 	return false;
+}
+
+bool isThereSpaceInPoint(Ponto &p1)
+{
+	return p1.getBicicletas().size() < p1.getCapacidade();
 }
 
 void Ponto::addBicicleta(Bicicleta* b1)

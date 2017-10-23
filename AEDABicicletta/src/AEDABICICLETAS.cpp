@@ -125,9 +125,48 @@ void testClosestType()
 
 	Corrida* bike = new Corrida(1);
 	c1.getPontos().at(1).addBicicleta(bike);
+	bike = new Corrida(2);
 	c1.getPontos().at(2).addBicicleta(bike);
 
 	ASSERT_EQUAL(c1.closestType(Coordenadas(4,0), "Corrida")->getNome(), "Ponto 3");
+}
+
+void testIsThereSpace()
+{
+	Cidade c1;
+	c1.addPoint(Ponto("Ponto 1", 1, Coordenadas(0,0)));
+	c1.addPoint(Ponto("Ponto 1", 0, Coordenadas(1,0)));
+	c1.addPoint(Ponto("Ponto 1", 1, Coordenadas(2,0)));
+	c1.addPoint(Ponto("Ponto 1", 0, Coordenadas(3,0)));
+
+	ASSERT_EQUAL(c1.getPontos().begin(), c1.isThereSpace());
+	Corrida* bike = new Corrida(0);
+	c1.getPontos().at(0).addBicicleta(bike);
+
+	ASSERT_EQUAL(c1.getPontos().begin() + 2, c1.isThereSpace());
+	bike = new Corrida(2);
+	c1.getPontos().at(2).addBicicleta(bike);
+
+	ASSERT_THROWS(c1.isThereSpace(), NoSpace);
+}
+
+void testClosestSpace()
+{
+	Cidade c1;
+	c1.addPoint(Ponto("Ponto 1", 1, Coordenadas(0,0)));
+	c1.addPoint(Ponto("Ponto 2", 0, Coordenadas(1,0)));
+	c1.addPoint(Ponto("Ponto 3", 1, Coordenadas(2,0)));
+	c1.addPoint(Ponto("Ponto 4", 0, Coordenadas(3,0)));
+
+	ASSERT_EQUAL("Ponto 3", c1.closestSpace(Coordenadas(4,0))->getNome());
+	Corrida* bike = new Corrida(0);
+	c1.getPontos().at(1).addBicicleta(bike);
+
+	ASSERT_EQUAL("Ponto 1", c1.closestSpace(Coordenadas(4,0))->getNome());
+	bike = new Corrida(2);
+	c1.getPontos().at(3).addBicicleta(bike);
+
+	ASSERT_THROWS(c1.closestSpace(Coordenadas(4,0)), NoSpace);
 }
 
 void runSuite()
@@ -138,6 +177,8 @@ void runSuite()
 	s.push_back(CUTE(testHoraSub));
 	s.push_back(CUTE(testIsThereBicycle));
 	s.push_back(CUTE(testClosestType));
+	s.push_back(CUTE(testIsThereSpace));
+	s.push_back(CUTE(testClosestSpace));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }
