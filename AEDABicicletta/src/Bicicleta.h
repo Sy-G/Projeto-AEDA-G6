@@ -5,51 +5,66 @@
  *      Author: Work
  */
 
-/*
-
 #ifndef BICICLETA_H_
 #define BICICLETA_H_
+#include <string>
+using namespace std;
 
-class Bicicleta {
+class Bicicleta
+{
 protected:
 	unsigned int ID;
 public:
-	Bicicleta();
+	Bicicleta(unsigned int ID);
 	virtual ~Bicicleta();
-	virtual double getPrecoportipo();
+	virtual double getPrecoportipo() const;
+	unsigned int getID() const;
+	virtual void setPrecoportipo(double newprice);
+
 };
 
-class Urbana: public Bicicleta{
+class Urbana: public Bicicleta
+{
 protected:
 	static  double preco_hora; //Preco por hora, em função do tipo.
 public:
 	Urbana(unsigned int ID);
-	double getPrecoportipo();
+	double getPrecoportipo()const;
+	void setPrecoportipo(double newprice);
+
 };
 
-class Urbana_Simples: public Bicicleta{
+class Urbana_Simples: public Bicicleta
+{
 protected:
 	static  double preco_hora;
-	int velocidade; //velocidade única em (m/s)
 public:
-	Urbana_Simples(unsigned int ID, int velocidade);
-	double getPrecoportipo();
+	Urbana_Simples(unsigned int ID);
+	double getPrecoportipo()const;
+	void setPrecoportipo(double newprice);
+
 };
 
-class Infantil: public Bicicleta{
+class Infantil: public Bicicleta
+{
 protected:
 	static  double preco_hora;
 public:
 	Infantil(unsigned int ID);
-	double getPrecoportipo();
+	double getPrecoportipo()const;
+	void setPrecoportipo(double newprice);
+
 };
 
-class Corrida: public Bicicleta{
+class Corrida: public Bicicleta
+{
 protected:
 	static  double preco_hora;
 public:
 	Corrida(unsigned int ID);
-	double getPrecoportipo();
+	double getPrecoportipo()const;
+	void setPrecoportipo(double newprice);
+
 };
 
 #endif /* BICICLETA_H_ */

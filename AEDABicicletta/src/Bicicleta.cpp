@@ -5,75 +5,106 @@
  *      Author: Work
  */
 
-#include "Cidade.h"
+#include "Bicicleta.h"
+
 
 double  Infantil::preco_hora = 0.30;
 double  Urbana::preco_hora = 0.75;
 double  Urbana_Simples::preco_hora = 0.50;
 double  Corrida::preco_hora = 0.80;
 
-Bicicleta::Bicicleta(unsigned int id):ID(id) {}
+Bicicleta::Bicicleta(unsigned int ID)
+{
+  this->ID = ID;
+}
 
 Bicicleta::~Bicicleta() {
 	// TODO Auto-generated destructor stub
 }
 
-double Bicicleta::getPrecoportipo(){
+double Bicicleta::getPrecoportipo() const
+{
 	return 0;
 }
 
-string Bicicleta::getTipo(){
-	return "";
+unsigned int Bicicleta::getID() const
+{
+	return this->ID;
 }
 
-double Infantil::getPrecoportipo(){
+void Bicicleta::setPrecoportipo(double newprice)
+{
+}
+
+
+/* Urbana */
+
+Urbana::Urbana(unsigned int ID) : Bicicleta(ID)
+{
+}
+
+double Urbana::getPrecoportipo() const
+{
 	return preco_hora;
 }
 
-double Urbana::getPrecoportipo(){
+void Urbana::setPrecoportipo(double newprice)
+{
+	this->preco_hora= newprice;
+}
+
+/* Urbana Simples */
+
+Urbana_Simples::Urbana_Simples(unsigned int ID): Bicicleta(ID)
+{
+}
+
+double Urbana_Simples::getPrecoportipo() const
+{
 	return preco_hora;
 }
 
-double Urbana_Simples::getPrecoportipo(){
+void Urbana_Simples::setPrecoportipo(double newprice)
+{this->preco_hora= newprice;
+}
+
+
+
+
+/* Infantil */
+
+
+Infantil::Infantil(unsigned int ID) : Bicicleta(ID)
+{
+}
+
+double Infantil::getPrecoportipo() const
+{
 	return preco_hora;
 }
 
-double Corrida::getPrecoportipo(){
+void Infantil::setPrecoportipo(double newprice)
+{
+	 this->preco_hora= newprice;
+}
+
+
+
+/* Corrida */
+
+
+Corrida::Corrida(unsigned int ID): Bicicleta(ID)
+{
+}
+
+double Corrida::getPrecoportipo() const
+{
 	return preco_hora;
 }
 
-Urbana::Urbana(unsigned int ID):Bicicleta(ID){
+void Corrida::setPrecoportipo(double newprice)
+{
+	this->preco_hora= newprice;
 }
 
-Infantil::Infantil(unsigned int ID):Bicicleta(ID){
-}
 
-Urbana_Simples::Urbana_Simples(unsigned int ID):Bicicleta(ID){
-}
-
-Corrida::Corrida(unsigned int ID):Bicicleta(ID){
-}
-
-string Corrida::getTipo(){
-	return "Corrida";
-}
-
-string Urbana::getTipo(){
-	return "Urbana";
-}
-
-string Urbana_Simples::getTipo(){
-	return "Urbana Simples";
-}
-
-string Infantil::getTipo(){
-	return "Infantil";
-}
-
-unsigned int Bicicleta::getID(){
-	return ID;
-}
-
-/*int Urbana_Simples::getVelocidade(){
-	return velocidade;
-}*/
