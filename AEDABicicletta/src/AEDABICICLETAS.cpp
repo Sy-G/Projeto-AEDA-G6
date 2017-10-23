@@ -87,11 +87,17 @@ void testSortByDistance()
 
 }
 
+void testHoraSub()
+{
+	ASSERT_EQUAL(0.5, Hora(1,30) - Hora(1,0));
+}
+
 void runSuite()
 {
 	cute::suite s;
 	s.push_back(CUTE(testAddAndRmBicicletas));
 	s.push_back(CUTE(testSortByDistance));
+	s.push_back(CUTE(testHoraSub));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }

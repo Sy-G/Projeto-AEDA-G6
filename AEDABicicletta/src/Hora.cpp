@@ -9,6 +9,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <cmath>
 
 
 
@@ -58,8 +59,7 @@ double operator-(Hora hora1, Hora hora2)
    unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
    unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
    unsigned int result = totalminutes - totalminuteshora2;
-
-   return (double) result/60;
+   return (double) floor((result/60.0) * 100 + 0.5)/100;
 }
 
 bool operator== (Hora hora1, Hora hora2)
