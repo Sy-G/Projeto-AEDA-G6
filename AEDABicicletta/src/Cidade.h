@@ -37,19 +37,23 @@ protected:
 	Hora horainicial;
 	Hora horafinal;
 	double tempouso;
+	int ID;
 public:
-	Utente(string nome, int cordX, int cordY);
+	Utente(string nome,int ID, int cordX, int cordY);
 	virtual ~Utente();
 	virtual double getPagamento();
 	void levantaBicicleta(Ponto *p1);
 	virtual void devolveBicicleta(Ponto *p1);
 	void subtraiHora(Hora horafinal, Hora horainicial); //calcula o tempo de uso
 	string getNome();
+	Bicicleta* getBicicleta();
+	Hora getHoraInicial();
+	Hora getHoraFinal();
 };
 
 class Regulares: public Utente{
 public:
-	Regulares(string nome, int cordX, int cordY);
+	Regulares(string nome,int ID, int cordX, int cordY);
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
 	void levantaBicicleta(Ponto *p1);
 	void devolveBicicleta(Ponto *p1);
@@ -60,7 +64,7 @@ protected:
 	static double mensalidade; //mensalidade dos Socios
 	vector<double> horasaccumuladas;
 public:
-	Socio(string nome, int cordX, int cordY);
+	Socio(string nome,int ID, int cordX, int cordY);
 	double getPagamento();
 	void levantaBicicleta(Ponto *p1);
 	void devolveBicicleta(Ponto *p1);
@@ -83,7 +87,7 @@ public:
 	Cidade& sortPointsByDistance(Coordenadas c1);
 
 	/**
-	 * @brief Adds a point ro the array
+	 * @brief Adds a point to the array
 	 *
 	 * @param p1 Point to add
 	 */
@@ -119,6 +123,14 @@ public:
 	 * @return Returns an iterator to the closest point with free space
 	 */
 	vector<Ponto>::iterator closestSpace(Coordenadas coord);
+
+	/**
+	 * @brief Adds a user to the array
+	 *
+	 * @param u1 User to add
+	 */
+	Cidade& addUtente(Utente* u1);
+
 	Cidade();
 	virtual ~Cidade();
 };

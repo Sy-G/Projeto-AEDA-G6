@@ -50,6 +50,12 @@ Cidade& Cidade::addPoint(Ponto p1)
 	return *this;
 }
 
+Cidade& Cidade::addUtente(Utente* u1)
+{
+	utentes.push_back(u1);
+	return *this;
+}
+
 vector<Ponto>::iterator Cidade::isThereBicycle(string bicycle)
 {
 	vector<Ponto>::iterator iter = pontos.begin();

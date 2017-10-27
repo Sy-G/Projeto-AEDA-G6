@@ -169,6 +169,84 @@ void testClosestSpace()
 	ASSERT_THROWS(c1.closestSpace(Coordenadas(4,0)), NoSpace);
 }
 
+void testlevantaBicicleta()
+{
+	Cidade c1;
+	Ponto p1("Ponto 1", 4, Coordenadas(0,0));
+	Ponto p2("Ponto 2", 5, Coordenadas(0,1));
+	Utente *j1 = new Regulares("João",2,1,-4);
+	Utente *r1 = new Socio("Rui",3,10,-2);
+	Utente *l1 = new Regulares("Lourenço",4,13,-7);
+	Bicicleta* b = new Infantil(1);
+	Bicicleta* a = new Corrida(1);
+	Bicicleta* c = new Urbana(1);
+
+	c1.addUtente(j1);
+	c1.addUtente(r1);
+	c1.addUtente(l1);
+	c1.addPoint(p1);
+	c1.addPoint(p2);
+	p1.addBicicleta(b);
+	p1.addBicicleta(a);
+	p2.addBicicleta(c);
+
+	ASSERT_EQUAL(2, p1.getnumbicicletasDisponiveis());
+	j1->levantaBicicleta(&p1); //asert throws não existe bicicleta
+	//Vamos dizer que ele quer especificamente uma Corrida.
+	ASSERT_EQUAL("Corrida", j1->getBicicleta()->getTipo());
+	//Vamos dizer que ele entra às 8:44
+	ASSERT_EQUAL(8, j1->getHoraInicial().hora);
+	ASSERT_EQUAL(44, j1->getHoraInicial().minutos);
+
+	r1->levantaBicicleta(&p2); //asert throws não existe bicicleta
+	//Vamos dizer que ele quer especificamente uma Urbana.
+	ASSERT_EQUAL("Corrida", r1->getBicicleta()->getTipo());
+	//Vamos dizer que ele entra às 18:34
+	ASSERT_EQUAL(18, r1->getHoraInicial().hora);
+	ASSERT_EQUAL(34, r1->getHoraInicial().minutos);
+}
+
+void testdevolveBicicletaRegulares()
+{
+	Cidade c1;
+	Ponto p1("Ponto 1", 4, Coordenadas(0,0));
+	Ponto p2("Ponto 2", 5, Coordenadas(0,1));
+	Utente *j1 = new Regulares("João",2,1,-4);
+	Utente *l1 = new Regulares("Lourenço",4,13,-7);
+
+	Bicicleta* b = new Infantil(1);
+	Bicicleta* a = new Corrida(1);
+	Bicicleta* c = new Urbana(1);
+
+	c1.addUtente(j1);
+	c1.addUtente(l1);
+	c1.addUtente(l1);
+	c1.addPoint(p1);
+	c1.addPoint(p2);
+	p1.addBicicleta(b);
+	p1.addBicicleta(a);
+	p2.addBicicleta(c); //no elemento 0 do vetor de bicicletas do ponto está uma urbana.
+
+	//o joao vai levantar especificamente uma bicicleta de corrida às 11:30, que é o elemento 1 do vetor de bicicletas do ponto p1.
+	j1->levantaBicicleta(&p1);
+
+	//agora ele vai devolvê-la noutro sítio
+	j1->devolveBicicleta(&p2);
+
+	//já não deve de ter bicicleta.
+	ASSERT_EQUAL(NULL, j1->getBicicleta());
+
+	//se devolveu corretamente, o segundo elemento (indice i) do ponto p2 das bicicletas devia de ser a bicicleta de corrida que ele devolve.
+	ASSERT_EQUAL("Corrida", p2.getBicicletas().at(1)->getTipo());
+
+	//vamos dizer que ele devolveu às 13:00
+	ASSERT_EQUAL(13, j1->getHoraFinal().hora);
+	ASSERT_EQUAL(00, j1->getHoraFinal().minutos);
+
+	//usou uma hora e meia uma bicicleta corrida cujo preço por hora é 0.80, logo pagamento = 1.5*0.80 = 1.2
+	ASSERT_EQUAL(1.2, j1->getPagamento());
+}
+
 void runSuite()
 {
 	cute::suite s;
@@ -179,6 +257,8 @@ void runSuite()
 	s.push_back(CUTE(testClosestType));
 	s.push_back(CUTE(testIsThereSpace));
 	s.push_back(CUTE(testClosestSpace));
+	s.push_back(CUTE(testlevantaBicicleta));
+	s.push_back(CUTE(testdevolveBicicletaRegulares));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }
@@ -218,8 +298,6 @@ int main() {
 
 	se foi encontrado continua sem problemas ...
 
-	||OPï¿½ï¿½ES||:
-
 	- levanta bicicleta.
 	- devolve bicicleta (pagamento imediato no caso de ser regular, accumulaï¿½ï¿½o/checkout no caso de sï¿½cio).
 	==================================================================
@@ -236,13 +314,13 @@ int main() {
 		}
 	}
 
-	se esse ciclo for nï¿½o dï¿½, ï¿½ necessï¿½rio implementar EXCEï¿½ï¿½O PONTO INEXISTENTE.
+	PONTO INEXISTENTE.
 	==================================================================
 
 	se devolve:
 	==================================================================
 	string nomepontodev;
-	cout << "qual o nome do ponto de devoluï¿½ï¿½o?"
+	cout << "qual o nome do ponto de devolução?"
 	cin >> nomepontodev;
 
 	for(unsigned int i = 0; i < c1.pontos.size(); i++){
@@ -251,7 +329,7 @@ int main() {
 		}
 	}
 
-	se esse ciclo for nï¿½o dï¿½, ï¿½ necessï¿½rio implementar EXCEï¿½ï¿½O PONTO INEXISTENTE.
+	EXEÇÃO DE PONTO INEXISTENTE.
 	==================================================================
 	 */
 

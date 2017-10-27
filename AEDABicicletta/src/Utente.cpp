@@ -7,21 +7,32 @@
 
 #include "Cidade.h"
 #include "Ponto.h"
+#include "Bicicleta.h"
+
 
 #include <iostream>
 using namespace std;
 double Socio::mensalidade = 27.5;
 
-Utente::Utente(string nome,int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00") {
+Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00") {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
+	this->ID = ID;
 	this->bicicleta = NULL; //no momento de registo/criação de UTENTE, este ainda não tem uma bicicleta associada, só tem quando a levantar.
 	this->tempouso = 0;
 }
 
-Regulares::Regulares(string nome,int cordX, int cordY): Utente(nome,cordX, cordY){}
+Regulares::Regulares(string nome,int ID, int cordX, int cordY): Utente(nome,ID,cordX, cordY){}
 
-Socio::Socio(string nome,int cordX, int cordY): Utente(nome,cordX, cordY){}
+Socio::Socio(string nome,int ID,int cordX, int cordY): Utente(nome,ID,cordX, cordY){}
+
+Bicicleta* Utente::getBicicleta(){
+	return bicicleta;
+}
+
+Hora Utente::getHoraInicial(){
+	return horainicial;
+}
 
 void Utente::levantaBicicleta(Ponto *p1){
 	string tipo;
@@ -35,6 +46,12 @@ void Utente::levantaBicicleta(Ponto *p1){
 	if(p1->getnumbicicletasDisponiveis() == 0){
 		cout << "Não há bicicletas disponíveis neste ponto!" << endl;
 		//EXCEÇÃO PONTO VAZIO!
+	}
+
+	//verificar se o Utente já tem uma bicicleta
+
+	if(this->bicicleta != NULL){
+		//EXCEÇÃO JÁ TEM BICICLETA
 	}
 
 	//As bicicletas são levantadas por tipo.
@@ -93,27 +110,26 @@ void Utente::levantaBicicleta(Ponto *p1){
 }
 
 void Regulares::devolveBicicleta(Ponto *p1){
-	//deve de verificar se o ponto está cheio
 	string hora;
 
-	if(p1->getBicicletas().size() > p1->getCapacidade()){
+	//deve de verificar se o ponto está cheio
+
+	if(p1->getBicicletas().size() == p1->getCapacidade()){
 		cout << "O ponto está cheio!" << endl;
 		//EXCEÇÃO PONTO CHEIO!!
 	}
 
 	//deve de verificar se o utente tem uma bicicleta para dar
+
 	if(this->bicicleta == NULL){
 		cout << "O cliente não tem uma bicicleta para devolver." << endl;
 		//EXCEÇÃO NÃO TEM BICICLETA
 	}
 
-	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
+	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente, mas, como a bicicleta guarda informações precisas para calcular o pagamento, só será retirado o apontador mais tarde.
 
 	p1->getBicicletas().push_back(bicicleta);
 	//adciona-se ao ponto
-
-	//retira-se ao cliente a bicicleta devolvida
-	this->bicicleta = NULL;
 
 	cout << "Bicicleta devolvida!" << endl;
 	cout << endl;
@@ -133,7 +149,11 @@ void Regulares::devolveBicicleta(Ponto *p1){
 	//como o cliente é um regular, terá de pagar já
 
 	cout << "O cliente tem de pagar: ";
-	getPagamento();
+	cout << getPagamento();
+
+	//depois de chamar getPagamento, poderá ser retirada a bicicleta.
+	this->bicicleta = NULL;
+
 	cout << " euros.";
 }
 
@@ -251,4 +271,9 @@ void Utente::devolveBicicleta(Ponto *p1){}
 
 string Utente::getNome(){
 	return nome;
+}
+
+
+Hora Utente::getHoraFinal(){
+	return this->horafinal;
 }
