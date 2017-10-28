@@ -79,12 +79,49 @@ bool operator< (Hora hora1,Hora hora2)
 }
 
 
+istream& operator>> (istream& in, Hora &hora)
+{
+    char delim;
+    in >> hora.hora >> delim >> hora.minutos;
+    if (in.fail())
+    	cout << "Invalid Input!" << endl;
+    else
+    {
+    	if (delim != ':')
+    		throw HoraInexistente(hora.hora,hora.minutos);
+    	else
+    	{
+    		if ((hora.hora > 23) || (hora.hora < 0))
+    			throw HoraInexistente(hora.hora,hora.minutos);
+    		else
+    		{
+    			if  ((hora.minutos > 59) || (hora.minutos < 0))
+    				throw HoraInexistente(hora.hora,hora.minutos);
+    		}
+    	}
+    }
+    return in;
+}
+
+ostream& operator<< (ostream& out, Hora &hora)
+{
+	out << hora.hora << ":" << hora.minutos;
+	return out;
+}
+
 HoraInexistente::HoraInexistente(unsigned int horas, unsigned int minutos)
 {
 	this->hora = horas;
 	this->minutos = minutos;
 }
 
+HorasInvalidas::HorasInvalidas(unsigned int horasinicio, unsigned int minutosinicio, unsigned int horasfim, unsigned int minutosfim)
+{
+	this->horainicio = horasinicio;
+	this->minutosinicio = minutosinicio;
+	this->horafim = horasfim;
+	this->minutosfim = minutosfim;
+}
 
 
 

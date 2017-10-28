@@ -21,13 +21,6 @@ int getIntInInterval(int lower, int upper)
 	{
 		validInput = true;
 		cin >> num;
-	//	if (num == upper + 1)
-	//	{
-	//					cin.clear();
-	//					cin.ignore(1000, '\n');
-	//					return -1;
-	//	}
-
 		if (cin.fail())
 		{
 			validInput = false;
@@ -258,11 +251,13 @@ void GetBikeMenu()
     catch(HoraInexistente &e)
 	{
     	cout << "Invalid hour" << endl;
+    	//return;
 	}
 
 
 	cout << "Bicycle lifted successfully" << endl ;
 	cout << endl;
+
 }
 
 

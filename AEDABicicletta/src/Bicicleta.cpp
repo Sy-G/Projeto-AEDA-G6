@@ -9,15 +9,14 @@
 #include <string>
 using namespace std;
 
-
+unsigned int Bicicleta::ultimoID = 0;
 double  Infantil::preco_hora = 0.30;
 double  Urbana::preco_hora = 0.75;
 double  Urbana_Simples::preco_hora = 0.50;
 double  Corrida::preco_hora = 0.80;
 
-Bicicleta::Bicicleta(unsigned int ID)
+Bicicleta::Bicicleta() : ID(++ultimoID)
 {
-  this->ID = ID;
 }
 
 Bicicleta::~Bicicleta() {
@@ -43,9 +42,10 @@ string Bicicleta::getTipo()
 	return "";
 }
 
+
 /* Urbana */
 
-Urbana::Urbana(unsigned int ID) : Bicicleta(ID)
+Urbana::Urbana() : Bicicleta()
 {
 }
 
@@ -66,7 +66,7 @@ string Urbana::getTipo()
 
 /* Urbana Simples */
 
-Urbana_Simples::Urbana_Simples(unsigned int ID): Bicicleta(ID)
+Urbana_Simples::Urbana_Simples(): Bicicleta()
 {
 }
 
@@ -89,7 +89,7 @@ string Urbana_Simples::getTipo()
 /* Infantil */
 
 
-Infantil::Infantil(unsigned int ID) : Bicicleta(ID)
+Infantil::Infantil() : Bicicleta()
 {
 }
 
@@ -111,7 +111,7 @@ string Infantil::getTipo()
 /* Corrida */
 
 
-Corrida::Corrida(unsigned int ID): Bicicleta(ID)
+Corrida::Corrida(): Bicicleta()
 {
 }
 

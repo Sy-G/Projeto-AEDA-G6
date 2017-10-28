@@ -13,9 +13,10 @@ using namespace std;
 class Bicicleta
 {
 protected:
+	static unsigned int ultimoID;
 	unsigned int ID;
 public:
-	Bicicleta(unsigned int ID);
+	Bicicleta();
 	virtual ~Bicicleta();
 	virtual double getPrecoportipo() const;
 	unsigned int getID() const;
@@ -24,12 +25,14 @@ public:
 
 };
 
+
+
 class Urbana: public Bicicleta
 {
 protected:
 	static  double preco_hora; //Preco por hora, em função do tipo.
 public:
-	Urbana(unsigned int ID);
+	Urbana();
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
 	string getTipo() ;
@@ -41,7 +44,7 @@ class Urbana_Simples: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
-	Urbana_Simples(unsigned int ID);
+	Urbana_Simples();
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
 	string getTipo() ;
@@ -53,7 +56,7 @@ class Infantil: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
-	Infantil(unsigned int ID);
+	Infantil();
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
 	string getTipo() ;
@@ -65,7 +68,7 @@ class Corrida: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
-	Corrida(unsigned int ID);
+	Corrida();
 	double getPrecoportipo()const;
 	void setPrecoportipo(double newprice);
 	string getTipo() ;

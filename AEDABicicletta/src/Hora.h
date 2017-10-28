@@ -32,6 +32,8 @@ public:
 double operator-(Hora hora1, Hora hora2);
 bool operator== (Hora hora1,Hora hora2);
 bool operator< (Hora hora1,Hora hora2);
+istream& operator>> (istream& in, Hora &hora) ;
+ostream& operator>> (ostream& out, Hora &hora) ;
 
 
 class HoraInexistente
@@ -41,6 +43,16 @@ public:
 	unsigned int minutos;
 	HoraInexistente(unsigned int horas, unsigned int minutos);
 
+};
+
+class HorasInvalidas
+{
+public:
+	unsigned int horainicio;
+	unsigned int minutosinicio;
+	unsigned int horafim;
+	unsigned int minutosfim;
+	HorasInvalidas(unsigned int horasinicio, unsigned int minutosinicio, unsigned int horasfim, unsigned int minutosfim);
 };
 
 
