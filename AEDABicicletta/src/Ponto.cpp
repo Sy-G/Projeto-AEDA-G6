@@ -7,6 +7,7 @@
 
 #include "Cidade.h"
 #include "Coordenadas.h"
+#include "Bicicleta.h"
 
 Ponto::Ponto(string nome, unsigned int capacidade, Coordenadas coord)
 {
@@ -97,8 +98,8 @@ void Ponto::addBicicleta(Bicicleta* b1)
 
 	for(size_t i = 0; i < bicicletas.size(); i++)
 	{
-		if(bicicletas.at(i)->getID() == b1->getID())
-			throw Bicicleta_Existente(b1->getID());
+		/*if(bicicletas.at(i)->getID() == b1->getID())
+			throw Bicicleta_Existente(b1->getID());*/
 	}
 	bicicletas.push_back(b1);
 }
@@ -107,7 +108,7 @@ void Ponto::rmBicicleta(unsigned int id)
 {
 	for(size_t i = 0; i < bicicletas.size(); i++)
 	{
-		if(bicicletas.at(i)->getID() == id)
+		/*if(bicicletas.at(i)->getID() == id)*/
 		{
 			bicicletas.erase(bicicletas.begin() + i);
 			return;

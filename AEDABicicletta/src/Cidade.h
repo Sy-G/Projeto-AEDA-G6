@@ -42,21 +42,22 @@ public:
 	Utente(string nome,int ID, int cordX, int cordY);
 	virtual ~Utente();
 	virtual double getPagamento();
-	void levantaBicicleta(Ponto *p1);
-	virtual void devolveBicicleta(Ponto *p1);
+	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
+	virtual double devolveBicicleta(Ponto *&p1, Hora horafinal);
 	void subtraiHora(Hora horafinal, Hora horainicial); //calcula o tempo de uso
 	string getNome();
 	Bicicleta* getBicicleta();
 	Hora getHoraInicial();
 	Hora getHoraFinal();
+	void setBicicleta(Bicicleta *b1);
 };
 
 class Regulares: public Utente{
 public:
 	Regulares(string nome,int ID, int cordX, int cordY);
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
-	void levantaBicicleta(Ponto *p1);
-	void devolveBicicleta(Ponto *p1);
+	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
+	double devolveBicicleta(Ponto *&p1, Hora horafinal);
 };
 
 class Socio: public Utente{
@@ -66,8 +67,8 @@ protected:
 public:
 	Socio(string nome,int ID, int cordX, int cordY);
 	double getPagamento();
-	void levantaBicicleta(Ponto *p1);
-	void devolveBicicleta(Ponto *p1);
+	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
+	double devolveBicicleta(Ponto *&p1, Hora horafinal);
 };
 
 class Cidade {
