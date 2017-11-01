@@ -56,10 +56,15 @@ void Hora::setHora(unsigned int newhoras, unsigned int newminutos)
 
 double operator-(Hora hora1, Hora hora2)
 {
+	if ( (hora1 == hora2) || (hora2 < hora1))
+		throw HorasInvalidas(hora1.hora, hora1.minutos, hora2.hora, hora2.minutos);
+	else
+	{
    unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
    unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
    unsigned int result = totalminutes - totalminuteshora2;
    return (double) floor((result/60.0) * 100 + 0.5)/100;
+	}
 }
 
 bool operator== (Hora hora1, Hora hora2)
