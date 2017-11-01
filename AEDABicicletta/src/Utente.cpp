@@ -11,11 +11,11 @@
 #include <iostream>
 using namespace std;
 double Socio::mensalidade = 27.5;
+int Utente::ultimoID = 0;
 
-Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00") {
+Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
-	this->ID = ID;
 	this->bicicleta = NULL; //no momento de registo/criação de UTENTE, este ainda não tem uma bicicleta associada, só tem quando a levantar.
 	this->tempouso = 0;
 }
@@ -41,14 +41,15 @@ void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
 	//verificar que no ponto em questão há bicicletas disponiveis.
 
 	if(p1->getnumbicicletasDisponiveis() == 0){
-		cout << "Não há bicicletas disponíveis neste ponto!" << endl;
 		//EXCEÇÃO PONTO VAZIO!
+		throw PontoVazio(p1->getNome());
 	}
 
 	//verificar se o Utente já tem uma bicicleta
 
 	if(this->bicicleta != NULL){
 		//EXCEÇÃO JÁ TEM BICICLETA
+		throw JaTemBicicletaException(this->nome);
 	}
 
 	//As bicicletas são levantadas por tipo.
@@ -62,6 +63,7 @@ void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
 			//agora retira-se essa bicicleta do vetor de bicicletas disponiveis desse ponto
 			p1->rmBicicleta(p1->getBicicletas().at(i)->getID());
 
+			//regista-se a hora de levantamento
 			this->horainicial = Hora(horainical);
 			sucesso = true;
 			break;
@@ -71,6 +73,7 @@ void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
 
 	if(sucesso == false){
 		//EXCEÇÃO BICICLETA NÃO EXISTENTE!!
+		throw Bicicleta_Inexistente(p1->getBicicletas().at(i)->getID());
 	}
 }
 
@@ -80,16 +83,16 @@ double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
 
 	//deve de verificar se o ponto está cheio
 
-	if(p1->getBicicletas().size() == p1->getCapacidade()){
-		cout << "O ponto está cheio!" << endl;
+	if(p1->getBicicletas().size() >= p1->getCapacidade()){
 		//EXCEÇÃO PONTO CHEIO!!
+		throw NoSpace(p1->getCapacidade());
 	}
 
 	//deve de verificar se o utente tem uma bicicleta para dar
 
 	if(this->bicicleta == NULL){
-		cout << "O cliente não tem uma bicicleta para devolver." << endl;
 		//EXCEÇÃO NÃO TEM BICICLETA
+		throw NaoTemBicicletaException(this->nome);
 	}
 
 	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente, mas, como a bicicleta guarda informações precisas para calcular o pagamento, só será retirado o apontador mais tarde.
@@ -112,14 +115,14 @@ double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
 
 	//deve de verificar se o ponto está cheio
 	if(p1->getBicicletas().size() > p1->getCapacidade()){
-		cout << "O ponto está cheio!" << endl;
 		//EXCEÇÃO PONTO CHEIO!!
+		throw NoSpace(p1->getCapacidade());
 	}
 
 	//deve de verificar se o utente tem uma bicicleta para dar
 	if(this->bicicleta == NULL){
-		cout << "O cliente não tem uma bicicleta para devolver." << endl;
 		//EXCEÇÃO NÃO TEM BICICLETA
+		throw NaoTemBicicletaException(this->nome);
 	}
 
 	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
@@ -213,7 +216,6 @@ double Utente::devolveBicicleta(Ponto *&p1, Hora horafinal){}
 string Utente::getNome(){
 	return nome;
 }
-
 
 Hora Utente::getHoraFinal(){
 	return this->horafinal;
