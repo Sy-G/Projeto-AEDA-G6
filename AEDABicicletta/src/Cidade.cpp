@@ -9,6 +9,7 @@
 #include "Ponto.h"
 #include <algorithm>
 #include <vector>
+#include <cmath>
 
 Cidade::Cidade() {
 	// TODO Auto-generated constructor stub
@@ -96,3 +97,133 @@ vector<Ponto>::iterator Cidade::closestSpace(Coordenadas coord)
 	sortPointsByDistance(coord);
 	return isThereSpace();
 }
+
+vector<Ponto>::iterator Cidade::findPoint(string name)
+{
+	vector<Ponto>::iterator iter;
+	Ponto p1(name, 0, Coordenadas());
+	if((iter = find(pontos.begin(), pontos.end(), p1)) == pontos.end())
+		throw NotAPoint(name);
+	return iter;
+}
+
+bool operator<(const pair<Ponto *, float> &p1, const pair<Ponto *, float> &p2)
+{
+	return p1.second > p2.second;
+}
+
+
+vector<Bicicleta*> Cidade::redistributeBikes()
+{
+	vector<Bicicleta *> corrida;
+	vector<Bicicleta *> urbana_simples;
+	vector<Bicicleta *> urbana;
+	vector<Bicicleta *> infantil;
+	unsigned int total_capacity = 0;
+
+	for(size_t i = 0; i < pontos.size(); i++)
+	{
+		total_capacity += pontos.at(i).getCapacidade();
+
+		for(size_t j = 0; j < pontos.at(i).getBicicletas().size(); j++)
+		{
+			if(pontos.at(i).getBicicletas().at(j)->getTipo() == "Corrida")
+			{
+				corrida.push_back(pontos.at(i).getBicicletas().at(j));
+			}
+			if(pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana")
+			{
+				urbana.push_back(pontos.at(i).getBicicletas().at(j));
+			}
+			if(pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
+			{
+				urbana_simples.push_back(pontos.at(i).getBicicletas().at(j));
+			}
+			if(pontos.at(i).getBicicletas().at(j)->getTipo() == "Infantil")
+			{
+				infantil.push_back(pontos.at(i).getBicicletas().at(j));
+			}
+		}
+
+		pontos.at(i).setBicicletas(vector<Bicicleta*>());
+	}
+
+	vector<Bicicleta *> ret;
+	float percentage = corrida.size()/(float)total_capacity;
+	vector<Bicicleta *> tmp = redistributeVector(corrida, percentage);
+	ret.insert(ret.begin(), tmp.begin(), tmp.end());
+	tmp.clear();
+
+	percentage = urbana.size()/(float)total_capacity;
+	tmp = redistributeVector(urbana, percentage);
+	ret.insert(ret.begin(), tmp.begin(), tmp.end());
+	tmp.clear();
+
+	percentage = urbana_simples.size()/(float)total_capacity;
+	tmp = redistributeVector(urbana_simples, percentage);
+	ret.insert(ret.begin(), tmp.begin(), tmp.end());
+	tmp.clear();
+
+	percentage = infantil.size()/(float)total_capacity;
+	tmp = redistributeVector(infantil, percentage);
+	ret.insert(ret.begin(), tmp.begin(), tmp.end());
+	tmp.clear();
+	return ret;
+}
+
+vector<Bicicleta*> Cidade::redistributeVector(vector<Bicicleta*>& v, float percentage)
+{
+	vector<pair<Ponto *, float> > set_v;
+	for(size_t i = 0; i < pontos.size(); i++)
+	{
+		set_v.insert(set_v.begin(),make_pair(&pontos.at(i), percentage * pontos.at(i).getCapacidade()));
+	}
+
+	sort(set_v.begin(), set_v.end());
+	while (v.size() > 0)
+	{
+		if(set_v.begin()->second > 0)
+		{
+			//			cout << "HERE\n";
+			set_v.begin()->first->addBicicleta(v.at(0));
+			v.erase(v.begin());
+			set_v.begin()->second--;
+			sort(set_v.begin(), set_v.end());
+		}
+		else
+		{
+			//			cout << "here\n";
+			break;
+		}
+
+		//		cout << "Size: " << v.size() << endl;
+	}
+	//	cout << "END\n";
+	return v;
+}
+
+vector<Bicicleta*> Cidade::testOccupation()
+{
+	double average_occupancy_percentage = 0;
+	for(size_t i = 0; i < pontos.size(); i++)
+	{
+		average_occupancy_percentage += pontos.at(i).getnumbicicletasDisponiveis()/(double)pontos.at(i).getCapacidade();
+	}
+
+	average_occupancy_percentage /= (double)pontos.size();
+	double standard_deviation = 0;
+	for(size_t i = 0; i < pontos.size(); i++)
+	{
+		standard_deviation += (pontos.at(i).getnumbicicletasDisponiveis()/(double)pontos.at(i).getCapacidade() - average_occupancy_percentage) * (pontos.at(i).getnumbicicletasDisponiveis()/(double)pontos.at(i).getCapacidade() - average_occupancy_percentage);
+		//		cout << standard_deviation << endl;
+	}
+
+	standard_deviation = sqrt(standard_deviation);
+	//	cout << endl << standard_deviation << endl << endl;
+
+	if(standard_deviation < 0.3)
+		throw NoRedistributionNeeded();
+	else
+		return redistributeBikes();
+}
+

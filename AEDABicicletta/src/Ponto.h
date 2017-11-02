@@ -60,6 +60,14 @@ public:
 	 * @return Pointer to the vector of bicycles of the point
 	 */
 	vector<Bicicleta *>& getBicicletas();
+
+	/**
+	 * @brief sets the vector of bicycles
+	 *
+	 * @param bikes new vector of bicycles
+	 */
+	void setBicicletas(vector<Bicicleta *>  bikes);
+
 	/**
 	 * @brief
 	 *
@@ -147,6 +155,15 @@ public:
 	 * @param nome New "nome"
 	 */
 	void setNome(const string& nome);
+
+	/**
+	 * @brieg equal points have only equal names
+	 *
+	 * @param p2 second point
+	 *
+	 * @return true if points have the same point
+	 */
+	bool operator==(const Ponto& p2);
 };
 
 /**

@@ -36,15 +36,15 @@ istream& operator>> (istream& in, Coordenadas &coord)
 //class Socio   bool eSocio();
 //class Regulares  bool eSocio();
 
-bool Socio::eSocio()
-{
-	return true;
-}
-
-bool Regulares::eSocio()
-{
-	return false;
-}
+//bool Socio::eSocio()
+//{
+//	return true;
+//}
+//
+//bool Regulares::eSocio()
+//{
+//	return false;
+//}
 /////////////////////////////////////////////////////////////////
 
 //menus

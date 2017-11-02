@@ -162,3 +162,16 @@ void Ponto::setNome(const string& nome)
 {
 	this->nome = nome;
 }
+
+bool Ponto::operator==(const Ponto& p2)
+{
+	return this->nome == p2.getNome();
+}
+
+void Ponto::setBicicletas(vector<Bicicleta*> bikes)
+{
+	if(bikes.size() > capacidade)
+		throw NoSpace(bikes.size());
+	bicicletas =  bikes;
+}
+

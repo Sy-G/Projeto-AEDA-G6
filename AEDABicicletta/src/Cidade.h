@@ -57,6 +57,7 @@ public:
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
 	void levantaBicicleta(Ponto *p1);
 	void devolveBicicleta(Ponto *p1);
+	bool eSocio();
 };
 
 class Socio: public Utente{
@@ -68,6 +69,7 @@ public:
 	double getPagamento();
 	void levantaBicicleta(Ponto *p1);
 	void devolveBicicleta(Ponto *p1);
+	bool eSocio();
 };
 
 class Cidade {
@@ -131,9 +133,70 @@ public:
 	 */
 	Cidade& addUtente(Utente* u1);
 
+	/**
+	 * @brief searches a point in the city
+	 *
+	 * @param name name of the point
+	 *
+	 * @return iterator to the point
+	 */
+	vector<Ponto>::iterator findPoint(string name);
+
+	/**
+	 * @brief redistribute bicycles evenly
+	 *
+	 * @return vector of bicycles that do not fit in the points
+	 */
+	vector<Bicicleta *> redistributeBikes();
+
+	/**
+	 * @brief redistributes a vector of bicycles.
+	 *
+	 * @param bicycles bikes to redistribute.
+	 * @param percentage percentage of bicycles to go in each point.
+	 * @return bicycles with no space.
+	 */
+	vector<Bicicleta *> redistributeVector(vector<Bicicleta *> &v, float percentage);
+
+	/**
+	 * @brief if the standard deviation of occupation is above a certain level, redistributes the bicycles.
+	 *
+	 * @return bikes that didn't fit (always empty due to implementation)
+	 */
+	vector<Bicicleta *> testOccupation();
+
 	Cidade();
 	virtual ~Cidade();
 };
 
+
+/**
+ * Not a point
+ */
+class NotAPoint
+{
+public:
+	string name;
+	NotAPoint(string n) : name(n){};
+};
+
+/**
+ * Point already exists
+ */
+class existentPoint
+{
+public:
+	string name;
+	existentPoint(string n) : name(n){};
+};
+
+/**
+ * Redistribution not neededs
+ */
+class NoRedistributionNeeded
+{
+public:
+	NoRedistributionNeeded(){};
+};
 
 #endif /* CIDADE_H_ */
