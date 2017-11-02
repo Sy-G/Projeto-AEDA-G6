@@ -1,5 +1,5 @@
 Nome do Ponto 1
-Capacidade CoordenadaX CoordenadaY Bicicletas
+Capacidade CoordenadaX-CoordenadaY Bicicletas
 
 C - Corrida
 U - Urbana
@@ -8,6 +8,6 @@ I - Infantil
 
 Exemplo 1:
 Trindade
-20 5 6 C C C U S S I I
+20 5-6 C C C U S S I I
 FEUP
-10 1 2 U U U C C C C C
+10 1-2 U U U C C C C C

@@ -176,7 +176,26 @@ public:
 	 *	@return output stream.
 	 */
 	friend ostream& operator<<(ostream &out, const Ponto &p);
+
+	/**
+	 * @brief deletes all bicycles in a point.
+	 *
+	 */
+	void deleteBicycles();
+
+	/**
+	 * @brief Creates point from strings.
+	 *
+	 * @param name name of the point.
+	 *
+	 * @param other other parameters
+	 */
+	Ponto(const string& name, const string& other);
+
+
 };
+
+
 
 /**
  * @return True if there is at least one "Urbana" in the point
@@ -231,6 +250,15 @@ class NoSpace
 public:
 	unsigned int capacidade;
 	NoSpace(int i):capacidade(i){};
+};
+
+/**
+ * @brief point not formated correctly
+ */
+class InvalidPoint
+{
+public:
+	InvalidPoint(){};
 };
 
 #endif /* PONTO_H_ */

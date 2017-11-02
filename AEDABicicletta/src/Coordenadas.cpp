@@ -25,3 +25,19 @@ bool Coordenadas::operator ==(const Coordenadas c1) const
 {
 	return (cordX == c1.cordX) && (cordY ==  c1.cordY);
 }
+
+
+
+istream& operator>> (istream& in, Coordenadas &coord)
+{
+    char delim;
+	in >> coord.cordX >> delim >> coord.cordY;
+	if (in.fail())
+		throw InvalidCoordinates();
+	else
+	{
+		if (delim != '-')
+			throw InvalidCoordinates();
+	}
+	return in;
+}

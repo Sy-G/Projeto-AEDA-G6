@@ -9,27 +9,11 @@
 using namespace std;
 
 /*cenas das coordenadas, nao quis estar a mexer na parte do Gui*/
-class InvalidCoordinates
-{
-public:
-	InvalidCoordinates(){};
-};
 
-istream& operator>> (istream& in, Coordenadas &coord) ;
 
-istream& operator>> (istream& in, Coordenadas &coord)
-{
-    char delim;
-	in >> coord.cordX >> delim >> coord.cordY;
-	if (in.fail())
-	    cout << "Invalid Input!" << endl;
-	else
-	{
-		if (delim != '-')
-			throw InvalidCoordinates();
-	}
-	return in;
-}
+
+
+
 ////////////////////////////////////////////////////////////
 //  utentes: para distinguir se e ou nao socio
 //class Utente  virtual bool eSocio() = 0;

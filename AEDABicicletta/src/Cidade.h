@@ -172,6 +172,20 @@ public:
 	 */
 	void printPoints(ostream &out);
 
+	/**
+	 * @brief prints all points to file.
+	 *
+	 * @param file to output to.
+	 */
+	void printPointsFile(const string &file);
+
+	/**
+	 * @brief reads points from a file.
+	 *
+	 * @param file to read.
+	 */
+	void readPoints(const string& file);
+
 	Cidade();
 	virtual ~Cidade();
 };
@@ -205,5 +219,25 @@ class NoRedistributionNeeded
 public:
 	NoRedistributionNeeded(){};
 };
+
+/**
+ * Not a file
+ */
+class NotAFile
+{
+public:
+	string name;
+	NotAFile(string n) : name(n){};
+};
+
+/**
+ * Redistribution not neededs
+ */
+class InvalidFile
+{
+public:
+	InvalidFile(){};
+};
+
 
 #endif /* CIDADE_H_ */
