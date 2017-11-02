@@ -47,8 +47,17 @@ Cidade& Cidade::sortPointsByDistance(Coordenadas c1)
 
 Cidade& Cidade::addPoint(Ponto p1)
 {
-	pontos.push_back(p1);
-	return *this;
+	try
+	{
+		findPoint(p1.getNome());
+	}
+	catch(NotAPoint &p)
+	{
+		pontos.push_back(p1);
+		return *this;
+	}
+
+	throw existentPoint(p1.getNome());
 }
 
 Cidade& Cidade::addUtente(Utente* u1)
@@ -227,3 +236,8 @@ vector<Bicicleta*> Cidade::testOccupation()
 		return redistributeBikes();
 }
 
+void Cidade::printPoints(ostream& out)
+{
+	for(size_t i = 0; i < pontos.size(); i++)
+		out << pontos.at(i) << endl;
+}

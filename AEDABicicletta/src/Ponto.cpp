@@ -175,3 +175,22 @@ void Ponto::setBicicletas(vector<Bicicleta*> bikes)
 	bicicletas =  bikes;
 }
 
+ostream& operator<<(ostream &out, const Ponto &p)
+{
+	out << p.nome << endl;
+	out << p.capacidade << ' ' << p.coord.cordX << ' ' << p.coord.cordY << ' ';
+
+	for(size_t i = 0; i < p.bicicletas.size(); i++)
+	{
+		if (p.bicicletas.at(i)->getTipo() == "Corrida")
+			out << "C ";
+		else if (p.bicicletas.at(i)->getTipo() == "Urbana")
+			out << "U ";
+		else if (p.bicicletas.at(i)->getTipo() == "Urbana_Simples")
+			out << "S ";
+		else if (p.bicicletas.at(i)->getTipo() == "Infantil")
+			out << "I ";
+	}
+
+	return out;
+}

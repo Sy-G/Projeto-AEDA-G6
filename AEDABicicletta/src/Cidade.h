@@ -165,6 +165,13 @@ public:
 	 */
 	vector<Bicicleta *> testOccupation();
 
+	/**
+	 * @brief prints all points to out.
+	 *
+	 * @param out output stream.
+	 */
+	void printPoints(ostream &out);
+
 	Cidade();
 	virtual ~Cidade();
 };

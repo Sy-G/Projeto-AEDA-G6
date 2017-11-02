@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include "Bicicleta.h"
 
 using namespace std;
@@ -47,6 +48,7 @@ public:
 	 * @brief Creates a point with no bicycles attached to it
 	 *
 	 * @param nome Name of the point
+	 *
 	 * @param capacidade Max number of bicycles a point can hold
 	 */
 	Ponto(string nome, unsigned int capacidade, Coordenadas coord);
@@ -157,13 +159,23 @@ public:
 	void setNome(const string& nome);
 
 	/**
-	 * @brieg equal points have only equal names
+	 * @brief equal points have only equal names
 	 *
 	 * @param p2 second point
 	 *
 	 * @return true if points have the same point
 	 */
 	bool operator==(const Ponto& p2);
+
+	/**
+	 *	@brief outputs a point in text.
+	 *
+	 *	@param out stream to output to.
+	 *	@param p point to print.
+	 *
+	 *	@return output stream.
+	 */
+	friend ostream& operator<<(ostream &out, const Ponto &p);
 };
 
 /**
