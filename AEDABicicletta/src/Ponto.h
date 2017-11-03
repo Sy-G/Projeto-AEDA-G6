@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include "Bicicleta.h"
 
 using namespace std;
@@ -47,6 +48,7 @@ public:
 	 * @brief Creates a point with no bicycles attached to it
 	 *
 	 * @param nome Name of the point
+	 *
 	 * @param capacidade Max number of bicycles a point can hold
 	 */
 	Ponto(string nome, unsigned int capacidade, Coordenadas coord);
@@ -60,6 +62,14 @@ public:
 	 * @return Pointer to the vector of bicycles of the point
 	 */
 	vector<Bicicleta *>& getBicicletas();
+
+	/**
+	 * @brief sets the vector of bicycles
+	 *
+	 * @param bikes new vector of bicycles
+	 */
+	void setBicicletas(vector<Bicicleta *>  bikes);
+
 	/**
 	 * @brief
 	 *
@@ -147,7 +157,45 @@ public:
 	 * @param nome New "nome"
 	 */
 	void setNome(const string& nome);
+
+	/**
+	 * @brief equal points have only equal names
+	 *
+	 * @param p2 second point
+	 *
+	 * @return true if points have the same point
+	 */
+	bool operator==(const Ponto& p2);
+
+	/**
+	 *	@brief outputs a point in text.
+	 *
+	 *	@param out stream to output to.
+	 *	@param p point to print.
+	 *
+	 *	@return output stream.
+	 */
+	friend ostream& operator<<(ostream &out, const Ponto &p);
+
+	/**
+	 * @brief deletes all bicycles in a point.
+	 *
+	 */
+	void deleteBicycles();
+
+	/**
+	 * @brief Creates point from strings.
+	 *
+	 * @param name name of the point.
+	 *
+	 * @param other other parameters
+	 */
+	Ponto(const string& name, const string& other);
+
+
 };
+
+
 
 /**
  * @return True if there is at least one "Urbana" in the point
@@ -202,6 +250,15 @@ class NoSpace
 public:
 	unsigned int capacidade;
 	NoSpace(int i):capacidade(i){};
+};
+
+/**
+ * @brief point not formated correctly
+ */
+class InvalidPoint
+{
+public:
+	InvalidPoint(){};
 };
 
 #endif /* PONTO_H_ */

@@ -140,12 +140,18 @@ public:
 	 * @param cordY Y coordinate of the User
 	 */
 	Regulares(string nome,int ID, int cordX, int cordY);
+<<<<<<< HEAD
 	/**
 	 * @brief This function obtains a given user's payment, if he is regular he needs to pay after each use, the amount is given by multiplying usage time with bike price per hour.
 	 */
 	double getPagamento();
 	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
 	double devolveBicicleta(Ponto *&p1, Hora horafinal);
+=======
+	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
+	void levantaBicicleta(Ponto *p1);
+	void devolveBicicleta(Ponto *p1);
+>>>>>>> master
 	bool eSocio();
 };
 
@@ -166,8 +172,13 @@ public:
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
+<<<<<<< HEAD
 	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
 	double devolveBicicleta(Ponto *&p1, Hora horafinal);
+=======
+	void levantaBicicleta(Ponto *p1);
+	void devolveBicicleta(Ponto *p1);
+>>>>>>> master
 	bool eSocio();
 };
 
@@ -231,6 +242,59 @@ public:
 	 * @param u1 User to add
 	 */
 	Cidade& addUtente(Utente* u1);
+
+	/**
+	 * @brief searches a point in the city
+	 *
+	 * @param name name of the point
+	 *
+	 * @return iterator to the point
+	 */
+	vector<Ponto>::iterator findPoint(string name);
+
+	/**
+	 * @brief redistribute bicycles evenly
+	 *
+	 * @return vector of bicycles that do not fit in the points
+	 */
+	vector<Bicicleta *> redistributeBikes();
+
+	/**
+	 * @brief redistributes a vector of bicycles.
+	 *
+	 * @param bicycles bikes to redistribute.
+	 * @param percentage percentage of bicycles to go in each point.
+	 * @return bicycles with no space.
+	 */
+	vector<Bicicleta *> redistributeVector(vector<Bicicleta *> &v, float percentage);
+
+	/**
+	 * @brief if the standard deviation of occupation is above a certain level, redistributes the bicycles.
+	 *
+	 * @return bikes that didn't fit (always empty due to implementation)
+	 */
+	vector<Bicicleta *> testOccupation();
+
+	/**
+	 * @brief prints all points to out.
+	 *
+	 * @param out output stream.
+	 */
+	void printPoints(ostream &out);
+
+	/**
+	 * @brief prints all points to file.
+	 *
+	 * @param file to output to.
+	 */
+	void printPointsFile(const string &file);
+
+	/**
+	 * @brief reads points from a file.
+	 *
+	 * @param file to read.
+	 */
+	void readPoints(const string& file);
 
 	Cidade();
 	virtual ~Cidade();
@@ -311,6 +375,55 @@ class PontoNaoExistente{
 	PontoNaoExistente(string nome){
 		this->nome = nome;
 	}
+};
+
+
+/**
+ * Not a point
+ */
+class NotAPoint
+{
+public:
+	string name;
+	NotAPoint(string n) : name(n){};
+};
+
+/**
+ * Point already exists
+ */
+class existentPoint
+{
+public:
+	string name;
+	existentPoint(string n) : name(n){};
+};
+
+/**
+ * Redistribution not neededs
+ */
+class NoRedistributionNeeded
+{
+public:
+	NoRedistributionNeeded(){};
+};
+
+/**
+ * Not a file
+ */
+class NotAFile
+{
+public:
+	string name;
+	NotAFile(string n) : name(n){};
+};
+
+/**
+ * Redistribution not neededs
+ */
+class InvalidFile
+{
+public:
+	InvalidFile(){};
 };
 
 

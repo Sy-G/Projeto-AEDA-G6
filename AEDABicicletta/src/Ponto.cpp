@@ -7,7 +7,12 @@
 
 #include "Cidade.h"
 #include "Coordenadas.h"
+<<<<<<< HEAD
 #include "Bicicleta.h"
+=======
+#include <sstream>
+#include <iostream>
+>>>>>>> master
 
 Ponto::Ponto(string nome, unsigned int capacidade, Coordenadas coord)
 {
@@ -162,4 +167,92 @@ void Ponto::setDistanceCoords(const Coordenadas& distanceCoords)
 void Ponto::setNome(const string& nome)
 {
 	this->nome = nome;
+}
+
+bool Ponto::operator==(const Ponto& p2)
+{
+	return this->nome == p2.getNome();
+}
+
+void Ponto::setBicicletas(vector<Bicicleta*> bikes)
+{
+	if(bikes.size() > capacidade)
+		throw NoSpace(bikes.size());
+	bicicletas =  bikes;
+}
+
+ostream& operator<<(ostream &out, const Ponto &p)
+{
+	out << p.nome << endl;
+	out << p.capacidade << ' ' << p.coord.cordX << '-' << p.coord.cordY << ' ';
+
+	for(size_t i = 0; i < p.bicicletas.size(); i++)
+	{
+		if (p.bicicletas.at(i)->getTipo() == "Corrida")
+			out << "C ";
+		else if (p.bicicletas.at(i)->getTipo() == "Urbana")
+			out << "U ";
+		else if (p.bicicletas.at(i)->getTipo() == "Urbana_Simples")
+			out << "S ";
+		else if (p.bicicletas.at(i)->getTipo() == "Infantil")
+			out << "I ";
+	}
+
+	return out;
+}
+
+Ponto::Ponto(const string& name, const string& other)
+{
+	istringstream in;
+	in.str(other);
+	this->nome = name;
+	this->distance = 0;
+
+	try
+	{
+		in >> capacidade >> coord;
+		if(in.fail())
+			throw InvalidPoint();
+	}
+	catch(InvalidCoordinates &e)
+	{
+		throw InvalidPoint();
+	}
+	this->distance_coords = coord;
+
+//	int counter = 0;
+	while(in.good())
+	{
+		try
+		{
+			char bicycle;
+			in >> bicycle;
+			if(in.fail())
+				break;
+			if(bicycle == 'C')
+				addBicicleta(new Corrida);
+			else if(bicycle == 'U')
+				addBicicleta(new Urbana);
+			else if(bicycle == 'S')
+				addBicicleta(new Urbana_Simples);
+			else if(bicycle == 'I')
+				addBicicleta(new Infantil);
+			else
+				throw NotAType("");
+//			counter++;
+		}
+		catch(NotAType &e)
+		{
+			for(size_t i = 0; i < bicicletas.size(); i++)
+				delete bicicletas.at(i);
+			throw InvalidPoint();
+		}
+	}
+//	cout << counter << endl;
+}
+
+void Ponto::deleteBicycles()
+{
+	for(size_t i = 0; i< bicicletas.size(); i++)
+		delete bicicletas.at(i);
 }
