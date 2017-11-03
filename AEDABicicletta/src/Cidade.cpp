@@ -244,6 +244,12 @@ void Cidade::printPoints(ostream& out)
 		out << pontos.at(i) << endl;
 }
 
+void Cidade::printUsers()
+{
+	for(size_t i = 0; i < utentes.size(); i++)
+		cout << utentes.at(i) << endl;
+}
+
 void Cidade::printPointsFile(const string& file)
 {
 
@@ -302,6 +308,36 @@ void Cidade::readPoints(const string& file)
 	{
 		throw NotAFile(file);
 	}
+}
 
+void Cidade::readUsers(const string& file){
+	vector<Utente> v_p;
+	ifstream in(file.c_str());
 
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+				string ident;
+				getline(in, ident);
+
+				string name;
+				getline(in, name);
+
+				string other;
+				getline(in, other);
+
+				if(ident == "Sócio"){
+					v_p.push_back(Socio(name,other));
+				}
+
+				if(ident == "Regular"){
+					v_p.push_back(Regulares(name,other));
+				}
+		}
+	}
+
+	for(size_t i = 0; i < v_p.size(); i++){
+		this->addUtente(&v_p.at(i));
+	}
 }

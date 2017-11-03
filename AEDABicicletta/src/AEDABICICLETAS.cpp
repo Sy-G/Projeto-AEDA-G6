@@ -308,6 +308,27 @@ void testReadWritePointsToFile()
 	c1.printPointsFile("points2.txt");
 }
 
+void testReadUsersFromFileAndPrintThem()
+{
+	Cidade c1;
+	c1.readUsers("utentes1.txt");
+	cout << "READ DONE\n";
+	c1.printUsers();
+}
+
+void testPrintUsers()
+{
+	Cidade c1;
+	Utente *j1 = new Regulares("João",2,1,-4);
+	Utente *r1 = new Socio("Rui",3,10,-2);
+	Utente *l1 = new Regulares("Lourenço",4,13,-7);
+	c1.addUtente(j1);
+	c1.addUtente(r1);
+	c1.addUtente(l1);
+
+	c1.printUsers();
+}
+
 void runSuite()
 {
 	cute::suite s;
@@ -324,6 +345,8 @@ void runSuite()
 	s.push_back(CUTE(testPrintPoints));
 	s.push_back(CUTE(testCreatePoint));
 	s.push_back(CUTE(testReadWritePointsToFile));
+	s.push_back(CUTE(testReadUsersFromFileAndPrintThem));
+	s.push_back(CUTE(testPrintUsers));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }

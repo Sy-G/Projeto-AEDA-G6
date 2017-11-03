@@ -119,6 +119,14 @@ public:
 	 */
 	Hora getHoraFinal();
 	/**
+	 * @brief This function gets a user's ID
+	 */
+	int getID();
+	/**
+	 * @brief This function gets a user's Coordinates
+	 */
+	Coordenadas getCoordenadas();
+	/**
 	 * @brief This function sets a user's bicycle to b1
 	 *
 	 * * @param b1 bicycle to set
@@ -127,7 +135,15 @@ public:
 	/**
 	 * @brief This function tells whether a user is an associate or not.
 	 */
-	virtual bool eSocio() = 0;
+	virtual bool eSocio();
+	/**
+	 * @brief This function helps print out users.
+	 */
+	friend ostream& operator<<(ostream &out, const Utente &u);
+	/**
+	 * @brief Overloaded constructor for reading from a file.
+	 */
+	Utente(const string& name, const string& other);
 };
 
 class Regulares: public Utente{
@@ -140,19 +156,14 @@ public:
 	 * @param cordY Y coordinate of the User
 	 */
 	Regulares(string nome,int ID, int cordX, int cordY);
-<<<<<<< HEAD
 	/**
 	 * @brief This function obtains a given user's payment, if he is regular he needs to pay after each use, the amount is given by multiplying usage time with bike price per hour.
 	 */
-	double getPagamento();
 	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
 	double devolveBicicleta(Ponto *&p1, Hora horafinal);
-=======
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
-	void levantaBicicleta(Ponto *p1);
-	void devolveBicicleta(Ponto *p1);
->>>>>>> master
 	bool eSocio();
+	Regulares(const string& name, const string& other);
 };
 
 class Socio: public Utente{
@@ -172,14 +183,10 @@ public:
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
-<<<<<<< HEAD
 	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
 	double devolveBicicleta(Ponto *&p1, Hora horafinal);
-=======
-	void levantaBicicleta(Ponto *p1);
-	void devolveBicicleta(Ponto *p1);
->>>>>>> master
 	bool eSocio();
+	Socio(const string& name, const string& other);
 };
 
 class Cidade {
@@ -283,6 +290,12 @@ public:
 	void printPoints(ostream &out);
 
 	/**
+	 * @brief prints all Users to the screen;
+	 *
+	 */
+	void printUsers();
+
+	/**
 	 * @brief prints all points to file.
 	 *
 	 * @param file to output to.
@@ -295,6 +308,12 @@ public:
 	 * @param file to read.
 	 */
 	void readPoints(const string& file);
+	/**
+	 * @brief reads Users from a file.
+	 *
+	 * @param file to read.
+	 */
+	void readUsers(const string& file);
 
 	Cidade();
 	virtual ~Cidade();
@@ -336,6 +355,7 @@ public:
  * @brief Exception
  */
 class PontoVazio{
+public:
 	string nome;
 
 	string getNome(){
@@ -351,6 +371,7 @@ class PontoVazio{
  * @brief Exception
  */
 class UtenteNaoExistente{
+public:
 	string nome;
 
 	string getNome(){
@@ -366,6 +387,7 @@ class UtenteNaoExistente{
  * @brief Exception
  */
 class PontoNaoExistente{
+public:
 	string nome;
 
 	string getNome(){
