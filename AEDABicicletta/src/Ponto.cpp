@@ -7,12 +7,8 @@
 
 #include "Cidade.h"
 #include "Coordenadas.h"
-<<<<<<< HEAD
-#include "Bicicleta.h"
-=======
 #include <sstream>
 #include <iostream>
->>>>>>> master
 
 Ponto::Ponto(string nome, unsigned int capacidade, Coordenadas coord)
 {

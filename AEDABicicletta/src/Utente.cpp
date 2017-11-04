@@ -141,7 +141,7 @@ double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
 	//envia o tempo dessa sessão de uso para o vetor para acumular.
 	horasaccumuladas.push_back(tempouso);
 
-	cout << "O cliente é sócio, deseja fazer o checkout do final do mês? (S/N): ";
+	cout << "O cliente é sócio, deseja fazer o checkOutstream do final do mês? (S/N): ";
 	cin >> verifica;
 
 	if(verifica == "S"){
@@ -247,60 +247,9 @@ Coordenadas Utente::getCoordenadas(){
 	return coordenada;
 }
 
-ostream & operator<<(ostream &out, Utente &u){
-	if(u.eSocio()){
-		out << "Associate: ";
-		out << u.getNome();
-		out << " ";
-		out << "ID: ";
-		out << u.getID();
-		out << " ";
-		out << "Coordinates: ";
-		out << "(";
-		out << u.getCoordenadas().cordX;
-		out << ",";
-		out << u.getCoordenadas().cordY;
-		out << ")";
-		out << " ";
-		out << "Bicycle: ";
-		if(u.getBicicleta() == NULL){
-			out << "This user has no bike at the moment.";
-		} else {
-			out << "ID: ";
-			out << u.getBicicleta()->getID();
-			out << " ";
-			out << "Type: ";
-			out << u.getBicicleta()->getTipo();
-			out << " ";
-		}
-		out << endl;
-	} else {
-			out << "Regular: ";
-			out << u.getNome();
-			out << " ";
-			out << "ID: ";
-			out << u.getID();
-			out << " ";
-			out << "Coordinates: ";
-			out << "(";
-			out << u.getCoordenadas().cordX;
-			out << ",";
-			out << u.getCoordenadas().cordY;
-			out << ")";
-			out << " ";
-			out << "Bicycle: ";
-			if(u.getBicicleta() == NULL){
-				out << "This user has no bike at the moment.";
-			} else {
-				out << "ID: ";
-				out << u.getBicicleta()->getID();
-				out << " ";
-				out << "Type: ";
-				out << u.getBicicleta()->getTipo();
-			}
-	}
-
-	return out;
+ inline ostream & operator<<(ostream &Outstream, const Utente &u){
+	u.printUtente(Outstream);
+	return (Outstream);
 }
 
 Utente::Utente(const string& name, const string& other): horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
@@ -316,3 +265,63 @@ Utente::Utente(const string& name, const string& other): horainicial("00:00"), h
 Regulares::Regulares(const string& name, const string& other): Utente(name, other){}
 
 Socio::Socio(const string& name, const string& other): Utente(name, other){}
+
+void Utente::printUtente(ostream &OutStream) const{
+	//empty space
+}
+
+void Regulares::printUtente(ostream &Outstream) const{
+	Outstream << "Regular: ";
+	Outstream << this->nome;
+	Outstream << " ";
+	Outstream << "ID: ";
+	Outstream << this->ID;
+	Outstream << " ";
+	Outstream << "Coordinates: ";
+	Outstream << "(";
+	Outstream << this->coordenada.cordX;
+	Outstream << ",";
+	Outstream << this->coordenada.cordY;
+	Outstream << ")";
+	Outstream << " ";
+	Outstream << "Bicycle: ";
+	if(this->bicicleta == NULL){
+		Outstream << "This user has no bike at the moment.";
+	} else {
+		Outstream << "ID: ";
+		Outstream << this->bicicleta->getID();
+		Outstream << " ";
+		Outstream << "Type: ";
+		Outstream << this->bicicleta->getTipo();
+		Outstream << " ";
+	}
+	Outstream << endl;
+}
+
+void Socio::printUtente(ostream &Outstream) const {
+	Outstream << "Associate: ";
+	Outstream << this->nome;
+	Outstream << " ";
+	Outstream << "ID: ";
+	Outstream << this->ID;
+	Outstream << " ";
+	Outstream << "Coordinates: ";
+	Outstream << "(";
+	Outstream << this->coordenada.cordX;
+	Outstream << ",";
+	Outstream << this->coordenada.cordY;
+	Outstream << ")";
+	Outstream << " ";
+	Outstream << "Bicycle: ";
+	if(this->bicicleta == NULL){
+		Outstream << "This user has no bike at the moment.";
+	} else {
+		Outstream << "ID: ";
+		Outstream << this->bicicleta->getID();
+		Outstream << " ";
+		Outstream << "Type: ";
+		Outstream << this->bicicleta->getTipo();
+		Outstream << " ";
+	}
+	Outstream << endl;
+}

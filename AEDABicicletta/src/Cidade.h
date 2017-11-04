@@ -137,9 +137,9 @@ public:
 	 */
 	virtual bool eSocio();
 	/**
-	 * @brief This function helps print out users.
+	 * @brief This function helps print out users in different ways depending if they're associates or regulars.
 	 */
-	friend ostream& operator<<(ostream &out, const Utente &u);
+	 virtual void printUtente(ostream &OutStream) const;
 	/**
 	 * @brief Overloaded constructor for reading from a file.
 	 */
@@ -164,6 +164,7 @@ public:
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
 	bool eSocio();
 	Regulares(const string& name, const string& other);
+	void printUtente(ostream &OutStream) const;
 };
 
 class Socio: public Utente{
@@ -187,6 +188,7 @@ public:
 	double devolveBicicleta(Ponto *&p1, Hora horafinal);
 	bool eSocio();
 	Socio(const string& name, const string& other);
+	void printUtente(ostream &OutStream) const;
 };
 
 class Cidade {

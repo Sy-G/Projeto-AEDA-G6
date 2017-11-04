@@ -246,8 +246,9 @@ void Cidade::printPoints(ostream& out)
 
 void Cidade::printUsers()
 {
-	for(size_t i = 0; i < utentes.size(); i++)
-		cout << utentes.at(i) << endl;
+	for(size_t i = 0; i < utentes.size(); i++){
+		cout << *(utentes.at(i)) << endl;
+	}
 }
 
 void Cidade::printPointsFile(const string& file)
