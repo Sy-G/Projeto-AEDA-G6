@@ -8,11 +8,6 @@
 #include "Ponto.h"
 using namespace std;
 
-/*cenas das coordenadas, nao quis estar a mexer na parte do Gui*/
-
-
-
-
 
 ////////////////////////////////////////////////////////////
 //  utentes: para distinguir se e ou nao socio
@@ -124,7 +119,7 @@ void FirstMenu(Cidade &cidade)
 	} while(!endInput);
 }
 
-//done
+//print locations and print users ????
 void CityManagementMenu(Cidade &cidade)
 {
 	cout
@@ -152,6 +147,7 @@ void CityManagementMenu(Cidade &cidade)
                 AddNewLocationMenu(cidade);
 				break;
 			case 3:
+
 				for (unsigned int i = 0; i < cidade.getPontos().size(); i++)
 				{
 					cout <<"Name: " <<cidade.getPontos().at(i).getNome() << endl;
@@ -584,10 +580,14 @@ void ClosestLocationMenu(Cidade &cidade)
   			  else
   				 return BikeMenuRU(cidade);
   			}
-            /////////////////////////////////////////////
-  			if (it == cidade.getPontos().end())
-  				return;
-            ////////////////////////////////////////////
+  			catch(NoPoint &e)
+  			{
+  			  if (esocio)
+  			  	 return BikeMenuMember(cidade);
+  			  else
+  			  	  return BikeMenuRU(cidade);
+  			}
+
 
   			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "-" << it->getCoord().cordY << " at a distance of ";
   			cout << it->getDistance() << "." << endl;

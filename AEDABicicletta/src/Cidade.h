@@ -28,6 +28,14 @@ public:
 	NotAType(string i):type(i){};
 };
 
+/**
+ * @brief Exception
+ */
+class NoPoint
+{
+public:
+	NoPoint(){};
+};
 
 class Utente {
 protected:

@@ -93,8 +93,9 @@ vector<Ponto>::iterator Cidade::isThereBicycle(string bicycle)
 	}
 	else
 		throw NotAType(bicycle);
+	throw NoPoint();
 
-	return pontos.end();
+	//return pontos.end();
 }
 
 vector<Ponto>::iterator Cidade::closestType(Coordenadas coord, string type)
@@ -246,9 +247,9 @@ void Cidade::printPoints(ostream& out)
 
 void Cidade::printUsers()
 {
-	for(size_t i = 0; i < utentes.size(); i++){
-		cout << *(utentes.at(i)) << endl;
-	}
+//	for(size_t i = 0; i < utentes.size(); i++){
+//		cout << *(utentes.at(i)) << endl;
+//	}
 }
 
 void Cidade::printPointsFile(const string& file)
