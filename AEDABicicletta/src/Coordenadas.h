@@ -24,5 +24,12 @@ public:
 };
 
 double distance_between_coordinates(Coordenadas c1, Coordenadas c2);
+istream& operator>> (istream& in, Coordenadas &coord) ;
+
+class InvalidCoordinates
+{
+public:
+	InvalidCoordinates(){};
+};
 
 #endif /* COORDENADAS_H_ */

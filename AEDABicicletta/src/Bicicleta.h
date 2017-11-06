@@ -22,10 +22,7 @@ public:
 	unsigned int getID() const;
 	virtual void setPrecoportipo(double newprice);
 	virtual string getTipo();
-
 };
-
-
 
 class Urbana: public Bicicleta
 {

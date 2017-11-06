@@ -271,6 +271,64 @@ void testPrintPoints()
 	cout << p1 << endl;
 }
 
+void testCreatePoint()
+{
+	try
+	{
+		cout << Ponto("Trindade 1","20 5-6 C C C U S S I I") << endl;
+	}
+	catch(...)
+	{
+		cout << "caught\n";
+	}
+
+	try
+	{
+		cout << Ponto("Trindade 1","20 5-6") << endl;
+	}
+	catch(...)
+	{
+		cout << "caught\n";
+	}
+
+
+	ASSERT_THROWS(Ponto("Trindade 1","20 5 6 C C C U S S I I"), InvalidPoint);
+
+	ASSERT_THROWS(Ponto("Trindade 1","20 5-6 C C C A S S I I"), InvalidPoint);
+
+	ASSERT_THROWS(Ponto("Trindade 1","20"), InvalidPoint);
+
+}
+
+void testReadWritePointsToFile()
+{
+	Cidade c1;
+	c1.readPoints("points1.txt");
+	cout << "READ DONE\n";
+	c1.printPointsFile("points2.txt");
+}
+
+void testReadUsersFromFileAndPrintThem()
+{
+	Cidade c1;
+	c1.readUsers("utentes1.txt");
+	cout << "READ DONE\n";
+	c1.printUsers();
+}
+
+void testPrintUsers()
+{
+	Cidade c1;
+	Utente *j1 = new Regulares("João",2,1,-4);
+	Utente *r1 = new Socio("Rui",3,10,-2);
+	Utente *l1 = new Regulares("Lourenço",4,13,-7);
+	c1.addUtente(j1);
+	c1.addUtente(r1);
+	c1.addUtente(l1);
+
+	c1.printUsers();
+}
+
 void runSuite()
 {
 	cute::suite s;
@@ -285,6 +343,10 @@ void runSuite()
 	s.push_back(CUTE(testdevolveBicicletaRegulares));
 	s.push_back(CUTE(testRedistribution));
 	s.push_back(CUTE(testPrintPoints));
+	s.push_back(CUTE(testCreatePoint));
+	s.push_back(CUTE(testReadWritePointsToFile));
+	s.push_back(CUTE(testReadUsersFromFileAndPrintThem));
+	s.push_back(CUTE(testPrintUsers));
 	cute::ide_listener<> lis;
 	cute::makeRunner(lis)(s, "AEDA Projeto Parte 1");
 }

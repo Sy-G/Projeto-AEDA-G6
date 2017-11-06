@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <vector>
 #include <cmath>
+#include <fstream>
 
 Cidade::Cidade() {
 	// TODO Auto-generated constructor stub
@@ -24,6 +25,7 @@ vector<Ponto>::iterator Cidade::isThereSpace()
 	else
 		return iter;
 }
+
 
 Cidade::~Cidade() {
 	// TODO Auto-generated destructor stub
@@ -240,4 +242,103 @@ void Cidade::printPoints(ostream& out)
 {
 	for(size_t i = 0; i < pontos.size(); i++)
 		out << pontos.at(i) << endl;
+}
+
+void Cidade::printUsers()
+{
+	for(size_t i = 0; i < utentes.size(); i++){
+		cout << *(utentes.at(i)) << endl;
+	}
+}
+
+void Cidade::printPointsFile(const string& file)
+{
+
+	ofstream out(file.c_str());
+	if(out.is_open())
+		printPoints(out);
+	out.close();
+}
+
+
+void Cidade::readPoints(const string& file)
+{
+	vector<Ponto> v_p;
+	ifstream in(file.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+
+					throw InvalidPoint();
+				}
+				string other;
+				getline(in, other);
+				v_p.push_back(Ponto(name,other));
+
+			}
+			catch(InvalidPoint &e)
+			{
+				for(size_t i = 0; i < v_p.size(); i++)
+					v_p.at(i).deleteBicycles();
+				throw InvalidFile();
+			}
+
+		}
+
+		try
+		{
+			for(size_t i = 0; i < v_p.size(); i++)
+				addPoint(v_p.at(i));
+		}
+		catch(existentPoint& e)
+		{
+			throw InvalidFile();
+		}
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(file);
+	}
+}
+
+void Cidade::readUsers(const string& file){
+	vector<Utente> v_p;
+	ifstream in(file.c_str());
+
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+				string ident;
+				getline(in, ident);
+
+				string name;
+				getline(in, name);
+
+				string other;
+				getline(in, other);
+
+				if(ident == "Sócio"){
+					v_p.push_back(Socio(name,other));
+				}
+
+				if(ident == "Regular"){
+					v_p.push_back(Regulares(name,other));
+				}
+		}
+	}
+
+	for(size_t i = 0; i < v_p.size(); i++){
+		this->addUtente(&v_p.at(i));
+	}
 }

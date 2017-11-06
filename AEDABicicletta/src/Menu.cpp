@@ -10,49 +10,7 @@ using namespace std;
 
 /*cenas das coordenadas, nao quis estar a mexer na parte do Gui*/
 
-/**
- * @brief Exception
- */
-class InvalidCoordinates
-{
-public:
-	InvalidCoordinates(){};
-};
 
-/**
- * @brief Exception
- */
-class NoPoint
-{
-public:
-	NoPoint(){};
-};
-
-
-/**
-* @brief gets a par of coordinates in the format x-y
-*
-* @param in input stream
-* @param coord coordinate to get
-*
-* @return the output stream.
-*/
-istream& operator>> (istream& in, Coordenadas &coord);
-
-
-istream& operator>> (istream& in, Coordenadas &coord)
-{
-    char delim;
-	in >> coord.cordX >> delim >> coord.cordY;
-	if (in.fail())
-	    cout << "Invalid Input!" << endl;
-	else
-	{
-		if (delim != '-')
-			throw InvalidCoordinates();
-	}
-	return in;
-}
 
 
 

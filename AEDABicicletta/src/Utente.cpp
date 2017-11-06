@@ -8,16 +8,14 @@
 #include "Cidade.h"
 #include "Ponto.h"
 #include "Bicicleta.h"
-
-
 #include <iostream>
 using namespace std;
 double Socio::mensalidade = 27.5;
+int Utente::ultimoID = 0;
 
-Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00") {
+Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
-	this->ID = ID;
 	this->bicicleta = NULL; //no momento de registo/criação de UTENTE, este ainda não tem uma bicicleta associada, só tem quando a levantar.
 	this->tempouso = 0;
 }
@@ -34,181 +32,128 @@ Hora Utente::getHoraInicial(){
 	return horainicial;
 }
 
-void Utente::levantaBicicleta(Ponto *p1){
-//	string tipo;
-//	string hora;
-//	bool sucesso;
-//
-//	sucesso = false; //para já ..
-//
-//	//verificar que no ponto em questão há bicicletas disponiveis.
-//
-//	if(p1->getnumbicicletasDisponiveis() == 0){
-//		cout << "Não há bicicletas disponíveis neste ponto!" << endl;
-//		//EXCEÇÃO PONTO VAZIO!
-//	}
-//
-//	//verificar se o Utente já tem uma bicicleta
-//
-//	if(this->bicicleta != NULL){
-//		//EXCEÇÃO JÁ TEM BICICLETA
-//	}
-//
-//	//As bicicletas são levantadas por tipo.
-//
-//	cout << "Qual o tipo de bicicleta que vai querer levantar? ";
-//	cin >> tipo;
-//
-//	for(unsigned int i = 0; i < p1->getBicicletas().size(); i++){
-//		if(p1->getBicicletas().at(i)->getTipo() == tipo){
-//
-//			//agora vamos associar a bicicleta ao utente em função do seu tipo.
-//
-//			if(tipo == "Urbana")
-//			{
-//				this->bicicleta = new Urbana(p1->getBicicletas().at(i)->getID());
-//				break;
-//			};
-//
-//			if(tipo == "Urbana_Simples")
-//			{
-//				this->bicicleta = new Urbana_Simples(p1->getBicicletas().at(i)->getID());
-//				break;
-//			}
-//
-//			if(tipo == "Infantil")
-//			{
-//				this->bicicleta = new Infantil(p1->getBicicletas().at(i)->getID());
-//				break;
-//			}
-//
-//			if(tipo == "Corrida")
-//			{
-//				this->bicicleta = new Corrida(p1->getBicicletas().at(i)->getID());
-//				break;
-//			}
-//		}
-//
-//			p1->getBicicletas().erase(p1->getBicicletas().begin()+i);
-//			//agora retira-se essa bicicleta do vetor de bicicletas disponiveis desse ponto.
-//
-//			cout << "Bicicleta levantada com sucesso!" << endl;
-//			cout << endl;
-//			sucesso = true;
-//
-//			//registar a hora de entrada para começar a contar o tempo de uso!
-//			cout << "Qual a hora de levantamento? ";
-//			cin >> hora;
-//
-//			this->horainicial = Hora(hora);
-//		}
-//
-//	if(sucesso == false){
-//		cout << "Não há bicicletas desse tipo neste ponto." << endl;
-//		//EXCEÇÃO BICICLETA NÃO EXISTENTE!!
-//	}
+
+void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
+	bool sucesso;
+	unsigned int i;
+
+	sucesso = false; //para já ..
+
+	//verificar que no ponto em questão há bicicletas disponiveis.
+
+	if(p1->getnumbicicletasDisponiveis() == 0){
+		//EXCEÇÃO PONTO VAZIO!
+		throw PontoVazio(p1->getNome());
+	}
+
+	//verificar se o Utente já tem uma bicicleta
+
+	if(this->bicicleta != NULL){
+		//EXCEÇÃO JÁ TEM BICICLETA
+		throw JaTemBicicletaException(this->nome);
+	}
+
+	//As bicicletas são levantadas por tipo.
+
+	for(i = 0; i < p1->getBicicletas().size(); i++){
+
+		if(p1->getBicicletas().at(i)->getTipo() == tipo){
+			//atribuí-se essa bicicleta ao utente
+			this->setBicicleta(p1->getBicicletas().at(i));
+
+			//agora retira-se essa bicicleta do vetor de bicicletas disponiveis desse ponto
+			p1->rmBicicleta(p1->getBicicletas().at(i)->getID());
+
+			//regista-se a hora de levantamento
+			this->horainicial = Hora(horainical);
+			sucesso = true;
+			break;
+		}
+
+	}
+
+	if(sucesso == false){
+		//EXCEÇÃO BICICLETA NÃO EXISTENTE!!
+		throw Bicicleta_Inexistente(p1->getBicicletas().at(i)->getID());
+	}
 }
 
-void Regulares::devolveBicicleta(Ponto *p1){
-//	string hora;
-//
-//	//deve de verificar se o ponto está cheio
-//
-//	if(p1->getBicicletas().size() == p1->getCapacidade()){
-//		cout << "O ponto está cheio!" << endl;
-//		//EXCEÇÃO PONTO CHEIO!!
-//	}
-//
-//	//deve de verificar se o utente tem uma bicicleta para dar
-//
-//	if(this->bicicleta == NULL){
-//		cout << "O cliente não tem uma bicicleta para devolver." << endl;
-//		//EXCEÇÃO NÃO TEM BICICLETA
-//	}
-//
-//	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente, mas, como a bicicleta guarda informações precisas para calcular o pagamento, só será retirado o apontador mais tarde.
-//
-//	p1->getBicicletas().push_back(bicicleta);
-//	//adciona-se ao ponto
-//
-//	cout << "Bicicleta devolvida!" << endl;
-//	cout << endl;
-//
-//	cout << "Qual a hora de devolução? ";
-//	cin >> hora;
-//
-//	Hora temp(hora);
-//
-//	if(temp.hora < this->horainicial.hora){
-//		cout << "Hora inválida!" << endl;
-//		//EXCEÇÃO HORA INVÁLIDA!
-//	}
-//
-//	this->horafinal = Hora(hora);
-//
-//	//como o cliente é um regular, terá de pagar já
-//
-//	cout << "O cliente tem de pagar: ";
-//	cout << getPagamento();
-//
-//	//depois de chamar getPagamento, poderá ser retirada a bicicleta.
-//	this->bicicleta = NULL;
-//
-//	cout << " euros.";
+double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
+	string hora;
+	double pagamento;
+
+	//deve de verificar se o ponto está cheio
+
+	if(p1->getBicicletas().size() >= p1->getCapacidade()){
+		//EXCEÇÃO PONTO CHEIO!!
+		throw NoSpace(p1->getCapacidade());
+	}
+
+	//deve de verificar se o utente tem uma bicicleta para dar
+
+	if(this->bicicleta == NULL){
+		//EXCEÇÃO NÃO TEM BICICLETA
+		throw NaoTemBicicletaException(this->nome);
+	}
+
+	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente, mas, como a bicicleta guarda informações precisas para calcular o pagamento, só será retirado o apontador mais tarde.
+	p1->addBicicleta(this->bicicleta);
+
+	this->horafinal = Hora(horafinal);
+
+	//como o cliente é um regular, terá de pagar já, calcular o pagamento.
+	pagamento = getPagamento();
+
+	//depois de chamar getPagamento, poderá ser retirada a bicicleta.
+	this->bicicleta = NULL;
+
+	return pagamento;
 }
 
-void Socio::devolveBicicleta(Ponto *p1){
-//	//deve de verificar se o ponto está cheio
-//	string hora;
-//	string verifica;
-//
-//	if(p1->getBicicletas().size() > p1->getCapacidade()){
-//		cout << "O ponto está cheio!" << endl;
-//		//EXCEÇÃO PONTO CHEIO!!
-//	}
-//
-//	//deve de verificar se o utente tem uma bicicleta para dar
-//	if(this->bicicleta == NULL){
-//		cout << "O cliente não tem uma bicicleta para devolver." << endl;
-//		//EXCEÇÃO NÃO TEM BICICLETA
-//	}
-//
-//	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
-//
-//	p1->getBicicletas().push_back(bicicleta);
-//	//adciona-se ao ponto
-//
-//	//retira-se ao cliente
-//	this->bicicleta = NULL;
-//
-//	cout << "Bicicleta devolvida!" << endl;
-//	cout << endl;
-//
-//	cout << "Qual a hora de devolução? ";
-//	cin >> hora;
-//
-//	this->horafinal = Hora(hora);
-//
-//	//calcular o tempo de uso
-//	subtraiHora(this->horafinal, this->horainicial);
-//
-//	//envia o tempo dessa sessão de uso para o vetor para acumular.
-//	horasaccumuladas.push_back(tempouso);
-//
-//	cout << "As horas do cliente foram acumuladas para o possível desconto. Deseja fazer checkout do final do mês? (S/N): ";
-//	cin >> verifica;
-//
-//	if(verifica == "S"){
-//		cout << "O valor da mensalidade é: ";
-//		getPagamento();
-//
-//		//reiniciar o vetor de acumulação
-//		for(unsigned int i = 0; i < horasaccumuladas.size(); i++){
-//			horasaccumuladas.erase(horasaccumuladas.begin()+i);
-//		}
-//
-//		//saír
-//	}
+double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
+	string verifica;
+	double quantidade;
+
+	//deve de verificar se o ponto está cheio
+	if(p1->getBicicletas().size() > p1->getCapacidade()){
+		//EXCEÇÃO PONTO CHEIO!!
+		throw NoSpace(p1->getCapacidade());
+	}
+
+	//deve de verificar se o utente tem uma bicicleta para dar
+	if(this->bicicleta == NULL){
+		//EXCEÇÃO NÃO TEM BICICLETA
+		throw NaoTemBicicletaException(this->nome);
+	}
+
+	//caso contrário, adiciona-se a bicicleta ao ponto e retira-se do cliente.
+	p1->addBicicleta(this->bicicleta);
+
+	//retira-se ao cliente
+	this->bicicleta = NULL;
+
+
+	this->horafinal = Hora(horafinal);
+
+	//calcular o tempo de uso
+	subtraiHora(this->horafinal, this->horainicial);
+
+	//envia o tempo dessa sessão de uso para o vetor para acumular.
+	horasaccumuladas.push_back(tempouso);
+
+	cout << "O cliente é sócio, deseja fazer o checkOutstream do final do mês? (S/N): ";
+	cin >> verifica;
+
+	if(verifica == "S"){
+		quantidade = getPagamento();
+
+		//reiniciar o vetor de acumulação
+		for(unsigned int i = 0; i < horasaccumuladas.size(); i++){
+			horasaccumuladas.erase(horasaccumuladas.begin()+i);
+		}
+
+		return quantidade;
+	} else return 0;
 }
 
 double Regulares::getPagamento(){
@@ -267,15 +212,19 @@ double Utente::getPagamento(){
 
 Utente::~Utente() {}
 
-void Utente::devolveBicicleta(Ponto *p1){}
+double Utente::devolveBicicleta(Ponto *&p1, Hora horafinal){}
 
 string Utente::getNome(){
 	return nome;
 }
 
-
 Hora Utente::getHoraFinal(){
 	return this->horafinal;
+}
+
+
+void Utente::setBicicleta(Bicicleta *b1){
+	this->bicicleta = b1;
 }
 
 bool Socio::eSocio()
@@ -286,4 +235,93 @@ bool Socio::eSocio()
 bool Regulares::eSocio()
 {
 	return false;
+}
+
+bool Utente::eSocio(){}
+
+int Utente::getID(){
+	return ID;
+}
+
+Coordenadas Utente::getCoordenadas(){
+	return coordenada;
+}
+
+ inline ostream & operator<<(ostream &Outstream, const Utente &u){
+	u.printUtente(Outstream);
+	return (Outstream);
+}
+
+Utente::Utente(const string& name, const string& other): horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
+	istringstream in;
+	in.str(other);
+	this->nome = name;
+	this->bicicleta = NULL; //no momento de registo/criação de UTENTE, este ainda não tem uma bicicleta associada, só tem quando a levantar.
+	this->tempouso = 0;
+
+	in >> this->coordenada.cordX >> this->coordenada.cordY;
+}
+
+Regulares::Regulares(const string& name, const string& other): Utente(name, other){}
+
+Socio::Socio(const string& name, const string& other): Utente(name, other){}
+
+void Utente::printUtente(ostream &OutStream) const{
+	//empty space
+}
+
+void Regulares::printUtente(ostream &Outstream) const{
+	Outstream << "Regular: ";
+	Outstream << this->nome;
+	Outstream << " ";
+	Outstream << "ID: ";
+	Outstream << this->ID;
+	Outstream << " ";
+	Outstream << "Coordinates: ";
+	Outstream << "(";
+	Outstream << this->coordenada.cordX;
+	Outstream << ",";
+	Outstream << this->coordenada.cordY;
+	Outstream << ")";
+	Outstream << " ";
+	Outstream << "Bicycle: ";
+	if(this->bicicleta == NULL){
+		Outstream << "This user has no bike at the moment.";
+	} else {
+		Outstream << "ID: ";
+		Outstream << this->bicicleta->getID();
+		Outstream << " ";
+		Outstream << "Type: ";
+		Outstream << this->bicicleta->getTipo();
+		Outstream << " ";
+	}
+	Outstream << endl;
+}
+
+void Socio::printUtente(ostream &Outstream) const {
+	Outstream << "Associate: ";
+	Outstream << this->nome;
+	Outstream << " ";
+	Outstream << "ID: ";
+	Outstream << this->ID;
+	Outstream << " ";
+	Outstream << "Coordinates: ";
+	Outstream << "(";
+	Outstream << this->coordenada.cordX;
+	Outstream << ",";
+	Outstream << this->coordenada.cordY;
+	Outstream << ")";
+	Outstream << " ";
+	Outstream << "Bicycle: ";
+	if(this->bicicleta == NULL){
+		Outstream << "This user has no bike at the moment.";
+	} else {
+		Outstream << "ID: ";
+		Outstream << this->bicicleta->getID();
+		Outstream << " ";
+		Outstream << "Type: ";
+		Outstream << this->bicicleta->getTipo();
+		Outstream << " ";
+	}
+	Outstream << endl;
 }
