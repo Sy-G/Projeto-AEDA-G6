@@ -21,15 +21,6 @@ Hora::Hora(string horas)
 	is.str(horas);
 
 	is >> this->hora >> delim >> this->minutos;
-
-	/* por no menu; assim o construtor nao tem de ser com string.....
-	cout << "hora?" << endl;
-	int horas, minutos;
-	char c;
-	cin >> horas >> c >> minutos;
-	cout << horas << endl;
-	cout << c << endl;
-	cout << minutos << endl;*/
 }
 
 
@@ -56,7 +47,7 @@ void Hora::setHora(unsigned int newhoras, unsigned int newminutos)
 
 double operator-(Hora hora1, Hora hora2)
 {
-	if ( (hora1 == hora2) || (hora2 < hora1))
+	if ( (hora1 == hora2) || (hora1 < hora2))
 		throw HorasInvalidas(hora1.hora, hora1.minutos, hora2.hora, hora2.minutos);
 	else
 	{
@@ -69,17 +60,17 @@ double operator-(Hora hora1, Hora hora2)
 
 bool operator== (Hora hora1, Hora hora2)
 {
-	bool equal = false;
-    if( (hora1.hora = hora2.hora) && (hora1.minutos = hora2.minutos))
-    	equal = true;
-	return equal;
+    if( (hora1.hora == hora2.hora) && (hora1.minutos == hora2.minutos))
+    	return true;
+    else
+    	return false;
 }
 
 bool operator< (Hora hora1,Hora hora2)
 {
 	 unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
 	 unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
-	 return totalminuteshora2 < totalminutes;
+	 return totalminutes < totalminuteshora2;
 
 }
 
@@ -89,7 +80,7 @@ istream& operator>> (istream& in, Hora &hora)
     char delim;
     in >> hora.hora >> delim >> hora.minutos;
     if (in.fail())
-    	cout << "Invalid Input!" << endl;
+    	throw HoraInvalida();
     else
     {
     	if (delim != ':')
@@ -120,6 +111,10 @@ HoraInexistente::HoraInexistente(unsigned int horas, unsigned int minutos)
 	this->minutos = minutos;
 }
 
+HoraInvalida::HoraInvalida()
+{
+}
+
 HorasInvalidas::HorasInvalidas(unsigned int horasinicio, unsigned int minutosinicio, unsigned int horasfim, unsigned int minutosfim)
 {
 	this->horainicio = horasinicio;
@@ -127,9 +122,3 @@ HorasInvalidas::HorasInvalidas(unsigned int horasinicio, unsigned int minutosini
 	this->horafim = horasfim;
 	this->minutosfim = minutosfim;
 }
-
-
-
-
-
-
