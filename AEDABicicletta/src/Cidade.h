@@ -79,7 +79,7 @@ public:
 	 * @param cordX X coordinate of the User
 	 * @param cordY Y coordinate of the User
 	 */
-	Utente(string nome,int ID, int cordX, int cordY);
+	Utente(string nome, int cordX, int cordY);
 	/**
 	 * @brief Destructor
 	 */
@@ -95,14 +95,14 @@ public:
 	 * * @param tipo The kind of bike that will be withdrawn
 	 * * @param horainicial Time of withdrawal
 	 */
-	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
+	void levantaBicicleta(Ponto *p1, string tipo, Hora &horainicial);
 	/**
 	 * @brief This function allows a user to return a bike.
 	 *
 	 * * @param p1 Reference to the point of return
 	 * * @param horafinal Time of return
 	 */
-	virtual double devolveBicicleta(Ponto *&p1, Hora horafinal);
+	virtual double devolveBicicleta(Ponto *p1, Hora horafinal);
 	/**
 	 * @brief This function calculates usage time by subtracting withdrawal hour to return hour
 	 *
@@ -163,12 +163,12 @@ public:
 	 * @param cordX X coordinate of the User
 	 * @param cordY Y coordinate of the User
 	 */
-	Regulares(string nome,int ID, int cordX, int cordY);
+	Regulares(string nome, int cordX, int cordY);
 	/**
 	 * @brief This function obtains a given user's payment, if he is regular he needs to pay after each use, the amount is given by multiplying usage time with bike price per hour.
 	 */
-	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
-	double devolveBicicleta(Ponto *&p1, Hora horafinal);
+	void levantaBicicleta(Ponto *p1, string tipo, Hora horainicial);
+	double devolveBicicleta(Ponto *p1, Hora horafinal);
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
 	bool eSocio();
 	Regulares(const string& name, const string& other);
@@ -187,13 +187,13 @@ public:
 	 * @param cordX X coordinate of the User
 	 * @param cordY Y coordinate of the User
 	 */
-	Socio(string nome,int ID, int cordX, int cordY);
+	Socio(string nome, int cordX, int cordY);
 	/**
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
-	void levantaBicicleta(Ponto *&p1, string tipo, Hora horainicial);
-	double devolveBicicleta(Ponto *&p1, Hora horafinal);
+	void levantaBicicleta(Ponto *p1, string tipo, Hora horainicial);
+	double devolveBicicleta(Ponto *p1, Hora horafinal);
 	bool eSocio();
 	Socio(const string& name, const string& other);
 	void printUtente(ostream &OutStream) const;

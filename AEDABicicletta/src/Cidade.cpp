@@ -247,7 +247,7 @@ void Cidade::printPoints(ostream& out)
 
 void Cidade::printUsers()
 {
-	for(size_t i = 0; i < utentes.size(); i++){
+	for(unsigned int i = 0; i < utentes.size(); i++){
 		utentes.at(i)->printUtente(cout);
 	}
 }
@@ -329,8 +329,8 @@ void Cidade::readUsers(const string& file){
 				string other;
 				getline(in, other);
 
-				if(ident == "Sócio"){
-					v_p.push_back(new Socio(name,other));
+				if(ident == "Socio"){
+					v_p.push_back(Socio(name,other));
 				}
 
 				if(ident == "Regular"){

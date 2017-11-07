@@ -13,16 +13,16 @@ using namespace std;
 double Socio::mensalidade = 27.5;
 int Utente::ultimoID = 0;
 
-Utente::Utente(string nome,int ID, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
+Utente::Utente(string nome, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
 	this->bicicleta = NULL; //no momento de registo/criação de UTENTE, este ainda não tem uma bicicleta associada, só tem quando a levantar.
 	this->tempouso = 0;
 }
 
-Regulares::Regulares(string nome,int ID, int cordX, int cordY): Utente(nome,ID,cordX, cordY){}
+Regulares::Regulares(string nome, int cordX, int cordY): Utente(nome, cordX, cordY){}
 
-Socio::Socio(string nome,int ID,int cordX, int cordY): Utente(nome,ID,cordX, cordY){}
+Socio::Socio(string nome, int cordX, int cordY): Utente(nome, cordX, cordY){}
 
 Bicicleta* Utente::getBicicleta(){
 	return bicicleta;
@@ -33,7 +33,7 @@ Hora Utente::getHoraInicial(){
 }
 
 
-void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
+void Utente::levantaBicicleta(Ponto *p1, string tipo, Hora &horainical){
 	bool sucesso;
 	unsigned int i;
 
@@ -78,7 +78,7 @@ void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
 	}
 }
 
-double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
+double Regulares::devolveBicicleta(Ponto *p1, Hora horafinal){
 	string hora;
 	double pagamento;
 
@@ -110,7 +110,7 @@ double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
 	return pagamento;
 }
 
-double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
+double Socio::devolveBicicleta(Ponto *p1, Hora horafinal){
 	string verifica;
 	double quantidade;
 
@@ -141,7 +141,7 @@ double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
 	//envia o tempo dessa sessão de uso para o vetor para acumular.
 	horasaccumuladas.push_back(tempouso);
 
-	cout << "O cliente é sócio, deseja fazer o checkOutstream do final do mês? (S/N): ";
+	cout << "O cliente é sócio, deseja fazer o checkout do final do mês? (S/N): ";
 	cin >> verifica;
 
 	if(verifica == "S"){
@@ -170,12 +170,7 @@ double Regulares::getPagamento(){
 }
 
 void Utente::subtraiHora(Hora horafinal, Hora horainicial){
-	unsigned int horainicialtotal, horafinaltotal;
-
-	horainicialtotal = horainicial.hora + ((horainicial.minutos)/60);
-	horafinaltotal = horafinal.hora + ((horafinal.minutos)/60);
-
-	this->tempouso = horafinaltotal - horainicialtotal;
+	this->tempouso = horafinal - horainicial;
 }
 
 double Socio::getPagamento(){
@@ -212,7 +207,7 @@ double Utente::getPagamento(){
 
 Utente::~Utente() {}
 
-double Utente::devolveBicicleta(Ponto *&p1, Hora horafinal){}
+double Utente::devolveBicicleta(Ponto *p1, Hora horafinal){}
 
 string Utente::getNome(){
 	return nome;
