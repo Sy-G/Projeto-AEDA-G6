@@ -1,0 +1,9 @@
+Socio
+Rui
+2 1
+Regular
+Marisa
+3 4
+Regular
+Joaquim
+-2 1

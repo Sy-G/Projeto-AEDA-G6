@@ -318,12 +318,20 @@ public:
 	 * @param file to read.
 	 */
 	void readPoints(const string& file);
+
 	/**
 	 * @brief reads Users from a file.
 	 *
 	 * @param file to read.
 	 */
 	void readUsers(const string& file);
+
+	/**
+	 * @brief writes Users to a file.
+	 *
+	 * @param file to write to.
+	 */
+	void printUserstoFile(const string& file);
 
 	Cidade();
 	virtual ~Cidade();

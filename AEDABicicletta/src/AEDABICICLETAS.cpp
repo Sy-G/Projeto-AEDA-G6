@@ -313,7 +313,7 @@ void testReadUsersFromFileAndPrintThem()
 	Cidade c1;
 	c1.readUsers("utentes1.txt");
 	cout << "READ DONE\n";
-	c1.printUsers();
+	c1.printUserstoFile("utentes2.txt");
 }
 
 void testPrintUsers()

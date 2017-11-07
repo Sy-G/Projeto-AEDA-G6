@@ -273,7 +273,7 @@ void SignUpMemberMenu(Cidade &cidade)
 	getline(cin, name);
 
 
-	Utente *nsocio = new Socio(name,1,0,0);
+	Utente *nsocio = new Socio(name,1,0);
 
 	cidade.addUtente(nsocio);
 
@@ -294,7 +294,7 @@ void SignUpRegularMenu(Cidade &cidade)
 	getline(cin, name);
 
 
-	Utente *nregular = new Regulares(name,1,0,0);
+	Utente *nregular = new Regulares(name,1,0);
 	cidade.addUtente(nregular);
 
 	//cout << "Your user ID number is "  << nregular->getID() << "." << endl;

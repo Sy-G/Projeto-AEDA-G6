@@ -330,7 +330,7 @@ void Cidade::readUsers(const string& file){
 				getline(in, other);
 
 				if(ident == "Socio"){
-					v_p.push_back(Socio(name,other));
+					v_p.push_back(new Socio(name,other));
 				}
 
 				if(ident == "Regular"){
@@ -347,6 +347,18 @@ void Cidade::readUsers(const string& file){
 		cout << "Here\n";
 		throw NotAFile(file);
 	}
+}
 
-
+void Cidade::printUserstoFile(const string& file){
+	ofstream out(file.c_str());
+	if(out.is_open()){
+		for(unsigned int i = 0; i < utentes.size(); i++){
+			if(utentes.at(i)->eSocio()){
+				out << "Socio" << endl;
+			} else out << "Regular" << endl;
+			out << utentes.at(i)->getNome() << endl;
+			out << utentes.at(i)->getCoordenadas().cordX << " " << utentes.at(i)->getCoordenadas().cordY << endl;
+		}
+	}
+	out.close();
 }
