@@ -192,8 +192,8 @@ public:
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
-	void levantaBicicleta(Ponto *p1, string tipo, Hora horainicial);
-	double devolveBicicleta(Ponto *p1, Hora horafinal);
+	void levantaBicicleta(vector<Ponto>::iterator p1, string tipo, Hora horainicial);
+	double devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal);
 	bool eSocio();
 	Socio(const string& name, const string& other);
 	void printUtente(ostream &OutStream) const;
