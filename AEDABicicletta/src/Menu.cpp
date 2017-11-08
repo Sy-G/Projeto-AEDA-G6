@@ -9,25 +9,6 @@
 using namespace std;
 
 
-////////////////////////////////////////////////////////////
-//  utentes: para distinguir se e ou nao socio
-//class Utente  virtual bool eSocio() = 0;
-//class Socio   bool eSocio();
-//class Regulares  bool eSocio();
-
-//bool Socio::eSocio()
-//{
-//	return true;
-//}
-//
-//bool Regulares::eSocio()
-//{
-//	return false;
-//}
-/////////////////////////////////////////////////////////////////
-
-//menus
-
 void cleanfunction()
 {
 	cin.ignore();
@@ -92,6 +73,7 @@ string getBikeType()
 	    return biketype;
 }
 
+//save changes??
 void FirstMenu(Cidade &cidade)
 {
 	bool endInput = false;
@@ -102,9 +84,10 @@ void FirstMenu(Cidade &cidade)
 		cout
 			<< "1- City Management" << endl
 			<< "2- User options" << endl
-			<< "3- Quit" << endl
+			<< "3- Save changes" << endl
+			<< "4- Quit" << endl
 			<< "Select one" << endl;
-		switch (getIntInInterval(1, 3))
+		switch (getIntInInterval(1, 4))
 				{
 				case 1:
 					CityManagementMenu(cidade);
@@ -113,23 +96,27 @@ void FirstMenu(Cidade &cidade)
                     UserOptionsMenu(cidade);
 					break;
 				case 3:
+					break;
+				case 4:
 					endInput = true;
 					break;
 				}
 	} while(!endInput);
 }
 
-//print locations and print users ????
+//print users ????
 void CityManagementMenu(Cidade &cidade)
 {
 	cout
 		    << "1- Bike redistribution" << endl
 			<< "2- Add new location " << endl
-			<< "3- Print locations " << endl
-			<< "4- Go back" << endl
+			<< "3- Remove location " << endl
+			<< "4- Print locations " << endl
+			<< "5- Print Users " << endl
+			<< "6- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 4))
+		switch (getIntInInterval(1, 6))
 		{
 			case 1:
 				try
@@ -146,18 +133,40 @@ void CityManagementMenu(Cidade &cidade)
 			case 2:
                 AddNewLocationMenu(cidade);
 				break;
+
 			case 3:
+				RemoveLocationMenu(cidade);
+				break;
+			case 4:
 
 				for (unsigned int i = 0; i < cidade.getPontos().size(); i++)
 				{
+					int ucounter = 0;
+					int uscounter = 0;
+					int icounter = 0;
+					int ccounter = 0;
 					cout <<"Name: " <<cidade.getPontos().at(i).getNome() << endl;
 					cout << "Coordinates: " << cidade.getPontos().at(i).getCoord().cordX << "-" << cidade.getPontos().at(i).getCoord().cordY << endl;
 					cout << "Capacity: " << cidade.getPontos().at(i).getCapacidade() << endl;
 					cout << "Number of bikes available: " << cidade.getPontos().at(i).getBicicletas().size() << endl;
+					for (unsigned int j = 0; j < cidade.getPontos().at(i).getBicicletas().size(); i++)
+					{
+						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Urbana")
+							ucounter++;
+						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
+							uscounter++;
+						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Infantil")
+							icounter++;
+						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Corrida")
+							ccounter++;
+					}
+					cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
 					cout << endl;
 				}
 				break;
-			case 4:
+			case 5:
+				break;
+			case 6:
 				return;
 				break;
 		}
@@ -189,7 +198,15 @@ void AddNewLocationMenu(Cidade &cidade)
     capacity = getInt();
 
     if (capacity == -1)
-    	return CityManagementMenu(cidade);
+    {
+     cout << "Invalid capacity." << endl;
+     return CityManagementMenu(cidade);
+    }
+    if(cidade.findPoint(cord.cordX, cord.cordY))
+    {
+     cout << "Invalid location, this point already exists. 11 " << endl;
+     return CityManagementMenu(cidade);
+    }
 
     Ponto newlocation(name, (unsigned) capacity, cord);
     try
@@ -198,13 +215,32 @@ void AddNewLocationMenu(Cidade &cidade)
     }
     catch (existentPoint &e)
     {
-    	cout << "Invalid location, this point already exists" << endl;
+    	cout << "Invalid location, this point already exists." << endl;
         return CityManagementMenu(cidade);
     }
 
- 	cout << "Location added  successfully" << endl;
+ 	cout << "Location added  successfully." << endl;
 }
 
+void RemoveLocationMenu(Cidade &cidade)
+{
+	string pointname;
+	cleanfunction();
+	cout << "What is the location's name? " << endl;
+	getline (cin,pointname);
+	try
+	{
+	 cidade.removePonto(pointname);
+	}
+	catch(NotAPoint &p)
+	{
+	  cout << "Not an existent location" << endl;
+	  return;
+	}
+	 cout << "Location removed successfully." << endl;
+}
+
+//done
 void UserOptionsMenu(Cidade &cidade)
 {
 	cout
@@ -226,22 +262,33 @@ void UserOptionsMenu(Cidade &cidade)
 			break;
 	}
 }
-
+//done
 void SignInMenu(Cidade &cidade)
 {
 	int idnumber;
     cout << "Member ID number ? " << endl;
     idnumber = getInt();
+    Utente *ptr;
+    try
+    {
+    	ptr = cidade.findUtente(idnumber);
+    }
+    catch(NoUserFound &e)
+    {
+    	cout << "No user found with that id, try signing up" << endl;
+    	return;
+    }
     if (idnumber == -1)
     	return UserOptionsMenu(cidade);
 
-   bool member = true;
-   if (member)
-	   BikeMenuMember(cidade);
-   else
-	   BikeMenuRU(cidade);
-}
 
+   bool member = ptr->eSocio();
+   if (member)
+	   BikeMenuMember(cidade, ptr);
+   else
+	   BikeMenuRU(cidade, ptr);
+}
+//done
 void SignUpMenu(Cidade &cidade)
 {
    cout
@@ -277,12 +324,10 @@ void SignUpMemberMenu(Cidade &cidade)
 
 	cidade.addUtente(nsocio);
 
-	//cout do numero de id do socio (para uso futuro)
-	//cout << "Your member ID number is "  << nsocio->getID() << "." << endl;
-
 	cout << "Sign up executed successfully." << endl;
+	cout << "Your member ID number is "  << nsocio->getID() << "." << endl;
 
-    BikeMenuMember(cidade);
+    BikeMenuMember(cidade, nsocio);
 }
 
 //falta a cena do id....
@@ -297,74 +342,99 @@ void SignUpRegularMenu(Cidade &cidade)
 	Utente *nregular = new Regulares(name,1,0,0);
 	cidade.addUtente(nregular);
 
-	//cout << "Your user ID number is "  << nregular->getID() << "." << endl;
-
 	cout << "Sign up executed successfully." << endl;
+	cout << "Your user ID number is "  << nregular->getID() << "." << endl;
 
-    BikeMenuRU(cidade);
+    BikeMenuRU(cidade ,nregular);
 }
 //done
-void BikeMenuRU(Cidade &cidade)
+void BikeMenuRU(Cidade &cidade, Utente *utente)
 {
 	cout
 	    << "1- Get Bike" << endl
 		<< "2- Return bike" << endl
 		<< "3- Closest location" << endl
-		<< "4- Go back" << endl
-		<< "Select one" << endl;
-
-	switch (getIntInInterval(1, 4))
-	{
-		case 1:
-            GetBikeMenu(cidade);
-			break;
-		case 2:
-            ReturnBikeMenu(cidade);
-			break;
-		case 3:
-			ClosestLocationMenu(cidade);
-		    break;
-		case 4:
-			return UserOptionsMenu(cidade);
-			break;
-	}
-}
-
-//done
-void BikeMenuMember(Cidade &cidade)
-{
-	cout
-	    << "1- Get Bike" << endl
-		<< "2- Return bike" << endl
-		<< "3- Closest location" << endl
-		<< "4- Monthly Payment" << endl
+		<< "4- Delete account " << endl
 		<< "5- Go back" << endl
 		<< "Select one" << endl;
 
 	switch (getIntInInterval(1, 5))
 	{
 		case 1:
-            GetBikeMenu(cidade);
+            GetBikeMenu(cidade, utente);
 			break;
 		case 2:
-            ReturnBikeMenu(cidade);
+            ReturnBikeMenu(cidade, utente);
 			break;
 		case 3:
-			ClosestLocationMenu(cidade);
+			ClosestLocationMenu(cidade, utente);
 		    break;
 		case 4:
-			MonthlyPaymentMenu(cidade);
-			break;
+		    try
+		    {
+		    	cidade.removeUtente(utente->getID());
+		    }
+		    catch(NoUserFound &p)
+		    {
+                cout << "No user found " << endl;
+                return UserOptionsMenu(cidade);
+		    }
+			cout << "Your account was deleted successfully, you will be missed." << endl;
+		    break;
 		case 5:
 			return UserOptionsMenu(cidade);
 			break;
 	}
 }
 
-//falta chamar a funcao para ver se socio, e chamar a funcao que levanta a bicicleta
-void GetBikeMenu(Cidade &cidade)
+//done
+void BikeMenuMember(Cidade &cidade, Utente *utente)
 {
-	bool esocio = true;  // funcao que ve se e socio ou nao
+	cout
+	    << "1- Get Bike" << endl
+		<< "2- Return bike" << endl
+		<< "3- Closest location" << endl
+		<< "4- Monthly Payment" << endl
+		<< "5- Delete account " << endl
+		<< "6- Go back" << endl
+		<< "Select one" << endl;
+
+	switch (getIntInInterval(1, 6))
+	{
+		case 1:
+            GetBikeMenu(cidade, utente);
+			break;
+		case 2:
+            ReturnBikeMenu(cidade, utente);
+			break;
+		case 3:
+			ClosestLocationMenu(cidade, utente);
+		    break;
+		case 4:
+			MonthlyPaymentMenu(cidade, utente);
+			break;
+		case 5:
+			 try
+			   {
+				cidade.removeUtente(utente->getID());
+			   }
+			  catch(NoUserFound &p)
+			   {
+			    cout << "No user found " << endl;
+			    return UserOptionsMenu(cidade);
+			   }
+			cout << "Your account was deleted successfully, you will be missed." << endl;
+			break;
+		case 6:
+			return UserOptionsMenu(cidade);
+			break;
+	}
+}
+
+//done
+void GetBikeMenu(Cidade &cidade, Utente *utente)
+{
+	bool esocio = utente->eSocio();
 	string pointname, biketype;
 	Hora horainicial;
     cleanfunction();
@@ -379,9 +449,9 @@ void GetBikeMenu(Cidade &cidade)
 	{
 		cout << "Not an existent location" << endl;
 		if (esocio)
-		  return BikeMenuMember(cidade);
+		  return BikeMenuMember(cidade, utente);
 	    else
-		  return BikeMenuRU(cidade);
+		  return BikeMenuRU(cidade, utente);
 	}
 	cout << "Type of bike you want ? " << endl;
 	try
@@ -390,11 +460,11 @@ void GetBikeMenu(Cidade &cidade)
 	}
 	catch(NotAType &e)
 	{
-	  cout << "Invalid type" << endl;
+	  cout << "Invalid type." << endl;
 	  if (esocio)
-		  return BikeMenuMember(cidade);
+		  return BikeMenuMember(cidade, utente);
 	  else
-		  return BikeMenuRU(cidade);
+		  return BikeMenuRU(cidade, utente);
 	}
 
 	cout << "What is the pick up hour ? " << endl;
@@ -404,48 +474,64 @@ void GetBikeMenu(Cidade &cidade)
 	}
 	catch(HoraInvalida &h)
     {
-	   cout << "Invalid Input" << endl;
+	   cout << "Invalid Input." << endl;
 	   if (esocio)
-	   	  return BikeMenuMember(cidade);
+	   	  return BikeMenuMember(cidade, utente);
 	   else
-	   	  return BikeMenuRU(cidade);
+	   	  return BikeMenuRU(cidade, utente);
 	}
     catch(HoraInexistente &e)
 	{
-    	cout << "Invalid hour" << endl;
+    	cout << "Invalid hour." << endl;
     	if (esocio)
-    	   return BikeMenuMember(cidade);
+    	   return BikeMenuMember(cidade, utente);
     	 else
-    	   return BikeMenuRU(cidade);
+    	   return BikeMenuRU(cidade, utente);
 	}
 
+    try
+    {
+    utente->levantaBicicleta(it,biketype,horainicial);
+    }
+    catch(PontoVazio &p)
+    {
+    	cout << "No bike to lift in this location." << endl;
+    	if (esocio)
+    	   return BikeMenuMember(cidade, utente);
+    	 else
+    	   return BikeMenuRU(cidade, utente);
+    }
+    catch(JaTemBicicletaException &p)
+    {
+    	cout << "You forgot to return your bike, try that and then come back." << endl;
+    	  if (esocio)
+    	     return BikeMenuMember(cidade, utente);
+    	   else
+    	      return BikeMenuRU(cidade, utente);
+    }
+    catch(Bicicleta_Inexistente &p)
+    {
+    	cout << "Invalid type." << endl;
+       if (esocio)
+           return BikeMenuMember(cidade, utente);
+        else
+    	   return BikeMenuRU(cidade, utente);
+    }
 
 	cout << "Bicycle lifted successfully." << endl ;
 	cout << endl;
 
 }
 
-
-void ReturnBikeMenu(Cidade &cidade)
+//falta a cena de pagar
+void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 {
-	bool esocio = true; // igual a funcao que ve se e ou nao socio
+	bool esocio = utente->eSocio();
 	string pointname;
 	Hora horafinal;
 	vector<Ponto>::iterator it;
+	double payment;
 	cleanfunction();
-	/*bool endofthemonth = false;
-	char verifyendofthemonth;
-	cout << "Is this the end of the month ? (s/n)" << endl;
-	cin >> verifyendofthemonth;
-	if ( (cin.fail()) || ( (verifyendofthemonth != 's' ) &&  (verifyendofthemonth != 'n' )))
-	{
-		cin.clear();
-		cin.ignore(1000, '\n');
-		cout << "Invalid Input!" << endl;
-		return;
-	}
-	if (verifyendofthemonth == 's' )
-		endofthemonth = true; */
 
 	cout << "Where are you returning the bike ? " << endl;
 	getline(cin, pointname);
@@ -457,9 +543,9 @@ void ReturnBikeMenu(Cidade &cidade)
 		{
 			cout << "Non existent location." << endl;
 			if (esocio)
-			  return BikeMenuMember(cidade);
+			  return BikeMenuMember(cidade, utente);
 		    else
-			  return BikeMenuRU(cidade);
+			  return BikeMenuRU(cidade, utente);
 		}
 	cout << "What is the returning hour ? " << endl;
 	try
@@ -470,37 +556,63 @@ void ReturnBikeMenu(Cidade &cidade)
 	    {
 	    	cout << "Invalid Input" << endl;
 	    	if (esocio)
-	    	  return BikeMenuMember(cidade);
+	    	  return BikeMenuMember(cidade, utente);
 	    	else
-	    	  return BikeMenuRU(cidade);
+	    	  return BikeMenuRU(cidade, utente);
 	    }
 	    catch(HoraInexistente &e)
 		{
 	    	cout << "Invalid hour" << endl;
 	    	if (esocio)
-	    	  return BikeMenuMember(cidade);
+	    	  return BikeMenuMember(cidade, utente);
 	    	else
-	    	  return BikeMenuRU(cidade);
+	    	  return BikeMenuRU(cidade, utente);
 		}
-	    /*try
+	    try
 		{
-		  horafinal - horainicial;
+		  horafinal - utente->getHoraInicial();
 		}
 	    catch(HorasInvalidas &e)
 		{
 	    	cout << "Invalid schedule" << endl;
 	    	return;
-		}*/
+		}
 
-	cout << "Bicycle returned successfully" << endl;
+	try
+	{
+		payment = utente->devolveBicicleta(it,horafinal);
+	}
+	catch(NoSpace &p)
+	{
+		cout << "This locations as no space for more bikes, please return it somewhere else." << endl;
+		if (esocio)
+		  return BikeMenuMember(cidade, utente);
+	    else
+	      return BikeMenuRU(cidade, utente);
+	}
+	catch(NaoTemBicicletaException &p)
+	{
+		cout << "You don't have a bike, try getting one and then return it." << endl;
+		if (esocio)
+	      return BikeMenuMember(cidade, utente);
+	    else
+		  return BikeMenuRU(cidade, utente);
+	}
+
+	if  ( (esocio) && (payment != 0))
+		cout << "This month's payment is " << payment << " euros." << endl;
+
+	if (!esocio)
+		cout << "Today's payment is " << payment << " euros." << endl;
+
+	cout << "Bicycle returned successfully." << endl;
 	cout << endl;
 }
 
-//falta ver se e ou nao socio
-// NoPoint exception !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-void ClosestLocationMenu(Cidade &cidade)
+//done
+void ClosestLocationMenu(Cidade &cidade, Utente *utente)
 {
-  bool esocio = true; // igual a funcao que ve se e ou nao socio
+  bool esocio = utente->eSocio();
   string biketype;
   Coordenadas cord;
   vector<Ponto>::iterator it;
@@ -520,9 +632,9 @@ void ClosestLocationMenu(Cidade &cidade)
   			{
   				cout << "Invalid coordinates." << endl;
   				if (esocio)
-  				 return BikeMenuMember(cidade);
+  				 return BikeMenuMember(cidade, utente);
   				else
-  				  return BikeMenuRU(cidade);
+  				  return BikeMenuRU(cidade, utente);
   			}
   			try
   			{
@@ -532,9 +644,9 @@ void ClosestLocationMenu(Cidade &cidade)
   			{
   				cout << "There is no space to return the bike. " << endl;
   				if (esocio)
-  				  return BikeMenuMember(cidade);
+  				  return BikeMenuMember(cidade, utente);
   				else
-  				  return BikeMenuRU(cidade);
+  				  return BikeMenuRU(cidade, utente);
   			}
 
   			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "-" << it->getCoord().cordY <<" at a distance of ";
@@ -551,9 +663,9 @@ void ClosestLocationMenu(Cidade &cidade)
 			{
 				cout << "Invalid coordinates." << endl;
 				if (esocio)
-				   return BikeMenuMember(cidade);
+				   return BikeMenuMember(cidade, utente);
 			    else
-				    return BikeMenuRU(cidade);
+				    return BikeMenuRU(cidade, utente);
 			}
   			cout << "What is the type of bike you want to get ? " << endl;
   			try
@@ -564,9 +676,9 @@ void ClosestLocationMenu(Cidade &cidade)
   			{
   			  cout << "Invalid type" << endl;
   			if (esocio)
-  			  return BikeMenuMember(cidade);
+  			  return BikeMenuMember(cidade, utente);
   			else
-  			  return BikeMenuRU(cidade);
+  			  return BikeMenuRU(cidade, utente);
   			}
 
   			try
@@ -575,19 +687,20 @@ void ClosestLocationMenu(Cidade &cidade)
   			}
   			catch(NotAType &e)
   			{
+  				cout << "Invalid type" << endl;
   			  if (esocio)
-  				 return BikeMenuMember(cidade);
+  				 return BikeMenuMember(cidade, utente);
   			  else
-  				 return BikeMenuRU(cidade);
+  				 return BikeMenuRU(cidade, utente);
   			}
   			catch(NoPoint &e)
   			{
+  				cout << "There is no bike of this type available at any of our locations." << endl;
   			  if (esocio)
-  			  	 return BikeMenuMember(cidade);
+  			  	 return BikeMenuMember(cidade, utente);
   			  else
-  			  	  return BikeMenuRU(cidade);
+  			  	  return BikeMenuRU(cidade, utente);
   			}
-
 
   			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "-" << it->getCoord().cordY << " at a distance of ";
   			cout << it->getDistance() << "." << endl;
@@ -595,16 +708,16 @@ void ClosestLocationMenu(Cidade &cidade)
   			break;
   		case 3:
   			if (esocio)
-  			 return BikeMenuMember(cidade);
+  			 return BikeMenuMember(cidade, utente);
   			else
-  			 return BikeMenuRU(cidade);
+  			 return BikeMenuRU(cidade, utente);
   			break;
   	}
 }
 
-//falta a cena do socio....
-void MonthlyPaymentMenu(Cidade &cidade)
+//done
+void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 {
-	int num = 0;  //num = funcao de pagamento
+	double num = utente->getPagamento();
 	cout << "This month's payment is " << num << " euros." << endl;
 }

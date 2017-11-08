@@ -119,6 +119,76 @@ vector<Ponto>::iterator Cidade::findPoint(string name)
 	return iter;
 }
 
+bool Cidade::findPoint(double x, double y)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < pontos.size(); i++)
+	{
+		if ((pontos.at(i).getCoord().cordX == x ) && (pontos.at(i).getCoord().cordY == y))
+		{
+			index = i;
+			break;
+		}
+	}
+	if (index == -1)
+		return false;
+	else
+		return true;
+}
+
+
+Utente* Cidade::findUtente(int id)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < utentes.size(); i++)
+	{
+		if (utentes.at(i)->getID() == id)
+			{
+			  index = i;
+			  break;
+			}
+	}
+	if (index == -1)
+		throw NoUserFound(id);
+	return utentes.at(index);
+}
+
+Cidade& Cidade::removeUtente(int id)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < utentes.size(); i++)
+	{
+		if (utentes.at(i)->getID() == id)
+			{
+			  index = i;
+			  utentes.erase(utentes.begin() + i);
+			  break;
+			}
+	}
+	if (index == -1)
+		throw NoUserFound(id);
+	return *this;
+}
+
+Cidade& Cidade::removePonto(string name)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < pontos.size(); i++)
+	{
+		if (pontos.at(i).getNome() == name)
+		{
+			index = i;
+			pontos.erase(pontos.begin() + i);
+			break;
+		}
+	}
+
+	if (index == -1)
+		throw NotAPoint(name);
+	return *this;
+}
+
+
 bool operator<(const pair<Ponto *, float> &p1, const pair<Ponto *, float> &p2)
 {
 	return p1.second > p2.second;

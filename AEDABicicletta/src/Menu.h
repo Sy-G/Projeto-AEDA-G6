@@ -49,9 +49,11 @@ void UserOptionsMenu(Cidade &cidade);
 
 void AddNewLocationMenu(Cidade &cidade);
 
-void BikeMenuRU(Cidade &cidade);
+void RemoveLocationMenu(Cidade &cidade);
 
-void BikeMenuMember(Cidade &cidade);
+void BikeMenuRU(Cidade &cidade, Utente *utente);
+
+void BikeMenuMember(Cidade &cidade, Utente *utente);
 
 void SignUpMenu(Cidade &cidade);
 
@@ -61,13 +63,13 @@ void SignUpMemberMenu(Cidade &cidade);
 
 void SignUpRegularMenu(Cidade &cidade);
 
-void GetBikeMenu(Cidade &cidade);
+void GetBikeMenu(Cidade &cidade , Utente *utente);
 
-void ReturnBikeMenu(Cidade &cidade);
+void ReturnBikeMenu(Cidade &cidade, Utente *utente);
 
-void MonthlyPaymentMenu(Cidade &cidade);
+void MonthlyPaymentMenu(Cidade &cidade, Utente *utente);
 
-void ClosestLocationMenu(Cidade &cidade);
+void ClosestLocationMenu(Cidade &cidade, Utente *utente);
 
 
 #endif /* MENU_H_ */

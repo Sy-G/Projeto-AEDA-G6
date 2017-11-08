@@ -33,7 +33,7 @@ Hora Utente::getHoraInicial(){
 }
 
 
-void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
+void Utente::levantaBicicleta(vector<Ponto>:: iterator p1, string tipo, Hora horainical){
 	bool sucesso;
 	unsigned int i;
 
@@ -78,7 +78,7 @@ void Utente::levantaBicicleta(Ponto *&p1, string tipo, Hora horainical){
 	}
 }
 
-double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
+double Regulares::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 	string hora;
 	double pagamento;
 
@@ -110,7 +110,7 @@ double Regulares::devolveBicicleta(Ponto *&p1, Hora horafinal){
 	return pagamento;
 }
 
-double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
+double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 	string verifica;
 	double quantidade;
 
@@ -141,7 +141,7 @@ double Socio::devolveBicicleta(Ponto *&p1, Hora horafinal){
 	//envia o tempo dessa sessão de uso para o vetor para acumular.
 	horasaccumuladas.push_back(tempouso);
 
-	cout << "O cliente é sócio, deseja fazer o checkOutstream do final do mês? (S/N): ";
+	cout << "Do you want to pay your monthly bill? (S/N): ";
 	cin >> verifica;
 
 	if(verifica == "S"){
@@ -212,7 +212,7 @@ double Utente::getPagamento(){
 
 Utente::~Utente() {}
 
-double Utente::devolveBicicleta(Ponto *&p1, Hora horafinal){}
+double Utente::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){}
 
 string Utente::getNome(){
 	return nome;
