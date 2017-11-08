@@ -317,9 +317,9 @@ void Cidade::printPoints(ostream& out)
 
 void Cidade::printUsers()
 {
-//	for(size_t i = 0; i < utentes.size(); i++){
-//		cout << *(utentes.at(i)) << endl;
-//	}
+	for(unsigned int i = 0; i < utentes.size(); i++){
+		utentes.at(i)->printUtente(cout);
+	}
 }
 
 void Cidade::printPointsFile(const string& file)
@@ -383,7 +383,7 @@ void Cidade::readPoints(const string& file)
 }
 
 void Cidade::readUsers(const string& file){
-	vector<Utente> v_p;
+	vector<Utente *> v_p;
 	ifstream in(file.c_str());
 
 	if(in.is_open())
@@ -399,17 +399,36 @@ void Cidade::readUsers(const string& file){
 				string other;
 				getline(in, other);
 
-				if(ident == "Sócio"){
-					v_p.push_back(Socio(name,other));
+				if(ident == "Socio"){
+					v_p.push_back(new Socio(name,other));
 				}
 
 				if(ident == "Regular"){
-					v_p.push_back(Regulares(name,other));
+					v_p.push_back(new Regulares(name,other));
 				}
 		}
-	}
 
-	for(size_t i = 0; i < v_p.size(); i++){
-		this->addUtente(&v_p.at(i));
+		for(size_t i = 0; i < v_p.size(); i++){
+				this->addUtente(v_p.at(i));
+			}
 	}
+	else
+	{
+		cout << "Here\n";
+		throw NotAFile(file);
+	}
+}
+
+void Cidade::printUserstoFile(const string& file){
+	ofstream out(file.c_str());
+	if(out.is_open()){
+		for(unsigned int i = 0; i < utentes.size(); i++){
+			if(utentes.at(i)->eSocio()){
+				out << "Socio" << endl;
+			} else out << "Regular" << endl;
+			out << utentes.at(i)->getNome() << endl;
+			out << utentes.at(i)->getCoordenadas().cordX << " " << utentes.at(i)->getCoordenadas().cordY << endl;
+		}
+	}
+	out.close();
 }
