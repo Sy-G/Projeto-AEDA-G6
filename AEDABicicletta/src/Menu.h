@@ -32,6 +32,14 @@ int getIntInInterval(int lower, int upper);
 int getInt();
 
 /**
+* @brief gets a file name
+*
+* @return the name of the file
+*/
+string getFileName();
+
+
+/**
 * @brief gets a bike type (string)
 * @return the bike type string if it is in fact a bike type, throws an exception otherwise;
 */
@@ -71,5 +79,6 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente);
 
 void ClosestLocationMenu(Cidade &cidade, Utente *utente);
 
+void SaveChangesMenu(Cidade &cidade);
 
 #endif /* MENU_H_ */

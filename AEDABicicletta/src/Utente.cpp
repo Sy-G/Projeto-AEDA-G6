@@ -268,17 +268,15 @@ void Utente::printUtente(ostream &OutStream) const{
 void Regulares::printUtente(ostream &Outstream) const{
 	Outstream << "Regular: ";
 	Outstream << this->nome;
-	Outstream << " ";
+	Outstream << "\n";
 	Outstream << "ID: ";
 	Outstream << this->ID;
-	Outstream << " ";
+	Outstream << "\n";
 	Outstream << "Coordinates: ";
-	Outstream << "(";
 	Outstream << this->coordenada.cordX;
-	Outstream << ",";
+	Outstream << "-";
 	Outstream << this->coordenada.cordY;
-	Outstream << ")";
-	Outstream << " ";
+	Outstream << "\n";
 	Outstream << "Bicycle: ";
 	if(this->bicicleta == NULL){
 		Outstream << "This user has no bike at the moment.";
@@ -288,25 +286,23 @@ void Regulares::printUtente(ostream &Outstream) const{
 		Outstream << " ";
 		Outstream << "Type: ";
 		Outstream << this->bicicleta->getTipo();
-		Outstream << " ";
+		Outstream << "\n";
 	}
 	Outstream << endl;
 }
 
 void Socio::printUtente(ostream &Outstream) const {
-	Outstream << "Associate: ";
+	Outstream << "Member: ";
 	Outstream << this->nome;
-	Outstream << " ";
+	Outstream << "\n";
 	Outstream << "ID: ";
 	Outstream << this->ID;
-	Outstream << " ";
+	Outstream << "\n";
 	Outstream << "Coordinates: ";
-	Outstream << "(";
 	Outstream << this->coordenada.cordX;
-	Outstream << ",";
+	Outstream << "-";
 	Outstream << this->coordenada.cordY;
-	Outstream << ")";
-	Outstream << " ";
+	Outstream << " \n";
 	Outstream << "Bicycle: ";
 	if(this->bicicleta == NULL){
 		Outstream << "This user has no bike at the moment.";
@@ -316,7 +312,7 @@ void Socio::printUtente(ostream &Outstream) const {
 		Outstream << " ";
 		Outstream << "Type: ";
 		Outstream << this->bicicleta->getTipo();
-		Outstream << " ";
+		Outstream << "\n";
 	}
 	Outstream << endl;
 }

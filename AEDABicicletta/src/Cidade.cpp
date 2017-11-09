@@ -315,10 +315,41 @@ void Cidade::printPoints(ostream& out)
 		out << pontos.at(i) << endl;
 }
 
+void Cidade::printPointsinMenu()
+{
+	for (unsigned int i = 0; i < pontos.size(); i++)
+		{
+			int ucounter = 0;
+			int uscounter = 0;
+			int icounter = 0;
+			int ccounter = 0;
+			cout <<"Name: " <<pontos.at(i).getNome() << endl;
+			cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "-" << pontos.at(i).getCoord().cordY << endl;
+			cout << "Capacity: " << pontos.at(i).getCapacidade() << endl;
+			cout << "Number of bikes available: " << pontos.at(i).getBicicletas().size() << endl;
+			for (unsigned int j = 0; j < pontos.at(i).getBicicletas().size(); j++)
+					{
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana")
+							ucounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
+							uscounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Infantil")
+							icounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Corrida")
+							ccounter++;
+					}
+			cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
+			cout << endl;
+		}
+}
+
 void Cidade::printUsers()
 {
 	for(unsigned int i = 0; i < utentes.size(); i++){
-		utentes.at(i)->printUtente(cout);
+		{
+			utentes.at(i)->printUtente(cout);
+			cout << endl;
+		}
 	}
 }
 
@@ -414,7 +445,6 @@ void Cidade::readUsers(const string& file){
 	}
 	else
 	{
-		cout << "Here\n";
 		throw NotAFile(file);
 	}
 }

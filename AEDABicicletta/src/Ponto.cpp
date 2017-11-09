@@ -109,7 +109,7 @@ void Ponto::rmBicicleta(unsigned int id)
 {
 	for(size_t i = 0; i < bicicletas.size(); i++)
 	{
-		/*if(bicicletas.at(i)->getID() == id)*/
+		if(bicicletas.at(i)->getID() == id)
 		{
 			bicicletas.erase(bicicletas.begin() + i);
 			return;

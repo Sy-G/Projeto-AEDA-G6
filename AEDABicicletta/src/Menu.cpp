@@ -58,6 +58,21 @@ int getInt()
 	return num;
 }
 
+
+string getFileName()
+{
+	string filename;
+	cin >> filename;
+	if (filename.size() <= 3)
+	{
+		filename += ".txt";
+	}
+	else if (filename.substr(filename.size() - 4, 4).compare(".txt") != 0)
+		filename += ".txt";
+
+ return filename;
+}
+
 string getBikeType()
 {
 	string biketype;
@@ -73,7 +88,7 @@ string getBikeType()
 	    return biketype;
 }
 
-//save changes??
+
 void FirstMenu(Cidade &cidade)
 {
 	bool endInput = false;
@@ -84,7 +99,7 @@ void FirstMenu(Cidade &cidade)
 		cout
 			<< "1- City Management" << endl
 			<< "2- User options" << endl
-			<< "3- Save changes" << endl
+			<< "3- Save " << endl
 			<< "4- Quit" << endl
 			<< "Select one" << endl;
 		switch (getIntInInterval(1, 4))
@@ -96,6 +111,7 @@ void FirstMenu(Cidade &cidade)
                     UserOptionsMenu(cidade);
 					break;
 				case 3:
+                    SaveChangesMenu(cidade);
 					break;
 				case 4:
 					endInput = true;
@@ -104,7 +120,6 @@ void FirstMenu(Cidade &cidade)
 	} while(!endInput);
 }
 
-//print users ????
 void CityManagementMenu(Cidade &cidade)
 {
 	cout
@@ -138,33 +153,10 @@ void CityManagementMenu(Cidade &cidade)
 				RemoveLocationMenu(cidade);
 				break;
 			case 4:
-
-				for (unsigned int i = 0; i < cidade.getPontos().size(); i++)
-				{
-					int ucounter = 0;
-					int uscounter = 0;
-					int icounter = 0;
-					int ccounter = 0;
-					cout <<"Name: " <<cidade.getPontos().at(i).getNome() << endl;
-					cout << "Coordinates: " << cidade.getPontos().at(i).getCoord().cordX << "-" << cidade.getPontos().at(i).getCoord().cordY << endl;
-					cout << "Capacity: " << cidade.getPontos().at(i).getCapacidade() << endl;
-					cout << "Number of bikes available: " << cidade.getPontos().at(i).getBicicletas().size() << endl;
-					for (unsigned int j = 0; j < cidade.getPontos().at(i).getBicicletas().size(); i++)
-					{
-						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Urbana")
-							ucounter++;
-						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
-							uscounter++;
-						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Infantil")
-							icounter++;
-						if (cidade.getPontos().at(i).getBicicletas().at(j)->getTipo() == "Corrida")
-							ccounter++;
-					}
-					cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
-					cout << endl;
-				}
+                cidade.printPointsinMenu();
 				break;
 			case 5:
+				cidade.printUsers();
 				break;
 			case 6:
 				return;
@@ -172,7 +164,7 @@ void CityManagementMenu(Cidade &cidade)
 		}
 }
 
-//done
+
 void AddNewLocationMenu(Cidade &cidade)
 {
 	string name;
@@ -204,7 +196,7 @@ void AddNewLocationMenu(Cidade &cidade)
     }
     if(cidade.findPoint(cord.cordX, cord.cordY))
     {
-     cout << "Invalid location, this point already exists. 11 " << endl;
+     cout << "Invalid location, this point already exists." << endl;
      return CityManagementMenu(cidade);
     }
 
@@ -240,7 +232,7 @@ void RemoveLocationMenu(Cidade &cidade)
 	 cout << "Location removed successfully." << endl;
 }
 
-//done
+
 void UserOptionsMenu(Cidade &cidade)
 {
 	cout
@@ -262,7 +254,7 @@ void UserOptionsMenu(Cidade &cidade)
 			break;
 	}
 }
-//done
+
 void SignInMenu(Cidade &cidade)
 {
 	int idnumber;
@@ -288,7 +280,7 @@ void SignInMenu(Cidade &cidade)
    else
 	   BikeMenuRU(cidade, ptr);
 }
-//done
+
 void SignUpMenu(Cidade &cidade)
 {
    cout
@@ -311,7 +303,7 @@ void SignUpMenu(Cidade &cidade)
 	}
 }
 
-//falta a cena do id...
+
 void SignUpMemberMenu(Cidade &cidade)
 {
 	string name;
@@ -347,7 +339,7 @@ void SignUpRegularMenu(Cidade &cidade)
 
     BikeMenuRU(cidade ,nregular);
 }
-//done
+
 void BikeMenuRU(Cidade &cidade, Utente *utente)
 {
 	cout
@@ -387,7 +379,6 @@ void BikeMenuRU(Cidade &cidade, Utente *utente)
 	}
 }
 
-//done
 void BikeMenuMember(Cidade &cidade, Utente *utente)
 {
 	cout
@@ -431,7 +422,6 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 	}
 }
 
-//done
 void GetBikeMenu(Cidade &cidade, Utente *utente)
 {
 	bool esocio = utente->eSocio();
@@ -523,7 +513,6 @@ void GetBikeMenu(Cidade &cidade, Utente *utente)
 
 }
 
-//falta a cena de pagar
 void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 {
 	bool esocio = utente->eSocio();
@@ -609,7 +598,6 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 	cout << endl;
 }
 
-//done
 void ClosestLocationMenu(Cidade &cidade, Utente *utente)
 {
   bool esocio = utente->eSocio();
@@ -715,9 +703,48 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   	}
 }
 
-//done
 void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 {
 	double num = utente->getPagamento();
 	cout << "This month's payment is " << num << " euros." << endl;
 }
+
+
+void SaveChangesMenu(Cidade &cidade)
+{
+	string pointfile, userfile;
+	cout
+	<< "1- Points" << endl
+	<< "2- Users"  << endl
+	<< "3- All" << endl
+	<< "4- Go back" << endl
+	<< "Select one" << endl;
+
+	switch(getIntInInterval(1,4))
+	{
+	case 1:
+		cout << "Name of the file to save the points ?" << endl;
+		pointfile = getFileName();
+		cidade.printPointsFile(pointfile);
+		break;
+	case 2:
+		cout << "Name of the file to save the users ? " << endl;
+		userfile = getFileName();
+		cidade.printUserstoFile(userfile);
+		break;
+	case 3:
+		cout << "Name of the file to save the points ?" << endl;
+		pointfile = getFileName();
+		cidade.printPointsFile(pointfile);
+		cout << "Name of the file to save the users ? " << endl;
+		userfile = getFileName();
+		cidade.printUserstoFile(userfile);
+		break;
+	case 4:
+		return;
+		break;
+	}
+}
+
+
+

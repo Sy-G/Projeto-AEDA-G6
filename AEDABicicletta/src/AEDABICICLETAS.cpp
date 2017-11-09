@@ -15,6 +15,7 @@
 #include "Ponto.h"
 #include "Utente.h"
 #include "Hora.h"
+#include "Menu.h"
 using namespace std;
 /*
 void testAddAndRmBicicletas()
@@ -341,7 +342,35 @@ void runSuite()
 
 
 int main() {
-	runSuite();
+	//runSuite();
+	Cidade c1;
+	string pointfile, userfile;
+	cout << "Name of the file containing the points ? " << endl;
+	pointfile = getFileName();
+	cout << "Name of the file containing the users ? " << endl;
+	userfile = getFileName();
+	try
+	{
+		c1.readPoints(pointfile);
+	}
+	catch(NotAFile &f)
+	{
+		cout << "Invalid file." << endl;
+		return 0;
+	}
+	try
+	{
+	    c1.readUsers(userfile);
+	}
+	catch(NotAFile &f)
+	{
+		cout << "Invalid file." << endl;
+		return 0;
+	}
+
+	cout << endl;
+  	FirstMenu(c1);
+
 	/*Cidade c1;
 	Utente *a1 = new Regular("Jo�o",&c1,1,-4);
 	Utente *b1 = new Socio("Rui",&c1,10,-2);

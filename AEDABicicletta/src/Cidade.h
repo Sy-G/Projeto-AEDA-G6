@@ -333,6 +333,11 @@ public:
 	void printPoints(ostream &out);
 
 	/**
+	 * @brief prints all points to out.
+	 */
+	void printPointsinMenu();
+
+	/**
 	 * @brief prints all Users to the screen;
 	 *
 	 */
@@ -484,7 +489,7 @@ public:
 
 
 /**
- * Redistribution not neededs
+ * Redistribution not needed
  */
 class NoRedistributionNeeded
 {
@@ -503,7 +508,7 @@ public:
 };
 
 /**
- * Redistribution not neededs
+ * Invalid File
  */
 class InvalidFile
 {
