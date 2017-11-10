@@ -9,11 +9,14 @@
 using namespace std;
 
 
+
 void cleanfunction()
 {
 	cin.ignore();
 	cin.clear();
 }
+
+
 
 int getIntInInterval(int lower, int upper)
 {
@@ -43,6 +46,7 @@ int getIntInInterval(int lower, int upper)
 }
 
 
+
 int getInt()
 {
 	int num;
@@ -57,6 +61,7 @@ int getInt()
 		}
 	return num;
 }
+
 
 
 string getFileName()
@@ -89,6 +94,7 @@ string getBikeType()
 }
 
 
+
 void FirstMenu(Cidade &cidade)
 {
 	bool endInput = false;
@@ -119,6 +125,8 @@ void FirstMenu(Cidade &cidade)
 				}
 	} while(!endInput);
 }
+
+
 
 void CityManagementMenu(Cidade &cidade)
 {
@@ -165,6 +173,7 @@ void CityManagementMenu(Cidade &cidade)
 }
 
 
+
 void AddNewLocationMenu(Cidade &cidade)
 {
 	string name;
@@ -175,7 +184,7 @@ void AddNewLocationMenu(Cidade &cidade)
  	cout << "New location's name ? " << endl;
  	getline(cin,name);
 
- 	cout << "Location's coordinates ? (x-y) " << endl;
+ 	cout << "Location's coordinates ? (x,y) " << endl;
 	try
 	{
 	  cin >> cord;
@@ -214,6 +223,8 @@ void AddNewLocationMenu(Cidade &cidade)
  	cout << "Location added  successfully." << endl;
 }
 
+
+
 void RemoveLocationMenu(Cidade &cidade)
 {
 	string pointname;
@@ -231,6 +242,7 @@ void RemoveLocationMenu(Cidade &cidade)
 	}
 	 cout << "Location removed successfully." << endl;
 }
+
 
 
 void UserOptionsMenu(Cidade &cidade)
@@ -255,6 +267,8 @@ void UserOptionsMenu(Cidade &cidade)
 	}
 }
 
+
+
 void SignInMenu(Cidade &cidade)
 {
 	int idnumber;
@@ -273,13 +287,14 @@ void SignInMenu(Cidade &cidade)
     if (idnumber == -1)
     	return UserOptionsMenu(cidade);
 
-
    bool member = ptr->eSocio();
    if (member)
 	   BikeMenuMember(cidade, ptr);
    else
 	   BikeMenuRU(cidade, ptr);
 }
+
+
 
 void SignUpMenu(Cidade &cidade)
 {
@@ -304,6 +319,7 @@ void SignUpMenu(Cidade &cidade)
 }
 
 
+
 void SignUpMemberMenu(Cidade &cidade)
 {
 	string name;
@@ -322,7 +338,8 @@ void SignUpMemberMenu(Cidade &cidade)
     BikeMenuMember(cidade, nsocio);
 }
 
-//falta a cena do id....
+
+
 void SignUpRegularMenu(Cidade &cidade)
 {
 	string name;
@@ -339,6 +356,8 @@ void SignUpRegularMenu(Cidade &cidade)
 
     BikeMenuRU(cidade ,nregular);
 }
+
+
 
 void BikeMenuRU(Cidade &cidade, Utente *utente)
 {
@@ -378,6 +397,8 @@ void BikeMenuRU(Cidade &cidade, Utente *utente)
 			break;
 	}
 }
+
+
 
 void BikeMenuMember(Cidade &cidade, Utente *utente)
 {
@@ -421,6 +442,8 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 			break;
 	}
 }
+
+
 
 void GetBikeMenu(Cidade &cidade, Utente *utente)
 {
@@ -513,6 +536,8 @@ void GetBikeMenu(Cidade &cidade, Utente *utente)
 
 }
 
+
+
 void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 {
 	bool esocio = utente->eSocio();
@@ -530,7 +555,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 		catch (NotAPoint &p)
 		{
-			cout << "Non existent location." << endl;
+			cout << "No an existent location." << endl;
 			if (esocio)
 			  return BikeMenuMember(cidade, utente);
 		    else
@@ -598,6 +623,8 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 	cout << endl;
 }
 
+
+
 void ClosestLocationMenu(Cidade &cidade, Utente *utente)
 {
   bool esocio = utente->eSocio();
@@ -611,7 +638,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   switch (getIntInInterval(1, 3))
   	{
   		case 1:
-  			cout << "What are your coordinates at the moment (x-y) ?" << endl;
+  			cout << "What are your coordinates at the moment ? (x,y)" << endl;
   			try
   			{
   			cin >> cord;
@@ -638,11 +665,11 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
 
   			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "-" << it->getCoord().cordY <<" at a distance of ";
-  			cout << it->getDistance() << "." << endl;
+  			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
   		case 2:
-  			cout << "What are your coordinates at the moment (x-y) ?" << endl;
+  			cout << "What are your coordinates at the moment ? (x,y)" << endl;
 			try
 			{
 				cin >> cord;
@@ -691,7 +718,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
 
   			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "-" << it->getCoord().cordY << " at a distance of ";
-  			cout << it->getDistance() << "." << endl;
+  			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
   		case 3:
@@ -703,11 +730,14 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   	}
 }
 
+
+
 void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 {
 	double num = utente->getPagamento();
 	cout << "This month's payment is " << num << " euros." << endl;
 }
+
 
 
 void SaveChangesMenu(Cidade &cidade)
@@ -745,6 +775,5 @@ void SaveChangesMenu(Cidade &cidade)
 		break;
 	}
 }
-
 
 

@@ -274,7 +274,7 @@ void Regulares::printUtente(ostream &Outstream) const{
 	Outstream << "\n";
 	Outstream << "Coordinates: ";
 	Outstream << this->coordenada.cordX;
-	Outstream << "-";
+	Outstream << ",";
 	Outstream << this->coordenada.cordY;
 	Outstream << "\n";
 	Outstream << "Bicycle: ";
@@ -300,7 +300,7 @@ void Socio::printUtente(ostream &Outstream) const {
 	Outstream << "\n";
 	Outstream << "Coordinates: ";
 	Outstream << this->coordenada.cordX;
-	Outstream << "-";
+	Outstream << ",";
 	Outstream << this->coordenada.cordY;
 	Outstream << " \n";
 	Outstream << "Bicycle: ";

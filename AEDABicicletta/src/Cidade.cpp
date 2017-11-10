@@ -324,7 +324,7 @@ void Cidade::printPointsinMenu()
 			int icounter = 0;
 			int ccounter = 0;
 			cout <<"Name: " <<pontos.at(i).getNome() << endl;
-			cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "-" << pontos.at(i).getCoord().cordY << endl;
+			cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "," << pontos.at(i).getCoord().cordY << endl;
 			cout << "Capacity: " << pontos.at(i).getCapacidade() << endl;
 			cout << "Number of bikes available: " << pontos.at(i).getBicicletas().size() << endl;
 			for (unsigned int j = 0; j < pontos.at(i).getBicicletas().size(); j++)

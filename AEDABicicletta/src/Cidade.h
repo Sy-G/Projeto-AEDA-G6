@@ -85,11 +85,11 @@ public:
 	 */
 	virtual ~Utente();
 	/**
-	 * @brief This function obtains a given user's payment, depends if he is a regular or not.
+	 * @brief This function obtains a given user's payment, depends if he is a regular or not
 	 */
 	virtual double getPagamento();
 	/**
-	 * @brief This function allows a user to withdraw a bike.
+	 * @brief This function allows a user to withdraw a bike
 	 *
 	 * * @param p1 Reference to the point from which the bike will be withdrawn
 	 * * @param tipo The kind of bike that will be withdrawn
@@ -141,11 +141,11 @@ public:
 	 */
 	void setBicicleta(Bicicleta *b1);
 	/**
-	 * @brief This function tells whether a user is an associate or not.
+	 * @brief This function tells whether a user is an associate or not
 	 */
 	virtual bool eSocio();
 	/**
-	 * @brief This function helps print out users in different ways depending if they're associates or regulars.
+	 * @brief This function helps print out users in different ways depending if they're associates or regulars
 	 */
 	 virtual void printUtente(ostream &OutStream) const;
 	/**

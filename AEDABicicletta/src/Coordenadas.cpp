@@ -36,7 +36,7 @@ istream& operator>> (istream& in, Coordenadas &coord)
 		throw InvalidCoordinates();
 	else
 	{
-		if (delim != '-')
+		if (delim != ',')
 			throw InvalidCoordinates();
 	}
 	return in;
