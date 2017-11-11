@@ -85,24 +85,24 @@ public:
 	 */
 	virtual ~Utente();
 	/**
-	 * @brief This function obtains a given user's payment, depends if he is a regular or not.
+	 * @brief This function obtains a given user's payment, depends if he is a regular or not
 	 */
 	virtual double getPagamento();
 	/**
-	 * @brief This function allows a user to withdraw a bike.
+	 * @brief This function allows a user to withdraw a bike
 	 *
 	 * * @param p1 Reference to the point from which the bike will be withdrawn
 	 * * @param tipo The kind of bike that will be withdrawn
 	 * * @param horainicial Time of withdrawal
 	 */
-	void levantaBicicleta(Ponto *p1, string tipo, Hora &horainicial);
+	void levantaBicicleta(vector<Ponto>:: iterator p1, string tipo, Hora horainicial);
 	/**
 	 * @brief This function allows a user to return a bike.
 	 *
 	 * * @param p1 Reference to the point of return
 	 * * @param horafinal Time of return
 	 */
-	virtual double devolveBicicleta(Ponto *p1, Hora horafinal);
+	virtual double devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal);
 	/**
 	 * @brief This function calculates usage time by subtracting withdrawal hour to return hour
 	 *
@@ -141,11 +141,11 @@ public:
 	 */
 	void setBicicleta(Bicicleta *b1);
 	/**
-	 * @brief This function tells whether a user is an associate or not.
+	 * @brief This function tells whether a user is an associate or not
 	 */
 	virtual bool eSocio();
 	/**
-	 * @brief This function helps print out users in different ways depending if they're associates or regulars.
+	 * @brief This function helps print out users in different ways depending if they're associates or regulars
 	 */
 	 virtual void printUtente(ostream &OutStream) const;
 	/**
@@ -167,8 +167,8 @@ public:
 	/**
 	 * @brief This function obtains a given user's payment, if he is regular he needs to pay after each use, the amount is given by multiplying usage time with bike price per hour.
 	 */
-	void levantaBicicleta(Ponto *p1, string tipo, Hora horainicial);
-	double devolveBicicleta(Ponto *p1, Hora horafinal);
+	void levantaBicicleta(vector<Ponto>::iterator p1, string tipo, Hora horainicial);
+	double devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal);
 	double getPagamento(); //multiplica o tempo pelo preco por hora da bicleta correspondente.
 	bool eSocio();
 	Regulares(const string& name, const string& other);
@@ -192,8 +192,8 @@ public:
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
-	void levantaBicicleta(Ponto *p1, string tipo, Hora horainicial);
-	double devolveBicicleta(Ponto *p1, Hora horafinal);
+	void levantaBicicleta(vector<Ponto>::iterator p1, string tipo, Hora horainicial);
+	double devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal);
 	bool eSocio();
 	Socio(const string& name, const string& other);
 	void printUtente(ostream &OutStream) const;
@@ -270,6 +270,39 @@ public:
 	vector<Ponto>::iterator findPoint(string name);
 
 	/**
+	 * @brief searches a point in the city
+	 *
+	 * @param x coordinate x of the point
+	 * @param y coordinate y of the point
+	 *
+	 * @return true if the point exists, false otherwise
+	 */
+	bool  findPoint(double x, double y);
+
+	/**
+	 * @brief removes an user from the city
+	 *
+	 * @param id id of the user
+	 */
+    Cidade& removeUtente(int id);
+
+    /**
+    * @brief removes a point from the city
+    *
+    * @param name name of the point
+    */
+    Cidade& removePonto(string name);
+
+   /**
+	 * @brief searches an user in the city
+	 *
+	 * @param id id of the user
+	 *
+	 * @return pointer to the user
+	 */
+	Utente* findUtente(int id);
+
+	/**
 	 * @brief redistribute bicycles evenly
 	 *
 	 * @return vector of bicycles that do not fit in the points
@@ -298,6 +331,11 @@ public:
 	 * @param out output stream.
 	 */
 	void printPoints(ostream &out);
+
+	/**
+	 * @brief prints all points to out.
+	 */
+	void printPointsinMenu();
 
 	/**
 	 * @brief prints all Users to the screen;
@@ -404,6 +442,16 @@ public:
 /**
  * @brief Exception
  */
+class NoUserFound
+{
+public:
+	int id;
+	NoUserFound (int id){this->id = id; };
+};
+
+/**
+ * @brief Exception
+ */
 class PontoNaoExistente{
 public:
 	string nome;
@@ -428,6 +476,7 @@ public:
 	NotAPoint(string n) : name(n){};
 };
 
+
 /**
  * Point already exists
  */
@@ -438,8 +487,9 @@ public:
 	existentPoint(string n) : name(n){};
 };
 
+
 /**
- * Redistribution not neededs
+ * Redistribution not needed
  */
 class NoRedistributionNeeded
 {
@@ -458,7 +508,7 @@ public:
 };
 
 /**
- * Redistribution not neededs
+ * Invalid File
  */
 class InvalidFile
 {

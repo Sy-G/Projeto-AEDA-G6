@@ -8,66 +8,183 @@
 
 
 /**
-* @brief uses cin.clean() and cin.ignore() to clean the input buffer and the error flag
+* @brief Uses cin.clean() and cin.ignore() to clean the input buffer and the error flag
 */
 void cleanfunction();
 
 
+
 /**
-* @brief gets a number (int) between lower and upper (including both)
+* @brief Gets a number (int) between lower and upper (including both)
 *
-* @param lower lower number possible to get
-* @param upper upper number possible to get
+* @param lower Lower number possible to get
+* @param upper Upper number possible to get
 *
-* @return the number in the interval given
+* @return A number in the interval given
 */
 int getIntInInterval(int lower, int upper);
 
 
+
 /**
-* @brief gets a number (int)
+* @brief Gets a number (int)
 *
-* @return number if cin didn't fail, -1 otherwise
+* @return Number if cin didn't fail, -1 otherwise
 */
 int getInt();
 
+
+
 /**
-* @brief gets a bike type (string)
-* @return the bike type string if it is in fact a bike type, throws an exception otherwise;
+* @brief Gets a file name
+*
+* @return The name of the file
+*/
+string getFileName();
+
+
+
+/**
+* @brief Getts a bike type (string)
+* @return The bike type string if it is in fact a bike type, throws an exception otherwise
 */
 string getBikeType();
 
 
+
 /*Menu functions*/
 
-
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void FirstMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void CityManagementMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void UserOptionsMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void AddNewLocationMenu(Cidade &cidade);
 
-void BikeMenuRU(Cidade &cidade);
 
-void BikeMenuMember(Cidade &cidade);
 
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
+void RemoveLocationMenu(Cidade &cidade);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ * @param utente User that is using the program
+ */
+void BikeMenuRU(Cidade &cidade, Utente *utente);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ * @param utente User that is using the program
+ */
+void BikeMenuMember(Cidade &cidade, Utente *utente);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void SignUpMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void SignInMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void SignUpMemberMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
 void SignUpRegularMenu(Cidade &cidade);
 
-void GetBikeMenu(Cidade &cidade);
 
-void ReturnBikeMenu(Cidade &cidade);
 
-void MonthlyPaymentMenu(Cidade &cidade);
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
+void GetBikeMenu(Cidade &cidade , Utente *utente);
 
-void ClosestLocationMenu(Cidade &cidade);
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ * @param utente User that is using the program
+ */
+void ReturnBikeMenu(Cidade &cidade, Utente *utente);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ * @param utente User that is using the program
+ */
+void MonthlyPaymentMenu(Cidade &cidade, Utente *utente);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ * @param utente User that is using the program
+ */
+void ClosestLocationMenu(Cidade &cidade, Utente *utente);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ * @param cidade City where the points are located
+ */
+void SaveChangesMenu(Cidade &cidade);
+
 
 
 #endif /* MENU_H_ */

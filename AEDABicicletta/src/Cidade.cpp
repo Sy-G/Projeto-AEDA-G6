@@ -119,6 +119,76 @@ vector<Ponto>::iterator Cidade::findPoint(string name)
 	return iter;
 }
 
+bool Cidade::findPoint(double x, double y)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < pontos.size(); i++)
+	{
+		if ((pontos.at(i).getCoord().cordX == x ) && (pontos.at(i).getCoord().cordY == y))
+		{
+			index = i;
+			break;
+		}
+	}
+	if (index == -1)
+		return false;
+	else
+		return true;
+}
+
+
+Utente* Cidade::findUtente(int id)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < utentes.size(); i++)
+	{
+		if (utentes.at(i)->getID() == id)
+			{
+			  index = i;
+			  break;
+			}
+	}
+	if (index == -1)
+		throw NoUserFound(id);
+	return utentes.at(index);
+}
+
+Cidade& Cidade::removeUtente(int id)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < utentes.size(); i++)
+	{
+		if (utentes.at(i)->getID() == id)
+			{
+			  index = i;
+			  utentes.erase(utentes.begin() + i);
+			  break;
+			}
+	}
+	if (index == -1)
+		throw NoUserFound(id);
+	return *this;
+}
+
+Cidade& Cidade::removePonto(string name)
+{
+	int index = -1;
+	for (unsigned int i = 0; i < pontos.size(); i++)
+	{
+		if (pontos.at(i).getNome() == name)
+		{
+			index = i;
+			pontos.erase(pontos.begin() + i);
+			break;
+		}
+	}
+
+	if (index == -1)
+		throw NotAPoint(name);
+	return *this;
+}
+
+
 bool operator<(const pair<Ponto *, float> &p1, const pair<Ponto *, float> &p2)
 {
 	return p1.second > p2.second;
@@ -245,10 +315,41 @@ void Cidade::printPoints(ostream& out)
 		out << pontos.at(i) << endl;
 }
 
+void Cidade::printPointsinMenu()
+{
+	for (unsigned int i = 0; i < pontos.size(); i++)
+		{
+			int ucounter = 0;
+			int uscounter = 0;
+			int icounter = 0;
+			int ccounter = 0;
+			cout <<"Name: " <<pontos.at(i).getNome() << endl;
+			cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "," << pontos.at(i).getCoord().cordY << endl;
+			cout << "Capacity: " << pontos.at(i).getCapacidade() << endl;
+			cout << "Number of bikes available: " << pontos.at(i).getBicicletas().size() << endl;
+			for (unsigned int j = 0; j < pontos.at(i).getBicicletas().size(); j++)
+					{
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana")
+							ucounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
+							uscounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Infantil")
+							icounter++;
+						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Corrida")
+							ccounter++;
+					}
+			cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
+			cout << endl;
+		}
+}
+
 void Cidade::printUsers()
 {
 	for(unsigned int i = 0; i < utentes.size(); i++){
-		utentes.at(i)->printUtente(cout);
+		{
+			utentes.at(i)->printUtente(cout);
+			cout << endl;
+		}
 	}
 }
 
@@ -344,7 +445,6 @@ void Cidade::readUsers(const string& file){
 	}
 	else
 	{
-		cout << "Here\n";
 		throw NotAFile(file);
 	}
 }
