@@ -152,6 +152,7 @@ void CityManagementMenu(Cidade &cidade)
 					return;
 				}
 				cout << "Bikes redistributed successfully" << endl;
+				cidade.printPointsinMenu();
 				break;
 			case 2:
                 AddNewLocationMenu(cidade);
@@ -588,7 +589,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 	    catch(HorasInvalidas &e)
 		{
-	    	cout << "Invalid schedule" << endl;
+	    	cout << "Invalid schedule." << endl;
 	    	return;
 		}
 
