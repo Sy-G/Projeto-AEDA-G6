@@ -465,7 +465,7 @@ void Cidade::readUsers(const string& file){
 		catch(...)
 		{
 			for(size_t i = 0; i < v_p.size(); i++){
-				if (v_p.at(i) != NULL)
+				//if (v_p.at(i) != NULL)
 					delete v_p.at(i);
 			}
 			throw InvalidFile();

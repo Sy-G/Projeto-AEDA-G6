@@ -142,6 +142,7 @@ public:
 	 */
 	Utente* findUtente(int id);
 
+
 	/**
 	 * @brief redistribute bicycles evenly
 	 *

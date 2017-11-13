@@ -177,6 +177,7 @@ void Ponto::setBicicletas(vector<Bicicleta*> bikes)
 	bicicletas =  bikes;
 }
 
+
 ostream& operator<<(ostream &out, const Ponto &p)
 {
 	out << p.nome << endl;

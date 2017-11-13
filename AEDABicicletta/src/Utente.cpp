@@ -10,6 +10,7 @@
 #include "Bicicleta.h"
 #include <iostream>
 using namespace std;
+
 double Socio::mensalidade = 27.5;
 int Utente::ultimoID = 0;
 

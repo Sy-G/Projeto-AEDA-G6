@@ -42,16 +42,13 @@ public:
 	unsigned int getID() const;
 
 	/**
-	 * @brief This function sets a bike's price to newprice
-	 *
-	 * @param newprice Price to set
-	 */
-	virtual void setPrecoportipo(double newprice);
-	/**
 	 * @brief This function gets the bike큦 type
 	 */
 	virtual string getTipo();
+
 };
+
+
 
 class Urbana: public Bicicleta
 {
@@ -66,18 +63,26 @@ public:
 	 * @brief This function gets the bike's price
 	 */
 	double getPrecoportipo()const;
-	/**
-	 * @brief This function sets a bike's price to newprice
-	 *
-	 * @param newprice Price to set
-	 */
-	void setPrecoportipo(double newprice);
+
 	/**
 	 * @brief This function gets the bike큦 type
 	 */
 	string getTipo();
 
+	/**
+	 * @brief This function gets the bike's price
+	 */
+	static double getPreco() {return Urbana::preco_hora; };
+
+	/**
+	 * @brief This function sets a bike's price to newprice
+	 *
+	 * @param newprice Price to set
+	 */
+	static void setPrecoportipo(double newprice) {Urbana::preco_hora = newprice;};
 };
+
+
 
 class Urbana_Simples: public Bicicleta
 {
@@ -91,17 +96,27 @@ public:
 	/**
 	 * @brief This function gets the bike's price
 	 */
-	double getPrecoportipo()const;
-	/**
-	 * @brief This function gets the bike's price
-	 */
-	void setPrecoportipo(double newprice);
+	 double getPrecoportipo()const;
+
 	/**
 	 * @brief This function gets the bike큦 type
 	 */
 	string getTipo() ;
 
+	/**
+	 * @brief This function gets the bike's price
+	 */
+	static double getPreco() {return Urbana_Simples::preco_hora; };
+
+    /**
+     * @brief This function sets a bike's price to newprice
+	 *
+	 * @param newprice Price to set
+	 */
+	static void setPrecoportipo(double newprice) {Urbana_Simples::preco_hora = newprice;};
 };
+
+
 
 class Infantil: public Bicicleta
 {
@@ -117,14 +132,21 @@ public:
 	 */
 	double getPrecoportipo()const;
 	/**
-	 * @brief This function gets the bike's price
-	 */
-	void setPrecoportipo(double newprice);
-	/**
 	 * @brief This function gets the bike큦 type
 	 */
 	string getTipo() ;
 
+	/**
+	 * @brief This function gets the bike's price
+	 */
+	static double getPreco() {return Infantil::preco_hora; };
+
+    /**
+	 * @brief This function sets a bike's price to newprice
+	 *
+	 * @param newprice Price to set
+	 */
+	static void setPrecoportipo(double newprice) {Infantil::preco_hora = newprice;};
 };
 
 class Corrida: public Bicicleta
@@ -141,13 +163,21 @@ public:
 	 */
 	double getPrecoportipo()const;
 	/**
-     * @brief This function gets the bike's price
-	 */
-	void setPrecoportipo(double newprice);
-	/**
 	 * @brief This function gets the bike큦 type
 	 */
 	string getTipo() ;
+
+	/**
+	 * @brief This function gets the bike's price
+	 */
+	static double getPreco() {return Corrida::preco_hora; };
+
+	 /**
+	  * @brief This function sets a bike's price to newprice
+	  *
+	  * @param newprice Price to set
+	  */
+	static void setPrecoportipo(double newprice) {Corrida::preco_hora = newprice;};
 
 };
 

@@ -64,6 +64,23 @@ int getInt()
 
 
 
+double getDouble()
+{
+	double num;
+	cin >> num;
+
+	if (cin.fail() || num < 0)
+		{
+			cin.clear();
+			cin.ignore(1000, '\n');
+			cout << "Invalid Input!\n";
+			return -1;
+		}
+	return num;
+}
+
+
+
 string getFileName()
 {
 	string filename;
@@ -138,10 +155,11 @@ void CityManagementMenu(Cidade &cidade)
 			<< "3- Remove location " << endl
 			<< "4- Print locations " << endl
 			<< "5- Print Users " << endl
-			<< "6- Go back" << endl
+			<< "6- Change prices " << endl
+			<< "7- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 6))
+		switch (getIntInInterval(1, 7))
 		{
 			case 1:
 				try
@@ -159,7 +177,6 @@ void CityManagementMenu(Cidade &cidade)
 			case 2:
                 AddNewLocationMenu(cidade);
 				break;
-
 			case 3:
 				RemoveLocationMenu(cidade);
 				break;
@@ -170,6 +187,9 @@ void CityManagementMenu(Cidade &cidade)
 				cidade.printUsers();
 				break;
 			case 6:
+				ChangePricesMenu(cidade);
+				break;
+			case 7:
 				return;
 				break;
 		}
@@ -187,7 +207,7 @@ void AddNewLocationMenu(Cidade &cidade)
  	cout << "New location's name ? " << endl;
  	getline(cin,name);
 
- 	cout << "Location's coordinates ? (x,y) " << endl;
+ 	cout << "Location's coordinates ? (x y) " << endl;
 	try
 	{
 	  cin >> cord;
@@ -248,6 +268,108 @@ void RemoveLocationMenu(Cidade &cidade)
 
 
 
+void ChangePricesMenu(Cidade &cidade)
+{
+	cout
+	<< "1- Change monthly payment (current payment : " << Socio::getMensalidade() << " euros) " << endl
+	<< "2- Change bikes price" << endl
+	<< "3- Go back" << endl
+	<< "Select one" << endl;
+
+	switch(getIntInInterval(1,3))
+	{
+	case 1:
+		int mpayment;
+		cout << "New monthly payment ? " << endl;
+		mpayment = getInt();
+		if (mpayment == -1)
+			return CityManagementMenu(cidade);
+		Socio::setMensalidade(mpayment);
+		break;
+	case 2:
+		ChangeBikesPriceMenu(cidade);
+		break;
+	case 3:
+		return CityManagementMenu(cidade);
+		break;
+	}
+}
+
+
+
+void ChangeBikesPriceMenu(Cidade &cidade)
+{
+	double newprice;
+	cout
+	<< "1- Urbana (current price : " << Urbana::getPreco() << " euros) " << endl
+	<< "2- Urbana_Simples (current price : " << Urbana_Simples::getPreco() << " euros) " << endl
+	<< "3- Infantil (current price : " << Infantil::getPreco() << " euros) " << endl
+	<< "4- Corrida (current price : " << Corrida::getPreco() << " euros) " << endl
+	<< "5- All" << endl
+	<< "6- Go back" << endl
+	<< "Select one" << endl;
+
+	switch(getIntInInterval(1,6))
+	{
+	case 1:
+		cout << "New price ? " << endl;
+		newprice = getDouble();
+		if (newprice == -1)
+			return ChangePricesMenu(cidade);
+	    Urbana::setPrecoportipo(newprice);
+		break;
+	case 2:
+		cout << "New price ? " << endl;
+		newprice = getDouble();
+		if (newprice == -1)
+			return ChangePricesMenu(cidade);
+		Urbana_Simples::setPrecoportipo(newprice);
+		break;
+	case 3:
+		cout << "New price ? " << endl;
+		newprice = getDouble();
+		if (newprice == -1)
+			return ChangePricesMenu(cidade);
+		Infantil::setPrecoportipo(newprice);
+		break;
+	case 4:
+		cout << "New price ? " << endl;
+		newprice = getDouble();
+		if (newprice == -1)
+			return ChangePricesMenu(cidade);
+		Corrida::setPrecoportipo(newprice);
+		break;
+	case 5:
+		cout << "New price for Urbana ? " << endl;
+		newprice = getDouble();
+		if (newprice == -1)
+			return ChangePricesMenu(cidade);
+	    Urbana::setPrecoportipo(newprice);
+	    cout << "New price for Urbana_Simples ? " << endl;
+	    newprice = getDouble();
+	    if (newprice == -1)
+	    	return ChangePricesMenu(cidade);
+	    Urbana_Simples::setPrecoportipo(newprice);
+	    cout << "New price for Infantil ? " << endl;
+	    newprice = getDouble();
+	    if (newprice == -1)
+	    	return ChangePricesMenu(cidade);
+	    Infantil::setPrecoportipo(newprice);
+	    cout << "New price for Corrida ? " << endl;
+	    newprice = getDouble();
+	    if (newprice == -1)
+	    	return ChangePricesMenu(cidade);
+	    Corrida::setPrecoportipo(newprice);
+		break;
+	case 6:
+		return ChangePricesMenu(cidade);
+		break;
+
+	}
+}
+
+
+
 void UserOptionsMenu(Cidade &cidade)
 {
 	cout
@@ -275,8 +397,10 @@ void UserOptionsMenu(Cidade &cidade)
 void SignInMenu(Cidade &cidade)
 {
 	int idnumber;
-    cout << "Member ID number ? " << endl;
+    cout << "ID number ? " << endl;
     idnumber = getInt();
+    if (idnumber == -1)
+    	return UserOptionsMenu(cidade);
     Utente *ptr;
     try
     {
@@ -287,8 +411,6 @@ void SignInMenu(Cidade &cidade)
     	cout << "No user found with that id, try signing up" << endl;
     	return;
     }
-    if (idnumber == -1)
-    	return UserOptionsMenu(cidade);
 
    bool member = ptr->eSocio();
    if (member)
@@ -329,15 +451,10 @@ void SignUpMemberMenu(Cidade &cidade)
 	cleanfunction();
 	cout << "Name ? (first and last) " << endl;
 	getline(cin, name);
-
-
 	Utente *nsocio = new Socio(name,1,0);
-
 	cidade.addUtente(nsocio);
-
 	cout << "Sign up executed successfully." << endl;
 	cout << "Your member ID number is "  << nsocio->getID() << "." << endl;
-
     BikeMenuMember(cidade, nsocio);
 }
 
@@ -349,14 +466,10 @@ void SignUpRegularMenu(Cidade &cidade)
 	cleanfunction();
 	cout << "Name ? (first and last) " << endl;
 	getline(cin, name);
-
-
 	Utente *nregular = new Regulares(name,1,0);
 	cidade.addUtente(nregular);
-
 	cout << "Sign up executed successfully." << endl;
 	cout << "Your user ID number is "  << nregular->getID() << "." << endl;
-
     BikeMenuRU(cidade ,nregular);
 }
 
@@ -368,11 +481,12 @@ void BikeMenuRU(Cidade &cidade, Utente *utente)
 	    << "1- Get Bike" << endl
 		<< "2- Return bike" << endl
 		<< "3- Closest location" << endl
-		<< "4- Delete account " << endl
-		<< "5- Go back" << endl
+		<< "4- Delete account" << endl
+		<< "5- Check bike prices" << endl
+		<< "6- Go back" << endl
 		<< "Select one" << endl;
 
-	switch (getIntInInterval(1, 5))
+	switch (getIntInInterval(1, 6))
 	{
 		case 1:
             GetBikeMenu(cidade, utente);
@@ -396,6 +510,14 @@ void BikeMenuRU(Cidade &cidade, Utente *utente)
 			cout << "Your account was deleted successfully, you will be missed." << endl;
 		    break;
 		case 5:
+			cout
+			<< "Urbana : " << Urbana::getPreco() << " euros per hour." << endl
+			<< "Urbana_Simples : " << Urbana_Simples::getPreco() << " euros per hour." << endl
+			<< "Infantil : " << Infantil::getPreco()<< " euros per hour." << endl
+			<< "Corrida : " << Corrida::getPreco() << " euros per hour." << endl
+			<< endl;
+			break;
+		case 6:
 			return UserOptionsMenu(cidade);
 			break;
 	}
@@ -430,14 +552,14 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 			break;
 		case 5:
 			 try
-			   {
+			 {
 				cidade.removeUtente(utente->getID());
-			   }
-			  catch(NoUserFound &p)
-			   {
+			 }
+			 catch(NoUserFound &p)
+			 {
 			    cout << "No user found " << endl;
 			    return UserOptionsMenu(cidade);
-			   }
+			 }
 			cout << "Your account was deleted successfully, you will be missed." << endl;
 			break;
 		case 6:
@@ -641,7 +763,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   switch (getIntInInterval(1, 3))
   	{
   		case 1:
-  			cout << "What are your coordinates at the moment ? (x,y)" << endl;
+  			cout << "What are your coordinates at the moment ? (x y)" << endl;
   			try
   			{
   			cin >> cord;
@@ -677,7 +799,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
 
   			break;
   		case 2:
-  			cout << "What are your coordinates at the moment ? (x,y)" << endl;
+  			cout << "What are your coordinates at the moment ? (x y)" << endl;
 			try
 			{
 				cin >> cord;

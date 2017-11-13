@@ -184,6 +184,19 @@ public:
 	bool eSocio();
 	Socio(const string& name, const string& other);
 	void printUtente(ostream &OutStream) const;
+	/*
+	 * @brief Gets the monthly payment value
+	 *
+	 * @return The monthly payment value
+	 * */
+	static double getMensalidade(){return Socio::mensalidade;};
+	/*
+	 * @brief Sets the monthly payment value to a new one
+	 *
+	 * @param newmensalidade Value to set
+	 * */
+	static void setMensalidade(double newmensalidade){Socio::mensalidade = newmensalidade;};
+
 };
 
 #endif /* UTENTE_H_ */

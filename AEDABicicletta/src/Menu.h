@@ -36,6 +36,15 @@ int getInt();
 
 
 /**
+* @brief Gets a number (double)
+*
+* @return Number if cin didn't fail, -1 otherwise
+*/
+double getDouble();
+
+
+
+/**
 * @brief Gets a file name
 *
 * @return The name of the file with .txt in the end
@@ -98,6 +107,23 @@ void AddNewLocationMenu(Cidade &cidade);
  */
 void RemoveLocationMenu(Cidade &cidade);
 
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ *
+ * @param cidade City where the points are located
+ */
+void ChangePricesMenu(Cidade &cidade);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ *
+ * @param cidade City where the points are located
+ */
+void ChangeBikesPriceMenu(Cidade &cidade);
 
 
 /*
