@@ -51,52 +51,49 @@ double operator-(Hora hora1, Hora hora2)
 		throw HorasInvalidas(hora1.hora, hora1.minutos, hora2.hora, hora2.minutos);
 	else
 	{
-   unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
-   unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
-   unsigned int result = totalminutes - totalminuteshora2;
-   return (double) floor((result/60.0) * 100 + 0.5)/100;
+		unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
+		unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
+		unsigned int result = totalminutes - totalminuteshora2;
+		return (double) floor((result/60.0) * 100 + 0.5)/100;
 	}
 }
 
 bool operator== (Hora hora1, Hora hora2)
-{
-    if( (hora1.hora == hora2.hora) && (hora1.minutos == hora2.minutos))
-    	return true;
-    else
-    	return false;
-}
+		{
+	if( (hora1.hora == hora2.hora) && (hora1.minutos == hora2.minutos))
+		return true;
+	else
+		return false;
+		}
 
 bool operator< (Hora hora1,Hora hora2)
 {
-	 unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
-	 unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
-	 return totalminutes < totalminuteshora2;
+	unsigned int totalminutes = hora1.hora * 60 + hora1.minutos;
+	unsigned int totalminuteshora2 = hora2.hora * 60 + hora2.minutos;
+	return totalminutes < totalminuteshora2;
 
 }
 
 
 istream& operator>> (istream& in, Hora &hora)
 {
-    char delim;
-    in >> hora.hora >> delim >> hora.minutos;
-    if (in.fail())
-    	throw HoraInvalida();
-    else
-    {
-    	if (delim != ':')
-    		throw HoraInexistente(hora.hora,hora.minutos);
-    	else
-    	{
-    		if ((hora.hora > 23) || (hora.hora < 0))
-    			throw HoraInexistente(hora.hora,hora.minutos);
-    		else
-    		{
-    			if  ((hora.minutos > 59) || (hora.minutos < 0))
-    				throw HoraInexistente(hora.hora,hora.minutos);
-    		}
-    	}
-    }
-    return in;
+	in >> hora.hora;
+	if (in.fail())
+		throw HoraInvalida();
+	in >> hora.minutos;
+	if (in.fail())
+		throw HoraInvalida();
+	else
+	{
+		if ((hora.hora > 23) || (hora.hora < 0))
+			throw HoraInexistente(hora.hora,hora.minutos);
+		else
+		{
+			if  ((hora.minutos > 59) || (hora.minutos < 0))
+				throw HoraInexistente(hora.hora,hora.minutos);
+		}
+	}
+	return in;
 }
 
 ostream& operator<< (ostream& out, Hora &hora)

@@ -646,6 +646,12 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
   			catch(InvalidCoordinates &c)
   			{
+  				cout << "here\n";
+  				if(cin.fail())
+  				{
+  					cin.ignore(1000, '\n');
+  					cin.clear();
+  				}
   				cout << "Invalid coordinates." << endl;
   				if (esocio)
   				 return BikeMenuMember(cidade, utente);
@@ -665,7 +671,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   				  return BikeMenuRU(cidade, utente);
   			}
 
-  			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "-" << it->getCoord().cordY <<" at a distance of ";
+  			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "," << it->getCoord().cordY <<" at a distance of ";
   			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
@@ -718,7 +724,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			  	  return BikeMenuRU(cidade, utente);
   			}
 
-  			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "-" << it->getCoord().cordY << " at a distance of ";
+  			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "," << it->getCoord().cordY << " at a distance of ";
   			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
