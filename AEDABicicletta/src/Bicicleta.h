@@ -10,6 +10,8 @@
 #include <string>
 using namespace std;
 
+
+
 class Bicicleta
 {
 protected:
@@ -22,6 +24,9 @@ protected:
 	 */
 	unsigned int ID;
 public:
+	/**
+     * @brief Creates a bike
+	 */
 	Bicicleta();
 	/**
      * @brief Destructor
@@ -32,7 +37,7 @@ public:
 	 */
 	virtual double getPrecoportipo() const;
 	/**
-	 * @brief This function gets a bike's id
+	 * @brief This function gets the bike's id
 	 */
 	unsigned int getID() const;
 
@@ -43,7 +48,7 @@ public:
 	 */
 	virtual void setPrecoportipo(double newprice);
 	/**
-	 * @brief This function gets a bike큦 type
+	 * @brief This function gets the bike큦 type
 	 */
 	virtual string getTipo();
 };
@@ -53,6 +58,9 @@ class Urbana: public Bicicleta
 protected:
 	static  double preco_hora; //Preco por hora, em fun豫o do tipo.
 public:
+	/**
+	 * @brief Creates a bike of type "Urbana"
+	 */
 	Urbana();
 	/**
 	 * @brief This function gets the bike's price
@@ -65,7 +73,7 @@ public:
 	 */
 	void setPrecoportipo(double newprice);
 	/**
-	 * @brief This function gets a bike큦 type
+	 * @brief This function gets the bike큦 type
 	 */
 	string getTipo();
 
@@ -76,9 +84,21 @@ class Urbana_Simples: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
+	/**
+	 * @brief Creates a bike of type "Urbana Simples"
+	 */
 	Urbana_Simples();
+	/**
+	 * @brief This function gets the bike's price
+	 */
 	double getPrecoportipo()const;
+	/**
+	 * @brief This function gets the bike's price
+	 */
 	void setPrecoportipo(double newprice);
+	/**
+	 * @brief This function gets the bike큦 type
+	 */
 	string getTipo() ;
 
 };
@@ -88,9 +108,21 @@ class Infantil: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
+	/**
+	 * @brief Creates a bike of type "Infantil"
+	 */
 	Infantil();
+	/**
+	 * @brief This function gets the bike's price
+	 */
 	double getPrecoportipo()const;
+	/**
+	 * @brief This function gets the bike's price
+	 */
 	void setPrecoportipo(double newprice);
+	/**
+	 * @brief This function gets the bike큦 type
+	 */
 	string getTipo() ;
 
 };
@@ -100,11 +132,25 @@ class Corrida: public Bicicleta
 protected:
 	static  double preco_hora;
 public:
+	/**
+	 * @brief Creates a bike of type "Corrida"
+	 */
 	Corrida();
+	/**
+	 * @brief This function gets the bike's price
+	 */
 	double getPrecoportipo()const;
+	/**
+     * @brief This function gets the bike's price
+	 */
 	void setPrecoportipo(double newprice);
+	/**
+	 * @brief This function gets the bike큦 type
+	 */
 	string getTipo() ;
 
 };
+
+
 
 #endif /* BICICLETA_H_ */

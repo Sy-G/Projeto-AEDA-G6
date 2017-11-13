@@ -38,7 +38,7 @@ int getInt();
 /**
 * @brief Gets a file name
 *
-* @return The name of the file
+* @return The name of the file with .txt in the end
 */
 string getFileName();
 
