@@ -556,7 +556,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 		catch (NotAPoint &p)
 		{
-			cout << "No an existent location." << endl;
+			cout << "Not an existent location." << endl;
 			if (esocio)
 			  return BikeMenuMember(cidade, utente);
 		    else
@@ -569,7 +569,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 	    catch(HoraInvalida &h)
 	    {
-	    	cout << "Invalid Input" << endl;
+	    	cout << "Invalid Input." << endl;
 	    	if (esocio)
 	    	  return BikeMenuMember(cidade, utente);
 	    	else
@@ -665,7 +665,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   				  return BikeMenuRU(cidade, utente);
   			}
 
-  			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "-" << it->getCoord().cordY <<" at a distance of ";
+  			cout << "The closest point is " << it->getNome() << " with coordinates " << it->getCoord().cordX << "," << it->getCoord().cordY <<" at a distance of ";
   			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
@@ -718,7 +718,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			  	  return BikeMenuRU(cidade, utente);
   			}
 
-  			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "-" << it->getCoord().cordY << " at a distance of ";
+  			cout << "The closest point is " << it->getNome() << " with coordinates " <<it->getCoord().cordX << "," << it->getCoord().cordY << " at a distance of ";
   			cout << it->getDistance() << " kilometers." << endl;
 
   			break;
