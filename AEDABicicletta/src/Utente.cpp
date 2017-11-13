@@ -146,12 +146,6 @@ double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 
 	if(verifica == "S"){
 		quantidade = getPagamento();
-
-		//reiniciar o vetor de acumula��o
-		for(unsigned int i = 0; i < horasaccumuladas.size(); i++){
-			horasaccumuladas.erase(horasaccumuladas.begin()+i);
-		}
-
 		return quantidade;
 	} else return 0;
 }
@@ -196,6 +190,11 @@ double Socio::getPagamento(){
 
 	if(acumulador == 0){
 		quantia = mensalidade;
+	}
+
+	//reiniciar o vetor de acumula��o
+	for(unsigned int i = 0; i < horasaccumuladas.size(); i++){
+		horasaccumuladas.erase(horasaccumuladas.begin()+i);
 	}
 
 	return quantia;
