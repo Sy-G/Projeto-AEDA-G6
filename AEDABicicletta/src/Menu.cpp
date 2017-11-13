@@ -646,7 +646,6 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
   			catch(InvalidCoordinates &c)
   			{
-  				cout << "here\n";
   				if(cin.fail())
   				{
   					cin.ignore(1000, '\n');

@@ -453,7 +453,7 @@ void Cidade::readUsers(const string& file){
 					v_p.push_back(new Socio(name,other));
 				}
 
-				if(ident == "Regular"){
+				else if(ident == "Regular"){
 					v_p.push_back(new Regulares(name,other));
 				}
 				else
@@ -464,7 +464,6 @@ void Cidade::readUsers(const string& file){
 		}
 		catch(...)
 		{
-			cout << "Here\n";
 			for(size_t i = 0; i < v_p.size(); i++){
 				if (v_p.at(i) != NULL)
 					delete v_p.at(i);

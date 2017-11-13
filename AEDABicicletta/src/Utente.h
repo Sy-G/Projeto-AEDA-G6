@@ -53,7 +53,7 @@ protected:
 	/**
 	 * @brief User's ID incremented statically
 	 */
-	static int ultimoID_u;
+	static int ultimoID;
 	/**
 	 * @brief User's ID
 	 */
