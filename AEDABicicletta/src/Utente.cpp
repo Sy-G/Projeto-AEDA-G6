@@ -13,7 +13,7 @@ using namespace std;
 double Socio::mensalidade = 27.5;
 int Utente::ultimoID = 0;
 
-Utente::Utente(string nome, int cordX, int cordY): coordenada(cordX, cordY), horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
+Utente::Utente(string nome, int cordX, int cordY): coordenada(cordX, cordY), horainicial(), horafinal(), ID(ultimoID++) {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
 	this->bicicleta = NULL; //no momento de registo/cria��o de UTENTE, este ainda n�o tem uma bicicleta associada, s� tem quando a levantar.
@@ -206,7 +206,7 @@ double Utente::getPagamento(){
 
 Utente::~Utente() {}
 
-double Utente::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){}
+double Utente::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){return 0;}
 
 string Utente::getNome(){
 	return nome;
@@ -231,7 +231,9 @@ bool Regulares::eSocio()
 	return false;
 }
 
-bool Utente::eSocio(){}
+bool Utente::eSocio(){
+	return false;
+}
 
 int Utente::getID(){
 	return ID;
@@ -246,7 +248,7 @@ Coordenadas Utente::getCoordenadas(){
 	return (Outstream);
 }
 
-Utente::Utente(const string& name, const string& other): horainicial("00:00"), horafinal("00:00"), ID(ultimoID++) {
+Utente::Utente(const string& name, const string& other): horainicial(), horafinal(), ID(ultimoID++) {
 	istringstream in;
 	in.str(other);
 	this->nome = name;

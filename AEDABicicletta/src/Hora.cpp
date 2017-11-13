@@ -12,16 +12,16 @@
 #include <cmath>
 
 
-
-Hora::Hora(string horas)
-{
-	istringstream is;
-	char delim = ':';
-
-	is.str(horas);
-
-	is >> this->hora >> delim >> this->minutos;
-}
+//
+//Hora::Hora(string horas)
+//{
+//	istringstream is;
+//	char delim = ':';
+//
+//	is.str(horas);
+//
+//	is >> this->hora >> delim >> this->minutos;
+//}
 
 
 Hora::Hora() {
