@@ -78,6 +78,8 @@ string getFileName()
  return filename;
 }
 
+
+
 string getBikeType()
 {
 	string biketype;
@@ -704,7 +706,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
 
   			try
   			{
-  				it = cidade.closestType(cord,biketype); //porque e que ele retorna o .end() e nao uma excecao??
+  				it = cidade.closestType(cord,biketype);
   			}
   			catch(NotAType &e)
   			{
