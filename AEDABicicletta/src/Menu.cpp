@@ -646,6 +646,11 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
   			catch(InvalidCoordinates &c)
   			{
+  				if(cin.fail())
+  				{
+  					cin.ignore(1000, '\n');
+  					cin.clear();
+  				}
   				cout << "Invalid coordinates." << endl;
   				if (esocio)
   				 return BikeMenuMember(cidade, utente);

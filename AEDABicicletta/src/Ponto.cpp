@@ -180,7 +180,7 @@ void Ponto::setBicicletas(vector<Bicicleta*> bikes)
 ostream& operator<<(ostream &out, const Ponto &p)
 {
 	out << p.nome << endl;
-	out << p.capacidade << ' ' << p.coord.cordX << ',' << p.coord.cordY << ' ';
+	out << p.capacidade << ' ' << p.coord.cordX << ' ' << p.coord.cordY << ' ';
 
 	for(size_t i = 0; i < p.bicicletas.size(); i++)
 	{

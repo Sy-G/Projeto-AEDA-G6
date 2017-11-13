@@ -253,7 +253,8 @@ Utente::Utente(const string& name, const string& other): horainicial("00:00"), h
 	this->bicicleta = NULL; //no momento de registo/cria��o de UTENTE, este ainda n�o tem uma bicicleta associada, s� tem quando a levantar.
 	this->tempouso = 0;
 
-	in >> this->coordenada.cordX >> this->coordenada.cordY;
+	in >> this->coordenada;
+
 }
 
 Regulares::Regulares(const string& name, const string& other): Utente(name, other){}

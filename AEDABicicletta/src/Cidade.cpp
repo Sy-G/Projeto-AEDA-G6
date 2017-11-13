@@ -13,7 +13,6 @@
 #include <fstream>
 
 Cidade::Cidade() {
-	// TODO Auto-generated constructor stub
 }
 
 vector<Ponto>::iterator Cidade::isThereSpace()
@@ -27,8 +26,26 @@ vector<Ponto>::iterator Cidade::isThereSpace()
 }
 
 
-Cidade::~Cidade() {
-	// TODO Auto-generated destructor stub
+Cidade::~Cidade()
+{
+	for(size_t i = 0; i < pontos.size(); i++)
+	{
+		for(size_t j = 0; j < pontos.at(i).getBicicletas().size(); j++)
+		{
+			delete pontos.at(i).getBicicletas().at(j);
+		}
+	}
+
+	for(size_t i = 0; i < utentes.size(); i++)
+	{
+		delete utentes.at(i)->getBicicleta();
+	}
+
+	for(size_t i = 0; i < utentes.size(); i++)
+	{
+		delete utentes.at(i);
+	}
+
 }
 
 vector<Ponto>& Cidade::getPontos(){
@@ -143,10 +160,10 @@ Utente* Cidade::findUtente(int id)
 	for (unsigned int i = 0; i < utentes.size(); i++)
 	{
 		if (utentes.at(i)->getID() == id)
-			{
-			  index = i;
-			  break;
-			}
+		{
+			index = i;
+			break;
+		}
 	}
 	if (index == -1)
 		throw NoUserFound(id);
@@ -159,11 +176,11 @@ Cidade& Cidade::removeUtente(int id)
 	for (unsigned int i = 0; i < utentes.size(); i++)
 	{
 		if (utentes.at(i)->getID() == id)
-			{
-			  index = i;
-			  utentes.erase(utentes.begin() + i);
-			  break;
-			}
+		{
+			index = i;
+			utentes.erase(utentes.begin() + i);
+			break;
+		}
 	}
 	if (index == -1)
 		throw NoUserFound(id);
@@ -318,29 +335,29 @@ void Cidade::printPoints(ostream& out)
 void Cidade::printPointsinMenu()
 {
 	for (unsigned int i = 0; i < pontos.size(); i++)
+	{
+		int ucounter = 0;
+		int uscounter = 0;
+		int icounter = 0;
+		int ccounter = 0;
+		cout <<"Name: " <<pontos.at(i).getNome() << endl;
+		cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "," << pontos.at(i).getCoord().cordY << endl;
+		cout << "Capacity: " << pontos.at(i).getCapacidade() << endl;
+		cout << "Number of bikes available: " << pontos.at(i).getBicicletas().size() << endl;
+		for (unsigned int j = 0; j < pontos.at(i).getBicicletas().size(); j++)
 		{
-			int ucounter = 0;
-			int uscounter = 0;
-			int icounter = 0;
-			int ccounter = 0;
-			cout <<"Name: " <<pontos.at(i).getNome() << endl;
-			cout << "Coordinates: " << pontos.at(i).getCoord().cordX << "," << pontos.at(i).getCoord().cordY << endl;
-			cout << "Capacity: " << pontos.at(i).getCapacidade() << endl;
-			cout << "Number of bikes available: " << pontos.at(i).getBicicletas().size() << endl;
-			for (unsigned int j = 0; j < pontos.at(i).getBicicletas().size(); j++)
-					{
-						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana")
-							ucounter++;
-						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
-							uscounter++;
-						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Infantil")
-							icounter++;
-						if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Corrida")
-							ccounter++;
-					}
-			cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
-			cout << endl;
+			if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana")
+				ucounter++;
+			if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Urbana_Simples")
+				uscounter++;
+			if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Infantil")
+				icounter++;
+			if (pontos.at(i).getBicicletas().at(j)->getTipo() == "Corrida")
+				ccounter++;
 		}
+		cout  << "Urbana: " << ucounter << "; Urbana_Simples: " << uscounter << "; Infantil: " << icounter << "; Corrida: "  << ccounter << endl;
+		cout << endl;
+	}
 }
 
 void Cidade::printUsers()
@@ -419,8 +436,10 @@ void Cidade::readUsers(const string& file){
 
 	if(in.is_open())
 	{
-		while(in.good())
+		try
 		{
+			while(in.good())
+			{
 				string ident;
 				getline(in, ident);
 
@@ -434,14 +453,26 @@ void Cidade::readUsers(const string& file){
 					v_p.push_back(new Socio(name,other));
 				}
 
-				if(ident == "Regular"){
+				else if(ident == "Regular"){
 					v_p.push_back(new Regulares(name,other));
 				}
-		}
-
-		for(size_t i = 0; i < v_p.size(); i++){
-				this->addUtente(v_p.at(i));
+				else
+					throw NotAType(ident);
 			}
+
+
+		}
+		catch(...)
+		{
+			for(size_t i = 0; i < v_p.size(); i++){
+				if (v_p.at(i) != NULL)
+					delete v_p.at(i);
+			}
+			throw InvalidFile();
+		}
+		for(size_t i = 0; i < v_p.size(); i++){
+			this->addUtente(v_p.at(i));
+		}
 	}
 	else
 	{
