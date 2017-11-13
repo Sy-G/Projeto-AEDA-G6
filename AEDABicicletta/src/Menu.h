@@ -46,6 +46,7 @@ string getFileName();
 
 /**
 * @brief Getts a bike type (string)
+*
 * @return The bike type string if it is in fact a bike type, throws an exception otherwise
 */
 string getBikeType();
@@ -56,6 +57,7 @@ string getBikeType();
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void FirstMenu(Cidade &cidade);
@@ -64,6 +66,7 @@ void FirstMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void CityManagementMenu(Cidade &cidade);
@@ -72,6 +75,7 @@ void CityManagementMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void UserOptionsMenu(Cidade &cidade);
@@ -80,6 +84,7 @@ void UserOptionsMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void AddNewLocationMenu(Cidade &cidade);
@@ -88,6 +93,7 @@ void AddNewLocationMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void RemoveLocationMenu(Cidade &cidade);
@@ -96,6 +102,7 @@ void RemoveLocationMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  * @param utente User that is using the program
  */
@@ -105,6 +112,7 @@ void BikeMenuRU(Cidade &cidade, Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  * @param utente User that is using the program
  */
@@ -114,6 +122,7 @@ void BikeMenuMember(Cidade &cidade, Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void SignUpMenu(Cidade &cidade);
@@ -122,6 +131,7 @@ void SignUpMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void SignInMenu(Cidade &cidade);
@@ -130,6 +140,7 @@ void SignInMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void SignUpMemberMenu(Cidade &cidade);
@@ -138,6 +149,7 @@ void SignUpMemberMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void SignUpRegularMenu(Cidade &cidade);
@@ -146,6 +158,7 @@ void SignUpRegularMenu(Cidade &cidade);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void GetBikeMenu(Cidade &cidade , Utente *utente);
@@ -154,6 +167,7 @@ void GetBikeMenu(Cidade &cidade , Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  * @param utente User that is using the program
  */
@@ -163,6 +177,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  * @param utente User that is using the program
  */
@@ -172,6 +187,7 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  * @param utente User that is using the program
  */
@@ -181,6 +197,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente);
 
 /*
  * @brief Calls the functions needed to implement the presented functionalities
+ *
  * @param cidade City where the points are located
  */
 void SaveChangesMenu(Cidade &cidade);

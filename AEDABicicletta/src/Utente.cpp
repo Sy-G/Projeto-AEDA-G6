@@ -141,10 +141,10 @@ double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 	//envia o tempo dessa sess�o de uso para o vetor para acumular.
 	horasaccumuladas.push_back(tempouso);
 
-	cout << "Do you want to pay your monthly bill? (S/N): ";
+	cout << "Do you want to pay your monthly bill? (Y/N): ";
 	cin >> verifica;
 
-	if(verifica == "S"){
+	if(verifica == "Y"){
 		quantidade = getPagamento();
 		return quantidade;
 	} else return 0;

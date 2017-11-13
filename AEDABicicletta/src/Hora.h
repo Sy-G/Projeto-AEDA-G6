@@ -19,12 +19,42 @@ using namespace std;
 class Hora
 {
 public:
+	/**
+	 * @brief Holds the hours
+     */
 	unsigned int hora;
+	/*
+	 * @brief Holds the minutes
+	 * */
 	unsigned int minutos;
+	/**
+	 * @brief Creates an Hour using a string int the format hours:minutes
+	 *
+	 * @param horas String that contains the hours
+	 */
 	Hora(string horas);
+	/**
+	 * @brief Creates an Hour with with hora ans minutos equal to zero
+     */
 	Hora();
+	/**
+	 * @brief Creates an Hour
+	 *
+	 * @param horas Hours of the hour
+	 * @param minutos Minutes of the hour
+	 */
 	Hora(unsigned int horas, unsigned int minutos);
+	/**
+	 * @brief Destructor
+	 */
 	virtual ~Hora();
+
+	/**
+	 * @brief Sets the hour values
+	 *
+	 * @param newhoras New hours of the hour
+	 * @param newminutos New minutes of the hour
+	 */
 	void setHora(unsigned int newhoras, unsigned int newminutos);
 
 };

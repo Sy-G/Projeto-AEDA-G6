@@ -556,7 +556,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 		catch (NotAPoint &p)
 		{
-			cout << "No an existent location." << endl;
+			cout << "Not an existent location." << endl;
 			if (esocio)
 			  return BikeMenuMember(cidade, utente);
 		    else
@@ -569,7 +569,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		}
 	    catch(HoraInvalida &h)
 	    {
-	    	cout << "Invalid Input" << endl;
+	    	cout << "Invalid Input." << endl;
 	    	if (esocio)
 	    	  return BikeMenuMember(cidade, utente);
 	    	else

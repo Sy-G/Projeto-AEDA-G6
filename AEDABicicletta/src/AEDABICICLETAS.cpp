@@ -345,28 +345,47 @@ int main() {
 	//runSuite();
 	Cidade c1;
 	string pointfile, userfile;
-	cout << "Name of the file containing the points ? " << endl;
-	pointfile = getFileName();
-	cout << "Name of the file containing the users ? " << endl;
-	userfile = getFileName();
-	try
-	{
-		c1.readPoints(pointfile);
-	}
-	catch(NotAFile &f)
-	{
-		cout << "Invalid file." << endl;
-		return 0;
-	}
-	try
-	{
-	    c1.readUsers(userfile);
-	}
-	catch(NotAFile &f)
-	{
-		cout << "Invalid file." << endl;
-		return 0;
-	}
+	bool validPfile = true;
+	bool validUfile = true;
+	do{
+		validPfile = true;
+		cout << "Name of the file containing the points ? " << endl;
+		pointfile = getFileName();
+	    try
+	    {
+		  c1.readPoints(pointfile);
+	    }
+	    catch(NotAFile &f)
+	    {
+		  cout << "Not file." << endl;
+		  validPfile = false;
+	    }
+	    catch(InvalidFile &f)
+	    {
+	    	cout << "Invalid file." << endl;
+	    	validPfile = false;
+	    }
+	}while (validPfile == false);
+    do{
+    	validUfile = true;
+    	cout << "Name of the file containing the users ? " << endl;
+    	userfile = getFileName();
+    	try
+    	{
+    	   c1.readUsers(userfile);
+    	}
+    	catch(NotAFile &f)
+    	{
+    	   cout << "Not file." << endl;
+    	   validUfile = false;
+    	}
+    	catch(InvalidFile &f)
+    	{
+    		cout << "Invalid File."<< endl;
+    		validUfile = false;
+    	}
+       }while(validUfile == false);
+
 
 	cout << endl;
   	FirstMenu(c1);
