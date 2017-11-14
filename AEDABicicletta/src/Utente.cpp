@@ -17,7 +17,7 @@ int Utente::ultimoID = 0;
 Utente::Utente(string nome, int cordX, int cordY): coordenada(cordX, cordY), horainicial(), horafinal(), ID(ultimoID++) {
 	// TODO Auto-generated constructor stub
 	this->nome = nome;
-	this->bicicleta = NULL; //no momento de registo/cria��o de UTENTE, este ainda n�o tem uma bicicleta associada, s� tem quando a levantar.
+	this->bicicleta = NULL; //upon creation of the object, the user doesn't have a bike yet because he just registered.
 	this->tempouso = 0;
 }
 
@@ -38,35 +38,37 @@ void Utente::levantaBicicleta(vector<Ponto>:: iterator p1, string tipo, Hora hor
 	bool sucesso;
 	unsigned int i;
 
-	sucesso = false; //para j� ..
+	sucesso = false; //for now ..
 
-	//verificar que no ponto em quest�o h� bicicletas disponiveis.
+	//check if you have any bicycles available in this point.
 
 	if(p1->getnumbicicletasDisponiveis() == 0){
-		//EXCE��O PONTO VAZIO!
+		//Empty point exception
 		throw PontoVazio(p1->getNome());
 	}
 
-	//verificar se o Utente j� tem uma bicicleta
+	//check if he has a bike already
 
 	if(this->bicicleta != NULL){
-		//EXCE��O J� TEM BICICLETA
+		//User already has a bike and can't withdraw one exception
 		throw JaTemBicicletaException(this->nome);
 	}
 
-	//As bicicletas s�o levantadas por tipo.
+	//Bicycles are withdrawn by type
 
 	for(i = 0; i < p1->getBicicletas().size(); i++){
 
 		if(p1->getBicicletas().at(i)->getTipo() == tipo){
-			//atribu�-se essa bicicleta ao utente
+
+			//give that bicycle to the user
 			this->setBicicleta(p1->getBicicletas().at(i));
 
-			//agora retira-se essa bicicleta do vetor de bicicletas disponiveis desse ponto
+			//take that bike away from the vector of available bikes
 			p1->rmBicicleta(p1->getBicicletas().at(i)->getID());
 
-			//regista-se a hora de levantamento
+			//register the withdrawal hour
 			this->horainicial = Hora(horainical);
+
 			sucesso = true;
 			break;
 		}
@@ -74,7 +76,7 @@ void Utente::levantaBicicleta(vector<Ponto>:: iterator p1, string tipo, Hora hor
 	}
 
 	if(sucesso == false){
-		//EXCE��O BICICLETA N�O EXISTENTE!!
+		//No bicycles of that type exist ..
 		throw Bicicleta_Inexistente(p1->getBicicletas().at(i)->getID());
 	}
 }
@@ -83,29 +85,30 @@ double Regulares::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 	string hora;
 	double pagamento;
 
-	//deve de verificar se o ponto est� cheio
+	//check if this point is full
 
 	if(p1->getBicicletas().size() >= p1->getCapacidade()){
-		//EXCE��O PONTO CHEIO!!
+		//full point exception
 		throw NoSpace(p1->getCapacidade());
 	}
 
-	//deve de verificar se o utente tem uma bicicleta para dar
+	//check if the user even has a bike to deposit
 
 	if(this->bicicleta == NULL){
-		//EXCE��O N�O TEM BICICLETA
+		//no bike exception
 		throw NaoTemBicicletaException(this->nome);
 	}
 
-	//caso contr�rio, adiciona-se a bicicleta ao ponto e retira-se do cliente, mas, como a bicicleta guarda informa��es precisas para calcular o pagamento, s� ser� retirado o apontador mais tarde.
+	//add this bicicle to the point in question
 	p1->addBicicleta(this->bicicleta);
 
+	//register deposit hour
 	this->horafinal = Hora(horafinal);
 
-	//como o cliente � um regular, ter� de pagar j�, calcular o pagamento.
+	//since the client is a regular, we have to get his payment upon returning the bike.
 	pagamento = getPagamento();
 
-	//depois de chamar getPagamento, poder� ser retirada a bicicleta.
+	//the function that acquires the payment still needs to interact with the bicycle pointer, after calling it there is no need for it anymore and so it must be removed.
 	this->bicicleta = NULL;
 
 	return pagamento;
@@ -115,34 +118,34 @@ double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 	string verifica;
 	double quantidade;
 
-	//deve de verificar se o ponto est� cheio
+	// SAME LOGIC AS REGULAR
 	if(p1->getBicicletas().size() > p1->getCapacidade()){
-		//EXCE��O PONTO CHEIO!!
 		throw NoSpace(p1->getCapacidade());
 	}
 
-	//deve de verificar se o utente tem uma bicicleta para dar
 	if(this->bicicleta == NULL){
-		//EXCE��O N�O TEM BICICLETA
 		throw NaoTemBicicletaException(this->nome);
 	}
 
-	//caso contr�rio, adiciona-se a bicicleta ao ponto e retira-se do cliente.
+
 	p1->addBicicleta(this->bicicleta);
 
-	//retira-se ao cliente
+	// Now here is the difference, in this case, we don't take the bike itself into account so we can remove the pointer right away.
 	this->bicicleta = NULL;
 
 
+	//deposit hour
 	this->horafinal = Hora(horafinal);
 
-	//calcular o tempo de uso
+	//calculates the time of use for this session.
 	subtraiHora(this->horafinal, this->horainicial);
 
-	//envia o tempo dessa sess�o de uso para o vetor para acumular.
+	//sends that time into a vector of accumulated hours
 	horasaccumuladas.push_back(tempouso);
 
-	cout << "Do you want to pay your monthly bill? (Y/N): ";
+	//in case the user isn't going to use any more bikes after this, or he returned it at the end of the month ..
+
+	cout << "Do you want to pay your monthly bill? (S/N): ";
 	cin >> verifica;
 
 	if(verifica == "Y"){
@@ -152,13 +155,13 @@ double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 }
 
 double Regulares::getPagamento(){
-	//o pagamento � calculado multiplicando as horas de uso pelo pre�o por tipo da bicicleta.
+	//paymente caculation equals time of use times bicicle price per hour.
 	double quantidade;
 
-	//primeiro calcular o tempo de uso
+	//calculating time of use
 	subtraiHora(this->horafinal, this->horainicial);
 
-	//multiplicar o tempouso pelo preco por tipo da bicicleta.
+	//multiplying time of use by price per hour
 	quantidade = this->bicicleta->getPrecoportipo()*this->tempouso;
 
 	return quantidade;
@@ -180,12 +183,12 @@ double Socio::getPagamento(){
 	}
 
 	if(acumulador > 20){
-		//tem 10% de desconto!
+		//10% discount
 		quantia = mensalidade - (mensalidade*0.1);
 	}
 
 	if(acumulador <= 20 && acumulador > 0){
-		//tem 5% de desconto
+		//5% discount
 		quantia = mensalidade - (mensalidade*0.05);
 	}
 
@@ -193,7 +196,7 @@ double Socio::getPagamento(){
 		quantia = mensalidade;
 	}
 
-	//reiniciar o vetor de acumula��o
+	//empty the accumulated hours, they've already been taken into account
 	for(unsigned int i = 0; i < horasaccumuladas.size(); i++){
 		horasaccumuladas.erase(horasaccumuladas.begin()+i);
 	}
@@ -253,7 +256,7 @@ Utente::Utente(const string& name, const string& other): horainicial(), horafina
 	istringstream in;
 	in.str(other);
 	this->nome = name;
-	this->bicicleta = NULL; //no momento de registo/cria��o de UTENTE, este ainda n�o tem uma bicicleta associada, s� tem quando a levantar.
+	this->bicicleta = NULL;
 	this->tempouso = 0;
 
 	in >> this->coordenada;
