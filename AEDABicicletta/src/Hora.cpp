@@ -77,22 +77,43 @@ bool operator< (Hora hora1,Hora hora2)
 
 istream& operator>> (istream& in, Hora &hora)
 {
-	in >> hora.hora;
-	if (in.fail())
+	string hora_s;
+	in >> hora_s;
+
+	unsigned int index =  hora_s.find_first_of(':');
+	if(index == string::npos)
 		throw HoraInvalida();
-	in >> hora.minutos;
-	if (in.fail())
-		throw HoraInvalida();
+
+	hora.hora = 0;
+	string tmp =  hora_s.substr(0,index);
+	for(size_t i = 0; i < tmp.size(); i++)
+	{
+		hora.hora *= 10;
+		if(tmp.at(i) >= '0' && tmp.at(i) <= '9')
+			hora.hora += tmp.at(i) - '0';
+		else
+			throw HoraInvalida();
+	}
+
+	hora.minutos = 0;
+	tmp =  hora_s.substr(index+1,hora_s.size());
+	for(size_t i = 0; i < tmp.size(); i++)
+	{
+		hora.minutos *= 10;
+		if(tmp.at(i) >= '0' && tmp.at(i) <= '9')
+			hora.minutos += tmp.at(i) - '0';
+		else
+			throw HoraInvalida();
+	}
+
+	if ((hora.hora > 23) || (hora.hora < 0))
+		throw HoraInexistente(hora.hora,hora.minutos);
 	else
 	{
-		if ((hora.hora > 23) || (hora.hora < 0))
+		if  ((hora.minutos > 59) || (hora.minutos < 0))
 			throw HoraInexistente(hora.hora,hora.minutos);
-		else
-		{
-			if  ((hora.minutos > 59) || (hora.minutos < 0))
-				throw HoraInexistente(hora.hora,hora.minutos);
-		}
 	}
+
 	return in;
 }
 
