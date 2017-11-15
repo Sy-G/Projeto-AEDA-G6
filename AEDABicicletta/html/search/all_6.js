@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['getbicicleta',['getBicicleta',['../classUtente.html#ad53739949c805ea699348a398bbbbe92',1,'Utente']]],
+  ['getbicicletas',['getBicicletas',['../classPonto.html#a883199992fb087e7485c799a69341f36',1,'Ponto']]],
+  ['getcapacidade',['getCapacidade',['../classPonto.html#ab53a76728526acda1ffe1c2937add201',1,'Ponto']]],
+  ['getcoord',['getCoord',['../classPonto.html#ae9fabcc556752883761dcc1ea33f7f8b',1,'Ponto']]],
+  ['getcoordenadas',['getCoordenadas',['../classUtente.html#a5fa85105ff3975b083f87c89e4b076c2',1,'Utente']]],
+  ['getdistance',['getDistance',['../classPonto.html#acdf580e8d94666025a42a071312e67f6',1,'Ponto']]],
+  ['getdistancecoords',['getDistanceCoords',['../classPonto.html#aa9816263e29c6649e4cb93225c63bd40',1,'Ponto']]],
+  ['gethorafinal',['getHoraFinal',['../classUtente.html#a9426a261fc02bd2983841d2c7889878c',1,'Utente']]],
+  ['gethorainicial',['getHoraInicial',['../classUtente.html#af2fca21a89886b99ff9bc069810d3263',1,'Utente']]],
+  ['getid',['getID',['../classBicicleta.html#a3a8353e5c7511c490c3b64eb4c2ea944',1,'Bicicleta::getID()'],['../classUtente.html#a48ea80acb0ea62f9ea1f5f199a0fc1ae',1,'Utente::getID()']]],
+  ['getnome',['getNome',['../classPonto.html#ad48f3975ba797393232d4b24b388f6f4',1,'Ponto::getNome()'],['../classUtente.html#a56bf08dbd5fb7fd208421cae1105d9e4',1,'Utente::getNome()']]],
+  ['getnumbicicletasdisponiveis',['getnumbicicletasDisponiveis',['../classPonto.html#abea1c6bc83d8dd546bc8c58a40e1a960',1,'Ponto']]],
+  ['getpagamento',['getPagamento',['../classUtente.html#ad7a9dd0db22b08f3f51236c15dbf963f',1,'Utente::getPagamento()'],['../classRegulares.html#aa449a3e1e75fccef8833f959539e07be',1,'Regulares::getPagamento()'],['../classSocio.html#a2b8b2ae912c2425114cfc8ded29bc517',1,'Socio::getPagamento()']]],
+  ['getpreco',['getPreco',['../classUrbana.html#a04f54833a425b7205146a5562c75ed7c',1,'Urbana::getPreco()'],['../classUrbana__Simples.html#a63a2c09dceba08ba28e36d81ae594e9c',1,'Urbana_Simples::getPreco()'],['../classInfantil.html#ad38417c5aa97ce216dc78f5464b99027',1,'Infantil::getPreco()'],['../classCorrida.html#a8d5bf7d8bd9b80bbdff618acc2d18cf7',1,'Corrida::getPreco()']]],
+  ['getprecoportipo',['getPrecoportipo',['../classBicicleta.html#a94face8d192529a0204c1ff333b2379f',1,'Bicicleta::getPrecoportipo()'],['../classUrbana.html#ad642b0bcd3929bc3507947c45a7d5427',1,'Urbana::getPrecoportipo()'],['../classUrbana__Simples.html#ad1e189a376fdd8977513832168ad57ea',1,'Urbana_Simples::getPrecoportipo()'],['../classInfantil.html#aee2028237dbeebb809957ed56d4198df',1,'Infantil::getPrecoportipo()'],['../classCorrida.html#ad33c561ec2fa9cdea2e35313cb341f7c',1,'Corrida::getPrecoportipo()']]],
+  ['gettipo',['getTipo',['../classBicicleta.html#a4582ea6f608f9d188df0b563961d7df5',1,'Bicicleta::getTipo()'],['../classUrbana.html#adcd02b0dc5918d03e7608ec54bb0ce94',1,'Urbana::getTipo()'],['../classUrbana__Simples.html#a1186cd154429412ccc60d5f63391e795',1,'Urbana_Simples::getTipo()'],['../classInfantil.html#a437256ce65e89628c0b2c8b72d7624d5',1,'Infantil::getTipo()'],['../classCorrida.html#aa55260e4daef1ae80c42dfa384e03a2f',1,'Corrida::getTipo()']]],
+  ['gettotalhorasacumuladas',['getTotalHorasAcumuladas',['../classUtente.html#a66c4c13755ac1ee931e6979055a0c743',1,'Utente::getTotalHorasAcumuladas()'],['../classRegulares.html#a7cbc6fa43ec4d1723b7d30fb5b7e9036',1,'Regulares::getTotalHorasAcumuladas()'],['../classSocio.html#aff3448b809b15e53fa88035216e9925f',1,'Socio::getTotalHorasAcumuladas()']]]
+];
