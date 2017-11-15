@@ -132,6 +132,11 @@ public:
 	 */
 	virtual bool eSocio();
 	/**
+	 * @brief Gets the total accumulated hours of a member
+	 * @return The total  accumulated hours of a member
+	 */
+	virtual double getTotalHorasAcumuladas() = 0;
+	/**
 	 * @brief This function helps print out users in different ways depending if they're associates or regulars
 	 */
 	 virtual void printUtente(ostream &OutStream) const;
@@ -160,6 +165,7 @@ public:
 	bool eSocio();
 	Regulares(const string& name, const string& other);
 	void printUtente(ostream &OutStream) const;
+	double getTotalHorasAcumuladas() {return 0;};
 };
 
 class Socio: public Utente{
@@ -179,6 +185,7 @@ public:
 	 * @brief This function obtains a given user's payment, in this case the user will accumulate hours until it's the end of the month, at that time it will checkout and calculate the user's monthly tax based on the usage hours.
 	 */
 	double getPagamento();
+	double getTotalHorasAcumuladas();
 	void levantaBicicleta(vector<Ponto>::iterator p1, string tipo, Hora horainicial);
 	double devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal);
 	bool eSocio();

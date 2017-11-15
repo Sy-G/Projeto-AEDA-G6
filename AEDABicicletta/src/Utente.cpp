@@ -145,7 +145,7 @@ double Socio::devolveBicicleta(vector<Ponto>::iterator p1, Hora horafinal){
 
 	//in case the user isn't going to use any more bikes after this, or he returned it at the end of the month ..
 
-	cout << "Do you want to pay your monthly bill? (S/N): ";
+	cout << "Do you want to pay your monthly bill? (Y/N): ";
 	cin >> verifica;
 
 	if(verifica == "Y"){
@@ -202,6 +202,16 @@ double Socio::getPagamento(){
 	}
 
 	return quantia;
+}
+
+double Socio::getTotalHorasAcumuladas()
+{
+	 double acumulador = 0;
+	 for(unsigned int i = 0; i < horasaccumuladas.size(); i++)
+	 {
+			acumulador = horasaccumuladas.at(i) + acumulador;
+	 }
+	 return acumulador;
 }
 
 double Utente::getPagamento(){

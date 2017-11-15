@@ -101,7 +101,7 @@ string getBikeType()
 {
 	string biketype;
 	cin >> biketype;
-
+    cin.ignore();
 	if (biketype == "urbana") return "Urbana";
 	if (biketype == "urbana_simples") return "Urbana_Simples";
 	if (biketype == "infantil") return "Infantil";
@@ -171,7 +171,7 @@ void CityManagementMenu(Cidade &cidade)
 					cout << "No redistribution needed." << endl;
 					return;
 				}
-				cout << "Bikes redistributed successfully" << endl;
+				cout << "Bikes redistributed successfully." << endl;
 				cidade.printPointsinMenu();
 				break;
 			case 2:
@@ -408,7 +408,7 @@ void SignInMenu(Cidade &cidade)
     }
     catch(NoUserFound &e)
     {
-    	cout << "No user found with that id, try signing up" << endl;
+    	cout << "No user found with that id, try signing up." << endl;
     	return;
     }
 
@@ -531,12 +531,13 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 	    << "1- Get Bike" << endl
 		<< "2- Return bike" << endl
 		<< "3- Closest location" << endl
-		<< "4- Monthly Payment" << endl
-		<< "5- Delete account " << endl
-		<< "6- Go back" << endl
+		<< "4- Check accumulated hours " << endl
+		<< "5- Monthly Payment" << endl
+		<< "6- Delete account " << endl
+		<< "7- Go back" << endl
 		<< "Select one" << endl;
 
-	switch (getIntInInterval(1, 6))
+	switch (getIntInInterval(1, 7))
 	{
 		case 1:
             GetBikeMenu(cidade, utente);
@@ -548,9 +549,12 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 			ClosestLocationMenu(cidade, utente);
 		    break;
 		case 4:
-			MonthlyPaymentMenu(cidade, utente);
+			cout << "Total renting hours : " << utente->getTotalHorasAcumuladas() << "." << endl;
 			break;
 		case 5:
+			MonthlyPaymentMenu(cidade, utente);
+			break;
+		case 6:
 			 try
 			 {
 				cidade.removeUtente(utente->getID());
@@ -562,7 +566,7 @@ void BikeMenuMember(Cidade &cidade, Utente *utente)
 			 }
 			cout << "Your account was deleted successfully, you will be missed." << endl;
 			break;
-		case 6:
+		case 7:
 			return UserOptionsMenu(cidade);
 			break;
 	}
@@ -605,7 +609,7 @@ void GetBikeMenu(Cidade &cidade, Utente *utente)
 		  return BikeMenuRU(cidade, utente);
 	}
 
-	cout << "What is the pick up hour ? " << endl;
+	cout << "What is the pick up hour ? (horas:minutes) " << endl;
 	try
 	{
 	  cin >> horainicial;
@@ -686,7 +690,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 		    else
 			  return BikeMenuRU(cidade, utente);
 		}
-	cout << "What is the returning hour ? " << endl;
+	cout << "What is the returning hour ? (horas:minutes)" << endl;
 	try
 		{
 		  cin >> horafinal;
@@ -701,7 +705,7 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 	    }
 	    catch(HoraInexistente &e)
 		{
-	    	cout << "Invalid hour" << endl;
+	    	cout << "Invalid hour." << endl;
 	    	if (esocio)
 	    	  return BikeMenuMember(cidade, utente);
 	    	else
@@ -714,6 +718,8 @@ void ReturnBikeMenu(Cidade &cidade, Utente *utente)
 	    catch(HorasInvalidas &e)
 		{
 	    	cout << "Invalid schedule." << endl;
+	    	cout << horafinal << endl;
+	    	cout << utente->getHoraInicial().hora << " " << utente->getHoraInicial().minutos << endl;
 	    	return;
 		}
 
@@ -819,7 +825,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
   			catch(NotAType &e)
   			{
-  			  cout << "Invalid type" << endl;
+  			  cout << "Invalid type." << endl;
   			if (esocio)
   			  return BikeMenuMember(cidade, utente);
   			else
@@ -832,7 +838,7 @@ void ClosestLocationMenu(Cidade &cidade, Utente *utente)
   			}
   			catch(NotAType &e)
   			{
-  				cout << "Invalid type" << endl;
+  				cout << "Invalid type." << endl;
   			  if (esocio)
   				 return BikeMenuMember(cidade, utente);
   			  else
