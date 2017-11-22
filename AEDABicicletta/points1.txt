@@ -2,5 +2,5 @@ Trindade
 20 5 -6 C C C U S S I
 FEUP
 10 1 2 U U U C C C C U
-Trindade 2
+S. Bento
 20 5 6
