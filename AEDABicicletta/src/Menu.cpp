@@ -280,8 +280,10 @@ void ChangePricesMenu(Cidade &cidade)
 	{
 	case 1:
 		int mpayment;
+		double mpayment;
 		cout << "New monthly payment ? " << endl;
 		mpayment = getInt();
+		mpayment = getDouble();
 		if (mpayment == -1)
 			return CityManagementMenu(cidade);
 		Socio::setMensalidade(mpayment);
