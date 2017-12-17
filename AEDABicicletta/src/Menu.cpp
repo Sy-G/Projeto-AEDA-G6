@@ -156,10 +156,11 @@ void CityManagementMenu(Cidade &cidade)
 			<< "4- Print locations " << endl
 			<< "5- Print Users " << endl
 			<< "6- Change prices " << endl
-			<< "7- Go back" << endl
+			<< "7- Store options" << endl
+			<< "8- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 7))
+		switch (getIntInInterval(1, 8))
 		{
 			case 1:
 				try
@@ -190,6 +191,9 @@ void CityManagementMenu(Cidade &cidade)
 				ChangePricesMenu(cidade);
 				break;
 			case 7:
+				StoreOptionsMenu(cidade);
+				break;
+			case 8:
 				return;
 				break;
 		}
@@ -279,10 +283,8 @@ void ChangePricesMenu(Cidade &cidade)
 	switch(getIntInInterval(1,3))
 	{
 	case 1:
-		int mpayment;
 		double mpayment;
 		cout << "New monthly payment ? " << endl;
-		mpayment = getInt();
 		mpayment = getDouble();
 		if (mpayment == -1)
 			return CityManagementMenu(cidade);
@@ -391,6 +393,60 @@ void UserOptionsMenu(Cidade &cidade)
 		case 3:
 			return;
 			break;
+	}
+}
+
+
+
+void StoreOptionsMenu(Cidade &cidade)   // TODO
+{
+	string type;
+	int number;
+	string name;
+	vector<Loja*> top5;
+	cout
+	<< "1- Get top 5 best reputed stores " << endl
+	<< "2- Buy Bikes " << endl
+	<< "3- Go back" << endl
+	<< "Select one" << endl;
+
+	switch (getIntInInterval(1, 3))
+	{
+	case 1:
+		try
+		{
+			top5 = cidade.getTop5();
+		}
+		catch(NoStores &p)
+		{
+		    return CityManagementMenu(cidade);
+		}
+		for (unsigned int i = 0; i < top5.size(); i++)
+		{
+			top5.at(i)->printStore();
+			cout << endl;
+		}
+		break;
+	case 2:
+		cout << "How many bikes do you want to buy ? " << endl;
+		number = getInt();
+		cout << "Type of bike ? " << endl;
+		type = getBikeType();
+		try
+		{
+			name = cidade.BuyBikes(type,number);
+		}
+		catch(InvalidPurchase &i)
+		{
+		    cout << "Invalid purchase, there is no stores with the number and type of bike you desire" << endl;
+		}
+		cout << "Successful purchase! What is your value of satisfaction with the store services ? " << endl;
+		number = getInt();
+		cidade.setStoreReputation(name,number);
+		break;
+	case 3:
+	    return CityManagementMenu(cidade);
+		break;
 	}
 }
 

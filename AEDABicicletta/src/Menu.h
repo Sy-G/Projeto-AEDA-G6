@@ -123,6 +123,15 @@ void ChangePricesMenu(Cidade &cidade);
  *
  * @param cidade City where the points are located
  */
+void StoreOptionsMenu(Cidade &cidade);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ *
+ * @param cidade City where the points are located
+ */
 void ChangeBikesPriceMenu(Cidade &cidade);
 
 

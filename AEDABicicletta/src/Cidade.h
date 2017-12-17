@@ -14,7 +14,9 @@
 #include "Bicicleta.h"
 #include "Ponto.h"
 #include "Utente.h"
+#include "loja.h"
 #include <vector>
+#include <queue>
 #include <tr1/unordered_set>
 
 using namespace std;
@@ -59,12 +61,15 @@ public:
 };
 
 
+typedef priority_queue<Loja*> HEAP_LOJAS;
+
 class Cidade {
 protected:
 	vector<Ponto> pontos;
 	vector<Utente *> utentes;
 	string nome;
 	HashTabBicycle brokenbikes;
+	HEAP_LOJAS  lojas;
 public:
 	vector<Ponto>& getPontos();
 	/**
@@ -226,6 +231,9 @@ public:
 	 */
 	void readUsers(const string& file);
 
+	// TODO
+	void readPoints(const string& file);
+
 	/**
 	 * @brief writes Users to a file.
 	 *
@@ -250,6 +258,14 @@ public:
 	 * @brief deletes a given bike from the registry
 	 */
 	void deleteBike(unsigned int bikeID);
+
+
+	string BuyBikes(string type, int number);
+
+	vector<Loja*> getTop5() const;
+
+	void setStoreReputation(string storeName, int newreputation);
+
 
 	Cidade();
 	virtual ~Cidade();
@@ -394,6 +410,26 @@ class InvalidFile
 {
 public:
 	InvalidFile(){};
+};
+
+
+/**
+ * @brief Exception
+ */
+class NoStores
+{
+public:
+	NoStores(){};
+};
+
+
+/**
+ * @brief Exception
+ */
+class InvalidPurchase
+{
+public:
+	InvalidPurchase(){};
 };
 
 
