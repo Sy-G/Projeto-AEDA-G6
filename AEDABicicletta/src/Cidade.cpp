@@ -493,3 +493,157 @@ void Cidade::printUserstoFile(const string& file){
 	}
 	out.close();
 }
+
+void Cidade::disassembleBike(unsigned int bikeID, string date){
+	HashTabBicycle::const_iterator it;
+
+	bool foundit = false;
+
+	for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
+		if((*it).getID() == bikeID){
+
+			if((*it).getDate() != "0/0/0"){
+				//this one was already disassembled exception!
+			}
+
+			//set and unordered set keys are read only, so we're going to have to create another object with the change we want and insert that in this one's place
+
+			Bicicleta b1 = (*it);
+
+			Date d1 = Date(date);
+
+			b1.setDate(d1);
+
+			brokenbikes.erase(*it);
+
+			brokenbikes.insert(b1);
+
+			foundit = true;
+
+			break;
+		}
+	}
+
+	if(foundit == false){
+		//exception! the bike you wanted to disassemble isn't in this dispersion table or does not exist!
+	}
+}
+
+
+
+void Cidade::consultBikes(){
+	HashTabBicycle::const_iterator it;
+
+	for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
+		cout << "Bicicle of ID: " << (*it).getID();
+
+		if((*it).getDate() == "0/0/0"){
+			cout << " is waiting to be disassembled." << endl;
+		} else {
+			cout << " was disassembled on the date " << (*it).getDate() << endl;
+		}
+	}
+}
+
+
+
+void Cidade::deleteBike(unsigned int bikeID){
+	HashTabBicycle::const_iterator it;
+
+	bool foundit = false;
+
+	for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
+		if((*it).getID() == bikeID){
+			brokenbikes.erase(*it);
+
+			foundit = true;
+
+			break;
+		}
+	}
+
+	if(foundit == false){
+		//exception! the bike you wanted to erase isn't in this dispersion table or does not exist!
+	}
+}
+
+
+
+
+vector<Loja*> Cidade::getTop5() const
+{
+	if (lojas.empty() == true)
+		throw NoStores();
+	if(lojas.size() < 5)
+		throw NoStores();
+	vector<Loja*> top5;
+	HEAP_LOJAS copy = this->lojas;
+	int counter = 0;
+	while (counter < 5)
+	{
+		top5.push_back(copy.top());
+		copy.pop();
+		counter++;
+	}
+	return top5;
+}
+
+
+
+string Cidade::BuyBikes(string type, int number)
+{
+	string name;
+	bool valid_purchase = false;
+	if (lojas.empty() == true)
+		throw InvalidPurchase();
+	HEAP_LOJAS copy = this->lojas;
+	int counter = 0;
+
+	while (lojas.empty() == false)
+	{
+		if (lojas.top()->Buy(type, number) == true)
+		{
+			valid_purchase = true;
+			name = lojas.top()->getName();
+			break;
+		}
+		lojas.pop();
+		counter++;
+	}
+	if (valid_purchase == false)
+		throw InvalidPurchase();
+	while (counter > 0)
+	{
+		lojas.push(copy.top());
+		copy.pop();
+		counter--;
+	}
+	return name;
+}
+
+
+
+void Cidade::setStoreReputation(string storeName, int newreputation)
+{
+
+	HEAP_LOJAS copy = lojas;
+	int counter = 0;
+	while (lojas.empty() == false)
+	{
+		if (lojas.top()->getName() == storeName)
+		{
+			Loja *l1 = lojas.top();
+			lojas.pop();
+			l1->setReputation(newreputation);
+			lojas.push(l1);
+		}
+		lojas.pop();
+		counter++;
+	}
+	while (counter > 0)
+	{
+		lojas.push(copy.top());
+		copy.pop();
+		counter--;
+	}
+}

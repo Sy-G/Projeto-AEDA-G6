@@ -8,8 +8,9 @@
 #ifndef BICICLETA_H_
 #define BICICLETA_H_
 #include <string>
-using namespace std;
+#include "Date.h"
 
+using namespace std;
 
 
 class Bicicleta
@@ -23,6 +24,10 @@ protected:
 	 * @brief Biker's ID
 	 */
 	unsigned int ID;
+	/**
+	 * @brief Date of disassembly for broken bikes
+	 */
+	Date date;
 public:
 	/**
      * @brief Creates a bike
@@ -46,6 +51,15 @@ public:
 	 */
 	virtual string getTipo();
 
+	/**
+	 * @brief This function gets the bike´s disassembly date
+	 */
+	string getDate() const;
+
+	/**
+	 * @brief This function sets the bike´s disassembly date
+	 */
+	void setDate(Date d1);
 };
 
 
