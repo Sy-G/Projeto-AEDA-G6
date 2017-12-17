@@ -15,9 +15,29 @@
 #include "Ponto.h"
 #include "Utente.h"
 #include <vector>
+#include <tr1/unordered_set>
 
 using namespace std;
 
+//this structure will be used to keep track of bicycles sent to be disassembled via dispersion table
+struct BicicleHash {
+
+	int operator() (const Bicicleta& b1) const{
+		//hash function, quadratic sounding is used to promote efficient collision-resolution
+
+	}
+
+	bool operator() (const Bicicleta& b1, const Bicicleta b2) const{
+		//comparison function, two bicycles are only the same if they have the same ID.
+
+		if(b1.getID() == b2.getID()){
+			return true;
+		} else return false;
+	}
+
+};
+
+typedef tr1::unordered_set<Bicicleta, BicicleHash, BicicleHash> HashTabBicycle;
 
 /**
  * @brief Exception
@@ -44,6 +64,7 @@ protected:
 	vector<Ponto> pontos;
 	vector<Utente *> utentes;
 	string nome;
+	HashTabBicycle brokenbikes;
 public:
 	vector<Ponto>& getPontos();
 	/**
@@ -211,6 +232,24 @@ public:
 	 * @param file to write to.
 	 */
 	void printUserstoFile(const string& file);
+
+	/**
+	 * @brief atributes a disassembly date to a bike
+	 *
+	 * @param bike to disassemble's ID;
+	 * @param date of disassembly;
+	 */
+	void disassembleBike(unsigned int bikeID, string date);
+
+	/**
+	 * @brief consults all the bicycles prepped for disassembly
+	 */
+	void consultBikes();
+
+	/**
+	 * @brief deletes a given bike from the registry
+	 */
+	void deleteBike(unsigned int bikeID);
 
 	Cidade();
 	virtual ~Cidade();

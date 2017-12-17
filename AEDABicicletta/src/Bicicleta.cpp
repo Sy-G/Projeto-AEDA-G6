@@ -136,3 +136,16 @@ string Corrida::getTipo()
 {
 	return "Corrida";
 }
+
+
+string Bicicleta::getDate() const{
+	string ss;
+
+	ss = this->date.getDay() + '/' + this->date.getMonth() + '/' + this->date.getYear();
+
+	return ss;
+}
+
+void Bicicleta::setDate(Date d1){
+	this->date = d1;
+}
