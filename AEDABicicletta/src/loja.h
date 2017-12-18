@@ -1,25 +1,33 @@
 #include  <iostream>
 #include "Bicicleta.h"
 #include <vector>
+#include <sstream>
+
 
 using namespace std;
 
 class Loja
 {
+protected:
 	string name;
 	int reputacao;
-	vector<vector<Bicicleta*>> stock;
+	vector<Bicicleta*> stock;
 public:
+	Loja(string name, int reputacao);
+	Loja(string name, string other);
 	int getReputacao() const;
 	string getName() const;
-	vector<vector<Bicicleta*>> getStock() const;
+	vector<Bicicleta*> getStock() const;
 	int getNumberByType(string type) const;
-	vector<Bicicleta*> getStockByType(string type) const;
 	void setReputation(int newreputation);
-	bool Buy(string type, int number);
+	bool Buy(string type, int number, vector<Bicicleta*>& purchase);
+	void addBicicleta(Bicicleta* bike);
 	void printStore();
 	bool operator<(const Loja& l1) const;
+	friend ostream& operator<<(ostream &out, const Loja &p);
 };
+
+
 
 /*
  * @brief Exception
@@ -31,4 +39,22 @@ public:
 	NoBikesOfThisType(string type){
 	this->type = type;
 	};
+};
+
+
+/*
+ * @brief Exception
+ */
+class InvalidStore
+{
+public :
+	InvalidStore(){};
+};
+
+
+class NotAType2
+{
+public:
+	string type;
+	NotAType2(string i):type(i){};
 };

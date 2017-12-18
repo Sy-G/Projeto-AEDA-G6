@@ -247,7 +247,7 @@ void AddNewLocationMenu(Cidade &cidade)
         return CityManagementMenu(cidade);
     }
 
- 	cout << "Location added  successfully." << endl;
+ 	cout << "Location added successfully." << endl;
 }
 
 
@@ -407,10 +407,11 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 	cout
 	<< "1- Get top 5 best reputed stores " << endl
 	<< "2- Buy Bikes " << endl
-	<< "3- Go back" << endl
+	<< "3- Print Stores" << endl
+	<< "4- Go back" << endl
 	<< "Select one" << endl;
 
-	switch (getIntInInterval(1, 3))
+	switch (getIntInInterval(1, 4))
 	{
 	case 1:
 		try
@@ -431,20 +432,32 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 		cout << "How many bikes do you want to buy ? " << endl;
 		number = getInt();
 		cout << "Type of bike ? " << endl;
-		type = getBikeType();
+		try
+		{
+			type = getBikeType();
+		}
+		catch (NotAType &t)
+		{
+			cout << "Invalid type! " << endl;
+			return CityManagementMenu(cidade);
+		}
 		try
 		{
 			name = cidade.BuyBikes(type,number);
 		}
 		catch(InvalidPurchase &i)
 		{
-		    cout << "Invalid purchase, there is no stores with the number and type of bike you desire" << endl;
+		    cout << "Invalid purchase, there is no stores with the number and type of bike you desire." << endl;
+		    return CityManagementMenu(cidade);
 		}
 		cout << "Successful purchase! What is your value of satisfaction with the store services ? " << endl;
 		number = getInt();
 		cidade.setStoreReputation(name,number);
 		break;
 	case 3:
+		cidade.printStoresInMenu();
+		break;
+	case 4 :
 	    return CityManagementMenu(cidade);
 		break;
 	}

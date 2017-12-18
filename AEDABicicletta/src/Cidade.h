@@ -232,7 +232,7 @@ public:
 	void readUsers(const string& file);
 
 	// TODO
-	void readPoints(const string& file);
+	void readStores(const string& file);
 
 	/**
 	 * @brief writes Users to a file.
@@ -260,11 +260,21 @@ public:
 	void deleteBike(unsigned int bikeID);
 
 
+
+
 	string BuyBikes(string type, int number);
 
 	vector<Loja*> getTop5() const;
 
 	void setStoreReputation(string storeName, int newreputation);
+
+	Cidade& addStore(Loja* loja);
+
+	void printStoresInMenu();
+
+	void printStores(ostream &out);
+
+	void printStoresFile(const string &file);
 
 
 	Cidade();

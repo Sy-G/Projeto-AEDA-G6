@@ -430,6 +430,8 @@ void Cidade::readPoints(const string& file)
 	}
 }
 
+
+
 void Cidade::readUsers(const string& file){
 	vector<Utente *> v_p;
 	ifstream in(file.c_str());
@@ -535,7 +537,7 @@ void Cidade::consultBikes(){
 	HashTabBicycle::const_iterator it;
 
 	for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
-		cout << "Bicicle of ID: " << (*it).getID();
+		cout << "Bicycle of ID: " << (*it).getID();
 
 		if((*it).getDate() == "0/0/0"){
 			cout << " is waiting to be disassembled." << endl;
@@ -593,6 +595,7 @@ vector<Loja*> Cidade::getTop5() const
 string Cidade::BuyBikes(string type, int number)
 {
 	string name;
+	vector<Bicicleta*> purchase;
 	bool valid_purchase = false;
 	if (lojas.empty() == true)
 		throw InvalidPurchase();
@@ -601,7 +604,7 @@ string Cidade::BuyBikes(string type, int number)
 
 	while (lojas.empty() == false)
 	{
-		if (lojas.top()->Buy(type, number) == true)
+		if (lojas.top()->Buy(type, number, purchase) == true)
 		{
 			valid_purchase = true;
 			name = lojas.top()->getName();
@@ -647,3 +650,91 @@ void Cidade::setStoreReputation(string storeName, int newreputation)
 		counter--;
 	}
 }
+
+
+Cidade& Cidade::addStore(Loja* loja)
+{
+	this->lojas.push(loja);
+	return *this;
+}
+
+
+
+void Cidade::readStores(const string& file)
+{
+	vector<Loja*> h_l;
+	ifstream in(file.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+
+					throw InvalidStore();
+				}
+				string other;
+				getline(in, other);
+				Loja *l1 = new Loja(name,other);
+				h_l.push_back(l1);
+
+			}
+			catch(InvalidStore &e)
+			{
+				for(size_t i = 0; i < h_l.size(); i++)
+					//h_l.at(i).deleteBicycles();
+				throw InvalidFile();
+			}
+
+		}
+
+		for(size_t i = 0; i < h_l.size(); i++)
+			addStore(h_l.at(i));
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(file);
+	}
+}
+
+
+
+void Cidade::printStoresInMenu()
+{
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		copy.top()->printStore();
+		copy.pop();
+		cout << endl;
+	}
+}
+
+
+void Cidade::printStores(ostream &out)
+{
+
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		out << copy.top() << endl;
+		copy.pop();
+	}
+}
+
+void Cidade::printStoresFile(const string& file)
+{
+	ofstream out(file.c_str());
+	if(out.is_open())
+		printStores(out);
+	out.close();
+}
+
+
