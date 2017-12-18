@@ -653,7 +653,7 @@ void Cidade::setStoreReputation(string storeName, int newreputation)
 
 
 
-void Cidade::insertPart(const Part& p1)
+void Cidade::insertPart(Part& p1)
 {
 	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
 
@@ -672,9 +672,9 @@ void Cidade::insertPart(const Part& p1)
 
 void Cidade::removePart(const string& namePart, const string& supplier )
 {
-	multiset<Part>::iterator iter = this->parts.begin();
+	multiset<Part>::iterator iter =  this->parts.lower_bound(Part(namePart));;
 
-	while(iter != this->parts.end())
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
 	{
 		if(iter->getSupplier() == supplier && iter->getNamePart() == namePart)
 		{
@@ -697,6 +697,55 @@ void Cidade::printTree(ostream& out)
 		out << *iter << endl;
 		iter++;
 	}
+}
+
+void Cidade::buyPart(Part &p1)
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == p1.getNamePart())
+	{
+		if(iter->getSupplier() == p1.getSupplier())
+		{
+			this->parts.erase(iter);
+			this->parts.insert(p1);
+			return;
+		}
+		iter++;
+	}
+
+	throw InvalidPartPurchase();
+}
+
+
+const Part Cidade::getLowestPrice(const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart && iter->getUnitPrice() == 0)
+	{
+		iter++;
+	}
+
+	if(iter != this->parts.end() && iter->getNamePart() == namePart)
+		return *iter;
+
+	throw InvalidPart();
+}
+
+vector<string>	Cidade::getSuppliers() const
+{
+	vector<string> res;
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		if(find(res.begin(), res.end(), iter->getSupplier()) != res.end())
+			res.push_back(iter->getSupplier());
+	}
+	return res;
 }
 
 
