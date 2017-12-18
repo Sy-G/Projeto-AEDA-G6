@@ -234,6 +234,9 @@ public:
 	 */
 	void readUsers(const string& file);
 
+	// TODO
+	void readStores(const string& file);
+
 	/**
 	 * @brief writes Users to a file.
 	 *
@@ -260,6 +263,8 @@ public:
 	void deleteBike(unsigned int bikeID);
 
 
+
+
 	string BuyBikes(string type, int number);
 
 	vector<Loja*> getTop5() const;
@@ -272,6 +277,7 @@ public:
 	 *	@param p1 Part to add to the tree
 	 */
 	void insertPart(const Part& p1);
+	Cidade& addStore(Loja* loja);
 
 	/**
 	 * Removes a part from the tree
@@ -287,6 +293,13 @@ public:
 	 * @param out Destination of the print
 	 */
 	void printTree(ostream& out);
+
+	void printStoresInMenu();
+
+	void printStores(ostream &out);
+
+	void printStoresFile(const string &file);
+
 
 	Cidade();
 	virtual ~Cidade();
