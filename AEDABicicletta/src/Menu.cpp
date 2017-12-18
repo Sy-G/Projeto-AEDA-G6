@@ -403,7 +403,8 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 	string type;
 	int number;
 	string name;
-	vector<Loja*> top5;
+	vector<Loja> top5;
+	vector<Bicicleta*> purchase;
 	cout
 	<< "1- Get top 5 best reputed stores " << endl
 	<< "2- Buy Bikes " << endl
@@ -424,7 +425,7 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 		}
 		for (unsigned int i = 0; i < top5.size(); i++)
 		{
-			top5.at(i)->printStore();
+			top5.at(i).printStore();
 			cout << endl;
 		}
 		break;
@@ -443,7 +444,7 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 		}
 		try
 		{
-			name = cidade.BuyBikes(type,number);
+			name = cidade.BuyBikes(type,number, purchase);
 		}
 		catch(InvalidPurchase &i)
 		{
@@ -452,7 +453,15 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 		}
 		cout << "Successful purchase! What is your value of satisfaction with the store services ? " << endl;
 		number = getInt();
-		cidade.setStoreReputation(name,number);
+		try
+		{
+			cidade.setStoreReputation(name,number);
+		}
+		catch(InvalidStore &p)
+		{
+			cout << "Invalid operation." << endl;
+			return CityManagementMenu(cidade);
+		}
 		break;
 	case 3:
 		cidade.printStoresInMenu();
@@ -949,15 +958,16 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 
 void SaveChangesMenu(Cidade &cidade)
 {
-	string pointfile, userfile;
+	string pointfile, userfile, storefile;
 	cout
 	<< "1- Points" << endl
 	<< "2- Users"  << endl
-	<< "3- All" << endl
-	<< "4- Go back" << endl
+	<< "3- Stores" << endl
+	<< "4- All" << endl
+	<< "5- Go back" << endl
 	<< "Select one" << endl;
 
-	switch(getIntInInterval(1,4))
+	switch(getIntInInterval(1,5))
 	{
 	case 1:
 		cout << "Name of the file to save the points ?" << endl;
@@ -970,14 +980,22 @@ void SaveChangesMenu(Cidade &cidade)
 		cidade.printUserstoFile(userfile);
 		break;
 	case 3:
+		cout << "Name of the file to save the stores ? " << endl;
+		storefile = getFileName();
+		cidade.printStoresFile(storefile);
+		break;
+	case 4:
 		cout << "Name of the file to save the points ?" << endl;
 		pointfile = getFileName();
 		cidade.printPointsFile(pointfile);
 		cout << "Name of the file to save the users ? " << endl;
 		userfile = getFileName();
 		cidade.printUserstoFile(userfile);
+		cout << "Name of the file to save the stores ? " << endl;
+		storefile = getFileName();
+		cidade.printStoresFile(storefile);
 		break;
-	case 4:
+	case 5:
 		return;
 		break;
 	}

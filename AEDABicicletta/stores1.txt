@@ -1,11 +1,14 @@
 GaiaBike 
 10 U U U C C C C U C C C U S S I C C C U S S I
-
 BikeZone 
 7 C C C U S S I C C C U S S I C C C U S S I 
-
 BeneBike 
 5 C C C C U S S I U U U C C C C U I I I C C U
-
 ViCycles 
 8 S S S U U U I I I C C C S I C C C U S S I 
+RBikes
+4 U U U U U U U C C C C C S C S S S I C S 
+Propedalar
+10 I I I I S S S C S C U C U U U S I I 
+LDB
+6 S S C U U C U I S I S C U U 

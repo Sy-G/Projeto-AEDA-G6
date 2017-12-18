@@ -265,9 +265,9 @@ public:
 
 
 
-	string BuyBikes(string type, int number);
+	string BuyBikes(string type, int number, vector<Bicicleta*> & purchase);
 
-	vector<Loja*> getTop5() const;
+	vector<Loja> getTop5() const;
 
 	void setStoreReputation(string storeName, int newreputation);
 
@@ -277,7 +277,6 @@ public:
 	 *	@param p1 Part to add to the tree
 	 */
 	void insertPart(const Part& p1);
-	Cidade& addStore(Loja* loja);
 
 	/**
 	 * Removes a part from the tree
@@ -293,6 +292,12 @@ public:
 	 * @param out Destination of the print
 	 */
 	void printTree(ostream& out);
+
+
+
+
+
+	Cidade& addStore(Loja loja);
 
 	void printStoresInMenu();
 

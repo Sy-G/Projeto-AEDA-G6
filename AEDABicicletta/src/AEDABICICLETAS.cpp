@@ -64,7 +64,7 @@ int main() {
     	}
        }while(validUfile == false);
 
-    /*do{
+    do{
 		validSfile = true;
 		cout << "Name of the file containing the stores ? " << endl;
 		pointfile = getFileName();
@@ -82,7 +82,7 @@ int main() {
 			cout << "Invalid file." << endl;
 			validSfile = false;
 		}
-	}while (validSfile == false);*/
+	}while (validSfile == false);
 
 
 	cout << endl;

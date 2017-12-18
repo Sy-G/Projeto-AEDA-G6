@@ -16,7 +16,6 @@ Loja::Loja(const string & name, const string & other)
 	istringstream in;
 	in.str(other);
 	this->name = name;
-
 	in >> reputacao;
 	if(in.fail())
 		throw InvalidStore();
@@ -91,7 +90,7 @@ void Loja::setReputation(int newreputation)
 bool Loja::Buy(string type, int number, vector<Bicicleta*>& purchase)
 {
 	int counter = 0;
-	if (this->getNumberByType(type) > number)
+	if (this->getNumberByType(type) < number)
 		return false;
 	for (unsigned int i = 0; i < this->stock.size(); i++)
 	{
@@ -101,6 +100,7 @@ bool Loja::Buy(string type, int number, vector<Bicicleta*>& purchase)
 		{
 			purchase.push_back(stock.at(i));
 			stock.erase(stock.begin() + i);
+			i--;
 			counter++;
 		}
 	}
@@ -113,12 +113,12 @@ void Loja::printStore()
 {
 	cout << "Name : " << this->name << endl;
 	cout << "Reputation : " << this->reputacao << endl;
-	cout << " Number of bikes available : " << this->stock.size() << endl;
+	cout << "Number of bikes available : " << this->stock.size() << endl;
 	cout
-	<< " Urbana : " << this->getNumberByType("Urbana") << "; "
-    << " Urbana Simples : " << this->getNumberByType("Urbana_Simples") << "; "
-    << " Corrida : " << this->getNumberByType("Corrida") << "; "
-	<< " Infantil : " << this->getNumberByType("Infantil") << endl;
+	<< "Urbana : " << this->getNumberByType("Urbana") << "; "
+    << "Urbana Simples : " << this->getNumberByType("Urbana_Simples") << "; "
+    << "Corrida : " << this->getNumberByType("Corrida") << "; "
+	<< "Infantil : " << this->getNumberByType("Infantil") << endl;
 }
 
 
@@ -146,7 +146,7 @@ ostream& operator<<(ostream &out, const Loja &p)
 
 bool Loja::operator <(const Loja &l1) const
 {
-	return l1.getReputacao() < this->reputacao;
+	return l1.getReputacao() > this->reputacao;
 }
 
 
