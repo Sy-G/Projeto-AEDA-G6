@@ -321,6 +321,14 @@ public:
 	vector<string> getSuppliers() const;
 
 	/**
+	 * Prints the prices of each supplier of a given part that as already sold something
+	 *
+	 * @param namePart Lists the prices of the parts with this name
+	 * @param out Destination stream
+	 */
+	void printLatestPrices(ostream& out, const string& namePart) const;
+
+	/**
 	 * Reads parts from a given file
 	 *
 	 * @param fileName Name of the file to read

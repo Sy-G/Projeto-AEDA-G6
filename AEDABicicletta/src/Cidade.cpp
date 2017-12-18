@@ -748,6 +748,21 @@ vector<string>	Cidade::getSuppliers() const
 	return res;
 }
 
+void Cidade::printLatestPrices(ostream& out, const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
+	{
+		if(iter->getUnitPrice() != 0)
+		{
+			out << *iter << endl;
+		}
+		iter++;
+	}
+}
+
 void Cidade::readParts(const string& fileName)
 {
 	vector<Part> v_p;
@@ -852,7 +867,7 @@ void Cidade::readStores(const string& file)
 			{
 				for(size_t i = 0; i < h_l.size(); i++)
 					//h_l.at(i).deleteBicycles();
-				throw InvalidFile();
+					throw InvalidFile();
 			}
 
 		}
