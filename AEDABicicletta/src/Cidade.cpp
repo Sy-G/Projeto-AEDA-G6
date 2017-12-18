@@ -466,7 +466,7 @@ void Cidade::readUsers(const string& file){
 		{
 			for(size_t i = 0; i < v_p.size(); i++){
 				//if (v_p.at(i) != NULL)
-					delete v_p.at(i);
+				delete v_p.at(i);
 			}
 			throw InvalidFile();
 		}
@@ -645,5 +645,53 @@ void Cidade::setStoreReputation(string storeName, int newreputation)
 		lojas.push(copy.top());
 		copy.pop();
 		counter--;
+	}
+}
+
+
+
+void Cidade::insertPart(const Part& p1)
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == p1.getNamePart())
+	{
+		if(iter->getSupplier() == p1.getSupplier())
+		{
+			throw InsertionError(*iter);
+		}
+		iter++;
+	}
+
+	this->parts.insert(p1);
+}
+
+void Cidade::removePart(const string& namePart, const string& supplier )
+{
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		if(iter->getSupplier() == supplier && iter->getNamePart() == namePart)
+		{
+			this->parts.erase(iter);
+			return;
+		}
+		iter++;
+	}
+
+	throw RemovingError();
+}
+
+
+void Cidade::printTree(ostream& out)
+{
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		out << *iter << endl;
+		iter++;
 	}
 }

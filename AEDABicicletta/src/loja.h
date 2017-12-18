@@ -8,11 +8,11 @@ class Loja
 {
 	string name;
 	int reputacao;
-	vector<vector<Bicicleta*>> stock;
+	vector<vector<Bicicleta*> > stock;
 public:
 	int getReputacao() const;
 	string getName() const;
-	vector<vector<Bicicleta*>> getStock() const;
+	vector<vector<Bicicleta*> > getStock() const;
 	int getNumberByType(string type) const;
 	vector<Bicicleta*> getStockByType(string type) const;
 	void setReputation(int newreputation);

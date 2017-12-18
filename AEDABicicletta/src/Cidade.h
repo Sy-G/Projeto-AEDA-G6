@@ -15,8 +15,10 @@
 #include "Ponto.h"
 #include "Utente.h"
 #include "loja.h"
+#include "Part.h"
 #include <vector>
 #include <queue>
+#include <set>
 #include <tr1/unordered_set>
 
 using namespace std;
@@ -70,6 +72,7 @@ protected:
 	string nome;
 	HashTabBicycle brokenbikes;
 	HEAP_LOJAS  lojas;
+	multiset<Part> parts;
 public:
 	vector<Ponto>& getPontos();
 	/**
@@ -231,9 +234,6 @@ public:
 	 */
 	void readUsers(const string& file);
 
-	// TODO
-	void readPoints(const string& file);
-
 	/**
 	 * @brief writes Users to a file.
 	 *
@@ -266,6 +266,27 @@ public:
 
 	void setStoreReputation(string storeName, int newreputation);
 
+	/**
+	 *	Adds a given part to the part tree
+	 *
+	 *	@param p1 Part to add to the tree
+	 */
+	void insertPart(const Part& p1);
+
+	/**
+	 * Removes a part from the tree
+	 *
+	 * @param namePart Name of the part to remove
+	 * @param supplier Supplier of the part to remove
+	 */
+	void removePart(const string& namePart, const string& supplier);
+
+	/**
+	 * Prints the tree in increasing order
+	 *
+	 * @param out Destination of the print
+	 */
+	void printTree(ostream& out);
 
 	Cidade();
 	virtual ~Cidade();
@@ -432,5 +453,23 @@ public:
 	InvalidPurchase(){};
 };
 
+/**
+ * Exception, triggered when the insertion in the set fails
+ */
+class InsertionError
+{
+public:
+	Part offender;
+	InsertionError(const Part& p1):offender(p1){}
+};
+
+/**
+ * Exception, could not remove the desired Part
+ */
+class RemovingError
+{
+public:
+	RemovingError(){};
+};
 
 #endif /* CIDADE_H_ */

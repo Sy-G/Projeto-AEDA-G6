@@ -19,7 +19,7 @@ string Loja::getName() const
 
 
 
-vector<vector<Bicicleta*>> Loja::getStock() const
+vector<vector<Bicicleta*> > Loja::getStock() const
 {
 	return this->stock;
 }
