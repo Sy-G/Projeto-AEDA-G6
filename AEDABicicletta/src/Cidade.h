@@ -271,12 +271,15 @@ public:
 
 	void setStoreReputation(string storeName, int newreputation);
 
+	Cidade& addStore(Loja* loja);
+
 	/**
 	 *	Adds a given part to the part tree
 	 *
 	 *	@param p1 Part to add to the tree
 	 */
 	void insertPart(const Part& p1);
+
 
 	/**
 	 * Removes a part from the tree
@@ -293,11 +296,52 @@ public:
 	 */
 	void printTree(ostream& out);
 
+	/**
+	 * Changes the unit price of a given a part with a given supplier
+	 *
+	 * @param p1 Part with the new price
+	 */
+	void buyPart(Part &p1);
 
+	/**
+	 *	Gets the supplier with the lowest price for a given part.
+	 *	Parts with unit price 0 do not count, as no purchase has been made from that supplier.
+	 *
+	 *	@param namePart Name of the part to check for lowest price
+	 *
+	 *	@return Part with the given name and the lowest price, that isn't 0
+	 */
+	const Part getLowestPrice(const string& namePart) const;
 
+	/**
+	 * Gets the name of all the suppliers in a vector
+	 *
+	 * @return Suppliers
+	 */
+	vector<string> getSuppliers() const;
 
+	/**
+	 * Prints the prices of each supplier of a given part that as already sold something
+	 *
+	 * @param namePart Lists the prices of the parts with this name
+	 * @param out Destination stream
+	 */
+	void printLatestPrices(ostream& out, const string& namePart) const;
 
-	Cidade& addStore(Loja loja);
+	/**
+	 * Reads parts from a given file
+	 *
+	 * @param fileName Name of the file to read
+	 */
+	void readParts(const string& fileName);
+
+	/**
+	 *	Prints all parts to a certain file
+	 *
+	 *	@param fileName Destination of the print
+	 */
+	void printParts(const string& fileName);
+
 
 	void printStoresInMenu();
 
@@ -488,6 +532,25 @@ class RemovingError
 {
 public:
 	RemovingError(){};
+};
+
+
+/**
+ * Exception, could not buy the part
+ */
+class InvalidPartPurchase
+{
+public:
+	InvalidPartPurchase(){};
+};
+
+/**
+ * Exception, could not find the part or it was never bought before
+ */
+class InvalidPart
+{
+public:
+	InvalidPart(){};
 };
 
 #endif /* CIDADE_H_ */

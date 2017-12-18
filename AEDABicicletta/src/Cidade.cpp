@@ -692,7 +692,7 @@ void Cidade::setStoreReputation(string storeName, int newreputation)
 
 
 
-void Cidade::insertPart(const Part& p1)
+void Cidade::insertPart(Part& p1)
 {
 	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
 
@@ -711,9 +711,9 @@ void Cidade::insertPart(const Part& p1)
 
 void Cidade::removePart(const string& namePart, const string& supplier )
 {
-	multiset<Part>::iterator iter = this->parts.begin();
+	multiset<Part>::iterator iter =  this->parts.lower_bound(Part(namePart));;
 
-	while(iter != this->parts.end())
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
 	{
 		if(iter->getSupplier() == supplier && iter->getNamePart() == namePart)
 		{
@@ -738,9 +738,140 @@ void Cidade::printTree(ostream& out)
 	}
 }
 
+void Cidade::buyPart(Part &p1)
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
 
-//falta ver se ja existe uma loja com o mesmo nome
-Cidade& Cidade::addStore(Loja loja)
+
+	while(iter != this->parts.end() && iter->getNamePart() == p1.getNamePart())
+	{
+		if(iter->getSupplier() == p1.getSupplier())
+		{
+			this->parts.erase(iter);
+			this->parts.insert(p1);
+			return;
+		}
+		iter++;
+	}
+
+	throw InvalidPartPurchase();
+}
+
+
+const Part Cidade::getLowestPrice(const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart && iter->getUnitPrice() == 0)
+	{
+		iter++;
+	}
+
+	if(iter != this->parts.end() && iter->getNamePart() == namePart)
+		return *iter;
+
+	throw InvalidPart();
+}
+
+vector<string>	Cidade::getSuppliers() const
+{
+	vector<string> res;
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		if(find(res.begin(), res.end(), iter->getSupplier()) != res.end())
+			res.push_back(iter->getSupplier());
+	}
+	return res;
+}
+
+void Cidade::printLatestPrices(ostream& out, const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
+	{
+		if(iter->getUnitPrice() != 0)
+		{
+			out << *iter << endl;
+		}
+		iter++;
+	}
+}
+
+void Cidade::readParts(const string& fileName)
+{
+	vector<Part> v_p;
+	ifstream in(fileName.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				string supplier;
+				getline(in, supplier);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				double price;
+				in >> price;
+				in.ignore();
+				v_p.push_back(Part(name,supplier,price));
+
+			}
+			catch(InvalidPoint &e)
+			{
+				throw InvalidFile();
+			}
+
+		}
+
+		try
+		{
+			for(size_t i = 0; i < v_p.size(); i++)
+				insertPart(v_p.at(i));
+		}
+		catch(InsertionError& e)
+		{
+			throw InvalidFile();
+		}
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(fileName);
+	}
+}
+
+void Cidade::printParts(const string& fileName)
+{
+	ofstream out(fileName.c_str());
+	if(out.is_open()){
+		multiset<Part>::iterator iter = this->parts.begin();
+		while(iter != this->parts.end())
+		{
+			out << *iter << endl;
+			iter++;
+		}
+	}
+	out.close();
+}
+
+
+Cidade& Cidade::addStore(Loja* loja)
 {
 	this->lojas.push(loja);
 	return *this;

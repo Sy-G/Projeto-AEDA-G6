@@ -43,8 +43,8 @@ bool Part::operator ==(const Part& p1) const{
 
 std::ostream& operator <<(std::ostream& out, const Part& p1)
 {
-	out << p1.getNamePart() << ' ' //std::endl
-			<< p1.getSupplier() << ' ' //std::endl
-			<< p1.getUnitPrice() << ' '; //std::endl;
+	out << p1.getNamePart() << std::endl
+			<< p1.getSupplier() << std::endl
+			<< p1.getUnitPrice();
 	return out;
 }
