@@ -24,6 +24,7 @@ int main() {
 	string pointfile, userfile;
 	bool validPfile = true;
 	bool validUfile = true;
+	bool validSfile = true;
 	do{
 		validPfile = true;
 		cout << "Name of the file containing the points ? " << endl;
@@ -62,6 +63,26 @@ int main() {
     		validUfile = false;
     	}
        }while(validUfile == false);
+
+    /*do{
+		validSfile = true;
+		cout << "Name of the file containing the stores ? " << endl;
+		pointfile = getFileName();
+		try
+		{
+		  c1.readStores(pointfile);
+		}
+		catch(NotAFile &f)
+		{
+		  cout << "Not file." << endl;
+		  validSfile = false;
+		}
+		catch(InvalidFile &f)
+		{
+			cout << "Invalid file." << endl;
+			validSfile = false;
+		}
+	}while (validSfile == false);*/
 
 
 	cout << endl;

@@ -583,7 +583,7 @@ vector<Loja*> Cidade::getTop5() const
 	int counter = 0;
 	while (counter < 5)
 	{
-		top5.push_back(copy.top());
+		//top5.push_back(*copy.top());
 		copy.pop();
 		counter++;
 	}
@@ -604,10 +604,13 @@ string Cidade::BuyBikes(string type, int number)
 
 	while (lojas.empty() == false)
 	{
-		if (lojas.top()->Buy(type, number, purchase) == true)
+		Loja l1 = lojas.top();
+		if (l1.Buy(type, number, purchase) == true)
 		{
 			valid_purchase = true;
-			name = lojas.top()->getName();
+			name = lojas.top().getName();
+			lojas.pop();
+			lojas.push(l1);
 			break;
 		}
 		lojas.pop();
@@ -633,11 +636,11 @@ void Cidade::setStoreReputation(string storeName, int newreputation)
 	int counter = 0;
 	while (lojas.empty() == false)
 	{
-		if (lojas.top()->getName() == storeName)
+		if (lojas.top().getName() == storeName)
 		{
-			Loja *l1 = lojas.top();
+			Loja l1 = lojas.top();
 			lojas.pop();
-			l1->setReputation(newreputation);
+			l1.setReputation(newreputation);
 			lojas.push(l1);
 		}
 		lojas.pop();
@@ -710,7 +713,7 @@ Cidade& Cidade::addStore(Loja* loja)
 
 void Cidade::readStores(const string& file)
 {
-	vector<Loja*> h_l;
+	vector<Loja> v_p;
 	ifstream in(file.c_str());
 	if(in.is_open())
 	{
@@ -722,26 +725,28 @@ void Cidade::readStores(const string& file)
 				getline(in, name);
 				if(!in.good())
 				{
-
 					throw InvalidStore();
 				}
 				string other;
 				getline(in, other);
-				Loja *l1 = new Loja(name,other);
-				h_l.push_back(l1);
+				v_p.push_back(Loja(name,other));
 
 			}
 			catch(InvalidStore &e)
 			{
-				for(size_t i = 0; i < h_l.size(); i++)
-					//h_l.at(i).deleteBicycles();
+				//for(size_t i = 0; i < v_p.size(); i++)
+					//v_p.at(i).deleteBicycles();
+				throw InvalidFile();
+			}
+			catch(NotAType2 &t)
+			{
 				throw InvalidFile();
 			}
 
 		}
 
-		for(size_t i = 0; i < h_l.size(); i++)
-			addStore(h_l.at(i));
+	    for(size_t i = 0; i < v_p.size(); i++)
+		  addStore(v_p.at(i));
 
 		in.close();
 		return;
@@ -759,7 +764,8 @@ void Cidade::printStoresInMenu()
 	HEAP_LOJAS copy = lojas;
 	while(copy.empty() == false)
 	{
-		copy.top()->printStore();
+		Loja l1 = copy.top();
+		l1.printStore();
 		copy.pop();
 		cout << endl;
 	}

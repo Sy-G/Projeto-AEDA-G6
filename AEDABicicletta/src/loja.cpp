@@ -11,7 +11,7 @@ Loja::Loja(string name, int reputacao)
 
 
 
-Loja::Loja(string name, string other)
+Loja::Loja(const string & name, const string & other)
 {
 	istringstream in;
 	in.str(other);
@@ -19,35 +19,25 @@ Loja::Loja(string name, string other)
 
 	in >> reputacao;
 	if(in.fail())
-	    throw InvalidStore();
+		throw InvalidStore();
 
-//	int counter = 0;
 	while(in.good())
 	{
-		try
-		{
-			char bicycle;
-			in >> bicycle;
-			if(in.fail())
-				break;
-			if(bicycle == 'C')
-				addBicicleta(new Corrida);
-			else if(bicycle == 'U')
-				addBicicleta(new Urbana);
-			else if(bicycle == 'S')
-				addBicicleta(new Urbana_Simples);
-			else if(bicycle == 'I')
-				addBicicleta(new Infantil);
-			else
-				throw NotAType2("");
-//			counter++;
-		}
-		catch(NotAType2 &e)
-		{
-			for(size_t i = 0; i < stock.size(); i++)
-				delete stock.at(i);
-			throw InvalidStore();
-		}
+		char bicycle;
+		in >> bicycle;
+		if(in.fail())
+			break;
+		if(bicycle == 'C')
+			addBicicleta(new Corrida);
+		else if(bicycle == 'U')
+			addBicicleta(new Urbana);
+		else if(bicycle == 'S')
+			addBicicleta(new Urbana_Simples);
+		else if(bicycle == 'I')
+			addBicicleta(new Infantil);
+		else
+			throw NotAType2("");
+
 	}
 }
 

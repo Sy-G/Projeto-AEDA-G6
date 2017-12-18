@@ -14,7 +14,7 @@ protected:
 	vector<Bicicleta*> stock;
 public:
 	Loja(string name, int reputacao);
-	Loja(string name, string other);
+	Loja(const string & name, const string & other);
 	int getReputacao() const;
 	string getName() const;
 	vector<Bicicleta*> getStock() const;

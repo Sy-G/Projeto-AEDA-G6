@@ -63,7 +63,7 @@ public:
 };
 
 
-typedef priority_queue<Loja*> HEAP_LOJAS;
+typedef priority_queue<Loja> HEAP_LOJAS;
 
 class Cidade {
 protected:
