@@ -320,6 +320,21 @@ public:
 	 */
 	vector<string> getSuppliers() const;
 
+	/**
+	 * Reads parts from a given file
+	 *
+	 * @param fileName Name of the file to read
+	 */
+	void readParts(const string& fileName);
+
+	/**
+	 *	Prints all parts to a certain file
+	 *
+	 *	@param fileName Destination of the print
+	 */
+	void printParts(const string& fileName);
+
+
 	void printStoresInMenu();
 
 	void printStores(ostream &out);

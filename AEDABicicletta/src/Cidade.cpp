@@ -748,6 +748,74 @@ vector<string>	Cidade::getSuppliers() const
 	return res;
 }
 
+void Cidade::readParts(const string& fileName)
+{
+	vector<Part> v_p;
+	ifstream in(fileName.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				string supplier;
+				getline(in, supplier);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				double price;
+				in >> price;
+				in.ignore();
+				v_p.push_back(Part(name,supplier,price));
+
+			}
+			catch(InvalidPoint &e)
+			{
+				throw InvalidFile();
+			}
+
+		}
+
+		try
+		{
+			for(size_t i = 0; i < v_p.size(); i++)
+				insertPart(v_p.at(i));
+		}
+		catch(InsertionError& e)
+		{
+			throw InvalidFile();
+		}
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(fileName);
+	}
+}
+
+void Cidade::printParts(const string& fileName)
+{
+	ofstream out(fileName.c_str());
+	if(out.is_open()){
+		multiset<Part>::iterator iter = this->parts.begin();
+		while(iter != this->parts.end())
+		{
+			out << *iter << endl;
+			iter++;
+		}
+	}
+	out.close();
+}
+
 
 Cidade& Cidade::addStore(Loja* loja)
 {

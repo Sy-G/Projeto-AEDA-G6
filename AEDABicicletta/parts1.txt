@@ -1,0 +1,21 @@
+Name 1
+Sup 1
+10.2
+Name 1
+Sup 2
+10.2
+Name 3
+Sup 3
+5.1
+Name 1
+Sup 4
+1.4
+Name 2
+Sup 2
+0
+Name 3
+Sup 2
+9.1
+Name 2
+Sup 20
+10.9123
