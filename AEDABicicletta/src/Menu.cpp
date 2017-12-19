@@ -157,10 +157,11 @@ void CityManagementMenu(Cidade &cidade)
 			<< "5- Print Users " << endl
 			<< "6- Change prices " << endl
 			<< "7- Store options" << endl
-			<< "8- Go back" << endl
+			<< "8- Part options " << endl
+			<< "9- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 8))
+		switch (getIntInInterval(1, 9))
 		{
 			case 1:
 				try
@@ -194,6 +195,9 @@ void CityManagementMenu(Cidade &cidade)
 				StoreOptionsMenu(cidade);
 				break;
 			case 8:
+				PartOptionsMenu(cidade);
+				break;
+			case 9:
 				return;
 				break;
 		}
@@ -398,7 +402,7 @@ void UserOptionsMenu(Cidade &cidade)
 
 
 
-void StoreOptionsMenu(Cidade &cidade)   // TODO
+void StoreOptionsMenu(Cidade &cidade)
 {
 	string type;
 	int number;
@@ -451,6 +455,9 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 		    cout << "Invalid purchase, there is no stores with the number and type of bike you desire." << endl;
 		    return CityManagementMenu(cidade);
 		}
+
+		cidade.AddPurchasedBikes(purchase);
+
 		cout << "Successful purchase! What is your value of satisfaction with the store services ? " << endl;
 		number = getInt();
 		try
@@ -472,6 +479,117 @@ void StoreOptionsMenu(Cidade &cidade)   // TODO
 	}
 }
 
+
+void PartOptionsMenu(Cidade &cidade)
+{
+	string name;
+	string supplier ;
+	double price;
+	Part p1 ("","",0);
+
+	cout
+	<< "1- Add part" << endl
+	<< "2- Remove part" << endl
+	<< "3- Buy part " << endl
+	<< "4- Lowest price" << endl
+	<< "5- Print suppliers" << endl
+	<< "6- Go back" << endl
+	<< "Select one" << endl;
+
+	switch (getIntInInterval(1, 6))
+	{
+
+	case 1:
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cleanfunction();
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cleanfunction();
+		cout << "Price ? " << endl;
+		price = getDouble();
+		cleanfunction();
+		p1.setNamePart(name);
+		p1.setSupplier(supplier);
+		p1.setUnitPrice(price);
+		try
+		{
+			cidade.insertPart(p1);
+			cout << "Part added successfully !" << endl;
+		}
+		catch(InsertionError &p)
+		{
+			cout << "Error inserting the part !" << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 2:
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cleanfunction();
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cleanfunction();
+		cout << "Price ? " << endl;
+		price = getDouble();
+		cleanfunction();
+		try
+		{
+			cidade.removePart(name,supplier);
+			cout << "Part added successfully ! " << endl;
+		}
+		catch( RemovingError &p)
+		{
+			cout << "Error removing the part !" << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 3:
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cleanfunction();
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cleanfunction();
+		cout << "Price ? " << endl;
+		price = getDouble();
+		cleanfunction();
+		p1.setNamePart(name);
+		p1.setSupplier(supplier);
+		p1.setUnitPrice(price);
+		try
+		{
+			cidade.buyPart(p1);
+			cout << "Successful purchase ! " << endl;
+		}
+		catch(InvalidPartPurchase &p)
+		{
+			cout << "Invalid purchase ! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 4:
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cleanfunction();
+		try
+		{
+			cidade.getLowestPrice(name);
+		}
+		catch(InvalidPart &p)
+		{
+			cout << "" << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 5 :
+		cidade.printSuppliers(cout);
+		break;
+	case 6:
+	    return CityManagementMenu(cidade);
+		break;
+	}
+}
 
 
 void SignInMenu(Cidade &cidade)

@@ -25,6 +25,7 @@ int main() {
 	bool validPfile = true;
 	bool validUfile = true;
 	bool validSfile = true;
+	bool validPTfile = true;
 	do{
 		validPfile = true;
 		cout << "Name of the file containing the points ? " << endl;
@@ -84,6 +85,25 @@ int main() {
 		}
 	}while (validSfile == false);
 
+    do{
+   		validPTfile = true;
+   		cout << "Name of the file containing the parts ? " << endl;
+   		pointfile = getFileName();
+   		try
+   		{
+   		  c1.readParts(pointfile);
+   		}
+   		catch(NotAFile &f)
+   		{
+   		  cout << "Not file." << endl;
+   		  validPTfile = false;
+   		}
+   		catch(InvalidFile &f)
+   		{
+   			cout << "Invalid file." << endl;
+   			validPTfile = false;
+   		}
+   	}while (validPTfile == false);
 
 	cout << endl;
   	FirstMenu(c1);

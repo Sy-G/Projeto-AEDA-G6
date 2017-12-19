@@ -234,8 +234,7 @@ public:
 	 */
 	void readUsers(const string& file);
 
-	// TODO
-	void readStores(const string& file);
+
 
 	/**
 	 * @brief writes Users to a file.
@@ -263,22 +262,12 @@ public:
 	void deleteBike(unsigned int bikeID);
 
 
-
-
-	string BuyBikes(string type, int number, vector<Bicicleta*> & purchase);
-
-	vector<Loja> getTop5() const;
-
-	void setStoreReputation(string storeName, int newreputation);
-
-	Cidade& addStore(Loja* loja);
-
 	/**
 	 *	Adds a given part to the part tree
 	 *
 	 *	@param p1 Part to add to the tree
 	 */
-	void insertPart(const Part& p1);
+	void insertPart(Part& p1);
 
 
 	/**
@@ -320,6 +309,8 @@ public:
 	 */
 	vector<string> getSuppliers() const;
 
+	void printSuppliers(ostream& out);
+
 	/**
 	 * Prints the prices of each supplier of a given part that as already sold something
 	 *
@@ -342,6 +333,22 @@ public:
 	 */
 	void printParts(const string& fileName);
 
+
+
+
+	bool findStore(string name);
+
+	void readStores(const string& file);
+
+	string BuyBikes(string type, int number, vector<Bicicleta*> & purchase);
+
+	bool AddPurchasedBikes(vector<Bicicleta*> &purchase);
+
+	vector<Loja> getTop5() const;
+
+	void setStoreReputation(string storeName, int newreputation);
+
+	Cidade& addStore(Loja loja);
 
 	void printStoresInMenu();
 

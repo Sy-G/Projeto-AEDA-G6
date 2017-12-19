@@ -571,124 +571,6 @@ void Cidade::deleteBike(unsigned int bikeID){
 
 
 
-//done
-vector<Loja> Cidade::getTop5() const
-{
-	if (lojas.empty() == true)
-		throw NoStores();
-	if(lojas.size() < 5)
-		throw NoStores();
-	vector<Loja> top5;
-	HEAP_LOJAS copy = this->lojas;
-	int counter = 0;
-	while (counter < 5)
-	{
-		top5.push_back(copy.top());
-		copy.pop();
-		counter++;
-	}
-	return top5;
-}
-
-
-
-/*
-string Cidade::BuyBikes(string type, int number, vector<Bicicleta*> & purchase)
-{
-	string name;
-	int counter = 0;
-	HEAP_LOJAS copy = lojas;
-	bool valid_purchase = false;
-	while((lojas.empty() == false) && (valid_purchase == false))
-	{
-		counter++;
-		Loja l1 = lojas.top();
-		if (l1.Buy(type,number,purchase) == true)
-		{
-			lojas.pop();
-			lojas.push(l1);
-			valid_purchase = true;
-			name = l1.getName();
-		}
-		lojas.pop();
-	}
-
-	if (valid_purchase == false)
-		throw InvalidPurchase();
-	while (counter > 0)
-	{
-		lojas.push(copy.top());
-		copy.pop();
-		counter--;
-	}
-	return name;
-}
-*/
-
-
-//done
-string Cidade::BuyBikes(string type, int number, vector<Bicicleta*> & purchase)
-{
-	vector<Loja> tmp;
-	string name;
-	bool valid_operation = false;
-	while ((lojas.empty() == false) && (valid_operation == false))
-	{
-		Loja l1 = lojas.top();
-		if (l1.Buy(type,number,purchase) == true)
-		{
-			name = l1.getName();
-			valid_operation = true;
-			tmp.push_back(l1);
-			lojas.pop();
-			break;
-		}
-		tmp.push_back(lojas.top());
-		lojas.pop();
-	}
-
-	if (valid_operation == false)
-		throw InvalidPurchase();
-
-	for (unsigned int i = 0; i < tmp.size(); i++)
-	{
-		lojas.push(tmp.at(i));
-	}
-
-	return name;
-}
-
-
-
-//done
-void Cidade::setStoreReputation(string storeName, int newreputation)
-{
-	vector<Loja> tmp;
-	string name;
-	bool valid_operation = false;
-	while ((lojas.empty() == false) && (valid_operation == false))
-	{
-		Loja l1 = lojas.top();
-		if (l1.getName() == storeName)
-		{
-			valid_operation = true;
-			l1.setReputation(newreputation);
-			tmp.push_back(l1);
-			lojas.pop();
-			break;
-		}
-		tmp.push_back(lojas.top());
-		lojas.pop();
-	}
-
-	if (valid_operation == false)
-		throw InvalidStore();
-
-	for (unsigned int i = 0; i < tmp.size(); i++)
-	{
-		lojas.push(tmp.at(i));
-	}
-}
 
 
 
@@ -783,9 +665,23 @@ vector<string>	Cidade::getSuppliers() const
 	{
 		if(find(res.begin(), res.end(), iter->getSupplier()) != res.end())
 			res.push_back(iter->getSupplier());
+		iter++;
 	}
+
 	return res;
 }
+
+
+void Cidade::printSuppliers(ostream& out)
+{
+	cout << getSuppliers().size() << endl;
+	for (unsigned int i = 0; i < this->getSuppliers().size(); i++)
+	{
+		cout << this->getSuppliers().at(i) << endl;
+	}
+}
+
+
 
 void Cidade::printLatestPrices(ostream& out, const string& namePart) const
 {
@@ -801,6 +697,9 @@ void Cidade::printLatestPrices(ostream& out, const string& namePart) const
 		iter++;
 	}
 }
+
+
+
 
 void Cidade::readParts(const string& fileName)
 {
@@ -871,8 +770,133 @@ void Cidade::printParts(const string& fileName)
 }
 
 
-Cidade& Cidade::addStore(Loja* loja)
+
+
+
+
+bool Cidade::findStore(string name)
 {
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		if (copy.top().getName() == name)
+		{
+			return true;
+		}
+		copy.pop();
+	}
+	return false;
+}
+
+
+
+//done
+vector<Loja> Cidade::getTop5() const
+{
+	if (lojas.empty() == true)
+		throw NoStores();
+	if(lojas.size() < 5)
+		throw NoStores();
+	vector<Loja> top5;
+	HEAP_LOJAS copy = this->lojas;
+	int counter = 0;
+	while (counter < 5)
+	{
+		top5.push_back(copy.top());
+		copy.pop();
+		counter++;
+	}
+	return top5;
+}
+
+
+
+
+//done
+string Cidade::BuyBikes(string type, int number, vector<Bicicleta*> & purchase)
+{
+	vector<Loja> tmp;
+	string name;
+	bool valid_operation = false;
+	while ((lojas.empty() == false) && (valid_operation == false))
+	{
+		Loja l1 = lojas.top();
+		if (l1.Buy(type,number,purchase) == true)
+		{
+			name = l1.getName();
+			valid_operation = true;
+			tmp.push_back(l1);
+			lojas.pop();
+			break;
+		}
+		tmp.push_back(lojas.top());
+		lojas.pop();
+	}
+
+	if (valid_operation == false)
+		throw InvalidPurchase();
+
+	for (unsigned int i = 0; i < tmp.size(); i++)
+	{
+		lojas.push(tmp.at(i));
+	}
+
+	return name;
+}
+
+
+bool Cidade::AddPurchasedBikes(vector<Bicicleta*> & purchase)
+{
+	for (unsigned int i = 0; i < this->pontos.size(); i++)
+	{
+		while((pontos.at(i).getBicicletas().size() < pontos.at(i).getCapacidade()) && (purchase.size() > 0))
+		{
+			pontos.at(i).addBicicleta(purchase.at(0));
+			purchase.erase(purchase.begin());
+		}
+	}
+	if (purchase.size() == 0)
+		return true;
+	return false;
+}
+
+
+//done
+void Cidade::setStoreReputation(string storeName, int newreputation)
+{
+	vector<Loja> tmp;
+	string name;
+	bool valid_operation = false;
+	while ((lojas.empty() == false) && (valid_operation == false))
+	{
+		Loja l1 = lojas.top();
+		if (l1.getName() == storeName)
+		{
+			valid_operation = true;
+			l1.setReputation(newreputation);
+			tmp.push_back(l1);
+			lojas.pop();
+			break;
+		}
+		tmp.push_back(lojas.top());
+		lojas.pop();
+	}
+
+	if (valid_operation == false)
+		throw InvalidStore();
+
+	for (unsigned int i = 0; i < tmp.size(); i++)
+	{
+		lojas.push(tmp.at(i));
+	}
+}
+
+
+Cidade& Cidade::addStore(Loja loja)
+{
+	if (this->findStore(loja.getName()) == true)
+		throw InvalidStore();
+
 	this->lojas.push(loja);
 	return *this;
 }
@@ -914,7 +938,14 @@ void Cidade::readStores(const string& file)
 		}
 
 	    for(size_t i = 0; i < v_p.size(); i++)
-		  addStore(v_p.at(i));
+		try
+	    {
+			 addStore(v_p.at(i));
+	    }
+	    catch(InvalidStore &r)
+	    {
+	    	throw InvalidFile();
+	    }
 
 		in.close();
 		return;
