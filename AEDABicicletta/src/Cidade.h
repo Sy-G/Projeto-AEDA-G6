@@ -84,12 +84,14 @@ public:
 	 */
 	Cidade& sortPointsByDistance(Coordenadas c1);
 
+
 	/**
 	 * @brief Adds a point to the array
 	 *
 	 * @param p1 Point to add
 	 */
 	Cidade& addPoint(Ponto p1);
+
 
 	/**
 	 * @brief If the vector is ordered by distance, finds the closer bicycle of a certain type, else  finds the first it can.
@@ -99,6 +101,7 @@ public:
 	 * @return iterator to the bicycle, or vector<Ponto>.end() se não encontrar
 	 */
 	vector<Ponto>::iterator isThereBicycle(string bicycle);
+
 
 	/**
 	 * @brief calculates the closest point with a certain kind of bicycle
@@ -110,10 +113,12 @@ public:
 	 */
 	vector<Ponto>::iterator closestType(Coordenadas coord, string type);
 
+
 	/**
 	 * @return Returns an iterator to the first point with free space
 	 */
 	vector<Ponto>::iterator isThereSpace();
+
 
 	/**
 	 * @param coord Coordinates to calculate the distance
@@ -122,12 +127,14 @@ public:
 	 */
 	vector<Ponto>::iterator closestSpace(Coordenadas coord);
 
+
 	/**
 	 * @brief Adds a user to the array
 	 *
 	 * @param u1 User to add
 	 */
 	Cidade& addUtente(Utente* u1);
+
 
 	/**
 	 * @brief searches a point in the city
@@ -137,6 +144,7 @@ public:
 	 * @return iterator to the point
 	 */
 	vector<Ponto>::iterator findPoint(string name);
+
 
 	/**
 	 * @brief searches a point in the city
@@ -148,6 +156,7 @@ public:
 	 */
 	bool  findPoint(double x, double y);
 
+
 	/**
 	 * @brief removes an user from the city
 	 *
@@ -155,12 +164,14 @@ public:
 	 */
     Cidade& removeUtente(int id);
 
+
     /**
     * @brief removes a point from the city
     *
     * @param name name of the point
     */
     Cidade& removePonto(string name);
+
 
    /**
 	 * @brief searches an user in the city
@@ -179,6 +190,7 @@ public:
 	 */
 	vector<Bicicleta *> redistributeBikes();
 
+
 	/**
 	 * @brief redistributes a vector of bicycles.
 	 *
@@ -188,12 +200,14 @@ public:
 	 */
 	vector<Bicicleta *> redistributeVector(vector<Bicicleta *> &v, float percentage);
 
+
 	/**
 	 * @brief if the standard deviation of occupation is above a certain level, redistributes the bicycles.
 	 *
 	 * @return bikes that didn't fit (always empty due to implementation)
 	 */
 	vector<Bicicleta *> testOccupation();
+
 
 	/**
 	 * @brief prints all points to out.
@@ -202,16 +216,19 @@ public:
 	 */
 	void printPoints(ostream &out);
 
+
 	/**
 	 * @brief prints all points to out.
 	 */
 	void printPointsinMenu();
+
 
 	/**
 	 * @brief prints all Users to the screen;
 	 *
 	 */
 	void printUsers();
+
 
 	/**
 	 * @brief prints all points to file.
@@ -220,12 +237,14 @@ public:
 	 */
 	void printPointsFile(const string &file);
 
+
 	/**
 	 * @brief reads points from a file.
 	 *
 	 * @param file to read.
 	 */
 	void readPoints(const string& file);
+
 
 	/**
 	 * @brief reads Users from a file.
@@ -235,13 +254,13 @@ public:
 	void readUsers(const string& file);
 
 
-
 	/**
 	 * @brief writes Users to a file.
 	 *
 	 * @param file to write to.
 	 */
 	void printUserstoFile(const string& file);
+
 
 	/**
 	 * @brief atributes a disassembly date to a bike
@@ -251,10 +270,12 @@ public:
 	 */
 	void disassembleBike(unsigned int bikeID, string date);
 
+
 	/**
 	 * @brief consults all the bicycles prepped for disassembly
 	 */
 	void consultBikes();
+
 
 	/**
 	 * @brief deletes a given bike from the registry
@@ -278,6 +299,7 @@ public:
 	 */
 	void removePart(const string& namePart, const string& supplier);
 
+
 	/**
 	 * Prints the tree in increasing order
 	 *
@@ -285,12 +307,14 @@ public:
 	 */
 	void printTree(ostream& out);
 
+
 	/**
 	 * Changes the unit price of a given a part with a given supplier
 	 *
 	 * @param p1 Part with the new price
 	 */
 	void buyPart(Part &p1);
+
 
 	/**
 	 *	Gets the supplier with the lowest price for a given part.
@@ -302,6 +326,7 @@ public:
 	 */
 	const Part getLowestPrice(const string& namePart) const;
 
+
 	/**
 	 * Gets the name of all the suppliers in a vector
 	 *
@@ -309,7 +334,14 @@ public:
 	 */
 	vector<string> getSuppliers() const;
 
+
+	/**
+	 * @brief Prints all the suppliers
+	 *
+	 * @param out Destination stream
+	 */
 	void printSuppliers(ostream& out);
+
 
 	/**
 	 * Prints the prices of each supplier of a given part that as already sold something
@@ -319,12 +351,14 @@ public:
 	 */
 	void printLatestPrices(ostream& out, const string& namePart) const;
 
+
 	/**
 	 * Reads parts from a given file
 	 *
 	 * @param fileName Name of the file to read
 	 */
 	void readParts(const string& fileName);
+
 
 	/**
 	 *	Prints all parts to a certain file
@@ -334,26 +368,90 @@ public:
 	void printParts(const string& fileName);
 
 
-
-
+	 /**
+	 * @brief searches a store in the city
+	 *
+	 * @param name Name of the store
+	 *
+	 * @return True if found, False otherwise
+	 */
 	bool findStore(string name);
 
+
+	/**
+	 * @brief reads Stores from a file
+	 *
+	 * @param file to read
+	 */
 	void readStores(const string& file);
 
+
+	/**
+	 * @brief Buys number amount of bikes of type type
+	 *
+	 * @param type Type of Bike
+	 * @param number Amount of bikes to purchase
+	 * @param purchase Vector that will contain the bikes purchased
+	 *
+	 * @return Name of the store where the bikes were purchased
+	 */
 	string BuyBikes(string type, int number, vector<Bicicleta*> & purchase);
 
+
+	/**
+	 * @brief Adds to the city points the previously purchased bikes
+	 *
+	 * @param purchase Vector that contains purchased bikes
+	 *
+	 * @return True if all the bikes were successfully added, False otherwise
+	 */
 	bool AddPurchasedBikes(vector<Bicicleta*> &purchase);
 
+
+	/**
+	 * @brief Gets the top 5 best reputes stores of the city
+	 *
+	 * @return Vector containing the 5 best reputed strores
+	 */
 	vector<Loja> getTop5() const;
 
+
+	/**
+	 * @brief Sets the reputation of the store specified
+	 *
+	 * @param storeName Name of the store  whose reputation will be set
+	 * @param newreputation The store's new reputation
+	 */
 	void setStoreReputation(string storeName, int newreputation);
 
+
+	/**
+	 * @brief Adds a store to the city
+	 *
+	 * @param loja Store to be added
+	 */
 	Cidade& addStore(Loja loja);
 
+
+	/**
+	 * @brief writes Stores to Menu
+	 */
 	void printStoresInMenu();
 
+
+	/**
+	 * @brief writes Stores
+	 *
+	 * @param out Destination stream
+	 */
 	void printStores(ostream &out);
 
+
+	/**
+	 * @brief writes Stores to a file.
+	 *
+	 * @param file to write to.
+	 */
 	void printStoresFile(const string &file);
 
 

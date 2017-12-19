@@ -674,10 +674,9 @@ vector<string>	Cidade::getSuppliers() const
 
 void Cidade::printSuppliers(ostream& out)
 {
-	cout << getSuppliers().size() << endl;
 	for (unsigned int i = 0; i < this->getSuppliers().size(); i++)
 	{
-		cout << this->getSuppliers().at(i) << endl;
+		out << this->getSuppliers().at(i) << endl;
 	}
 }
 

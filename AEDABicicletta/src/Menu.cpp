@@ -485,6 +485,8 @@ void PartOptionsMenu(Cidade &cidade)
 	string name;
 	string supplier ;
 	double price;
+	double lowestprice;
+	string lowestsupplier;
 	Part p1 ("","",0);
 
 	cout
@@ -500,15 +502,13 @@ void PartOptionsMenu(Cidade &cidade)
 	{
 
 	case 1:
+		cleanfunction();
 		cout << "Name of the part ?  " << endl;
 		getline(cin,name);
-		cleanfunction();
 		cout << "Name of the supplier ? " << endl;
 		getline(cin,supplier);
-		cleanfunction();
 		cout << "Price ? " << endl;
 		price = getDouble();
-		cleanfunction();
 		p1.setNamePart(name);
 		p1.setSupplier(supplier);
 		p1.setUnitPrice(price);
@@ -524,19 +524,17 @@ void PartOptionsMenu(Cidade &cidade)
 		}
 		break;
 	case 2:
+		cleanfunction();
 		cout << "Name of the part ?  " << endl;
 		getline(cin,name);
-		cleanfunction();
 		cout << "Name of the supplier ? " << endl;
 		getline(cin,supplier);
-		cleanfunction();
 		cout << "Price ? " << endl;
 		price = getDouble();
-		cleanfunction();
 		try
 		{
 			cidade.removePart(name,supplier);
-			cout << "Part added successfully ! " << endl;
+			cout << "Part removed successfully ! " << endl;
 		}
 		catch( RemovingError &p)
 		{
@@ -545,15 +543,13 @@ void PartOptionsMenu(Cidade &cidade)
 		}
 		break;
 	case 3:
+		cleanfunction();
 		cout << "Name of the part ?  " << endl;
 		getline(cin,name);
-		cleanfunction();
 		cout << "Name of the supplier ? " << endl;
 		getline(cin,supplier);
-		cleanfunction();
 		cout << "Price ? " << endl;
 		price = getDouble();
-		cleanfunction();
 		p1.setNamePart(name);
 		p1.setSupplier(supplier);
 		p1.setUnitPrice(price);
@@ -569,18 +565,21 @@ void PartOptionsMenu(Cidade &cidade)
 		}
 		break;
 	case 4:
+		cleanfunction();
 		cout << "Name of the part ?  " << endl;
 		getline(cin,name);
-		cleanfunction();
 		try
 		{
-			cidade.getLowestPrice(name);
+			Part p2  = cidade.getLowestPrice(name);
+			lowestprice = p2.getUnitPrice();
+			lowestsupplier = p2.getSupplier();
 		}
 		catch(InvalidPart &p)
 		{
-			cout << "" << endl;
+			cout << "Invalid part ! " << endl;
 			return CityManagementMenu(cidade);
 		}
+		cout << "The lowest price for part " << name << " is " << lowestprice << " from supplier " << lowestsupplier << ". "<< endl;
 		break;
 	case 5 :
 		cidade.printSuppliers(cout);
@@ -590,7 +589,6 @@ void PartOptionsMenu(Cidade &cidade)
 		break;
 	}
 }
-
 
 void SignInMenu(Cidade &cidade)
 {
@@ -1076,16 +1074,17 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 
 void SaveChangesMenu(Cidade &cidade)
 {
-	string pointfile, userfile, storefile;
+	string pointfile, userfile, storefile, partfile;
 	cout
 	<< "1- Points" << endl
 	<< "2- Users"  << endl
 	<< "3- Stores" << endl
-	<< "4- All" << endl
-	<< "5- Go back" << endl
+	<< "4- Parts" << endl
+	<< "5- All" << endl
+	<< "6- Go back" << endl
 	<< "Select one" << endl;
 
-	switch(getIntInInterval(1,5))
+	switch(getIntInInterval(1,6))
 	{
 	case 1:
 		cout << "Name of the file to save the points ?" << endl;
@@ -1103,6 +1102,11 @@ void SaveChangesMenu(Cidade &cidade)
 		cidade.printStoresFile(storefile);
 		break;
 	case 4:
+		cout << "Name of the file to save the parts ? " << endl;
+		partfile = getFileName();
+		cidade.printParts(storefile);
+		break;
+	case 5:
 		cout << "Name of the file to save the points ?" << endl;
 		pointfile = getFileName();
 		cidade.printPointsFile(pointfile);
@@ -1112,8 +1116,11 @@ void SaveChangesMenu(Cidade &cidade)
 		cout << "Name of the file to save the stores ? " << endl;
 		storefile = getFileName();
 		cidade.printStoresFile(storefile);
+		cout << "Name of the file to save the parts ? " << endl;
+		partfile = getFileName();
+		cidade.printParts(storefile);
 		break;
-	case 5:
+	case 6:
 		return;
 		break;
 	}
