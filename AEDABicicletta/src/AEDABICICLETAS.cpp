@@ -103,6 +103,11 @@ int main() {
    			cout << "Invalid file." << endl;
    			validPTfile = false;
    		}
+   		catch(InvalidPoint &p)
+   		{
+   			cout << "Invalid file." << endl;
+   			validPTfile = false;
+   		}
    	}while (validPTfile == false);
 
 	cout << endl;

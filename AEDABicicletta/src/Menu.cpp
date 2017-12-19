@@ -458,8 +458,8 @@ void StoreOptionsMenu(Cidade &cidade)
 
 		cidade.AddPurchasedBikes(purchase);
 
-		cout << "Successful purchase! What is your value of satisfaction with the store services ? " << endl;
-		number = getInt();
+		cout << "Successful purchase! What is your value of satisfaction with the store services ?  (0-15) " << endl;
+		number = getIntInInterval(0,15);
 		try
 		{
 			cidade.setStoreReputation(name,number);
@@ -478,6 +478,7 @@ void StoreOptionsMenu(Cidade &cidade)
 		break;
 	}
 }
+
 
 
 void PartOptionsMenu(Cidade &cidade)
@@ -589,6 +590,8 @@ void PartOptionsMenu(Cidade &cidade)
 		break;
 	}
 }
+
+
 
 void SignInMenu(Cidade &cidade)
 {
