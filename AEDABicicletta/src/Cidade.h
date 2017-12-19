@@ -278,7 +278,7 @@ public:
 	 *
 	 *	@param p1 Part to add to the tree
 	 */
-	void insertPart(const Part& p1);
+	void insertPart(Part& p1);
 
 
 	/**

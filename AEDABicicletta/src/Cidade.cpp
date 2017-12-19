@@ -781,8 +781,9 @@ vector<string>	Cidade::getSuppliers() const
 
 	while(iter != this->parts.end())
 	{
-		if(find(res.begin(), res.end(), iter->getSupplier()) != res.end())
+		if(find(res.begin(), res.end(), iter->getSupplier()) == res.end())
 			res.push_back(iter->getSupplier());
+		iter++;
 	}
 	return res;
 }
