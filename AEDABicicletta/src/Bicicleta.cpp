@@ -20,6 +20,10 @@ Bicicleta::Bicicleta() : ID(++ultimoID)
 {
 }
 
+Bicicleta::Bicicleta(unsigned int ID, string date){
+	this->ID = ID;
+	this->date = Date(date);
+}
 
 
 Bicicleta::~Bicicleta() {

@@ -359,6 +359,20 @@ public:
 	 */
 	void readParts(const string& fileName);
 
+	/**
+	 * Reads bikes from a given file
+	 *
+	 * @param fileName Name of the file to read
+	 */
+	void readBikes(const string& fileName);
+
+	/**
+	 *	Prints all bikes to a certain file
+	 *
+	 *	@param file Destination of the print
+	 */
+	void printBikes(const string& file);
+
 
 	/**
 	 *	Prints all parts to a certain file
