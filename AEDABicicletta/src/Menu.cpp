@@ -113,6 +113,58 @@ string getBikeType()
 }
 
 
+bool anobissexto(int ano)
+{
+	if ((ano % 400) == 0)
+		return true;
+	else
+	{
+		if (((ano % 4) == 0) && ((ano % 100) != 0))
+			return true;
+		else
+			return false;
+	}
+}
+
+
+
+int ndiasmes(int mes, int ano)
+{
+	int res;
+	switch (mes)
+	{
+	case (1): case (3): case (5): case (7): case (8): case (10): case (12):
+		res = 31;
+		break;
+	case (4): case (6): case (9): case (11):
+		res = 30;
+		break;
+	case (2):
+	{
+		if (anobissexto(ano))
+			res = 29;
+		else
+			res = 28;
+	}
+	break;
+	}
+	return res;
+}
+
+
+
+bool validDate(int dia, int mes, int ano)
+{
+	if ((mes > 12) || (mes < 0))
+		return false;
+	if (dia < 0)
+		return false;
+	int ndias = ndiasmes(mes, ano);
+	if (dia > ndias)
+		return false;
+	return true;
+}
+
 
 void FirstMenu(Cidade &cidade)
 {
@@ -158,10 +210,11 @@ void CityManagementMenu(Cidade &cidade)
 			<< "6- Change prices " << endl
 			<< "7- Store options" << endl
 			<< "8- Part options " << endl
-			<< "9- Go back" << endl
+			<< "9- Disassemble options" << endl
+			<< "10- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 9))
+		switch (getIntInInterval(1, 10))
 		{
 			case 1:
 				try
@@ -198,6 +251,9 @@ void CityManagementMenu(Cidade &cidade)
 				PartOptionsMenu(cidade);
 				break;
 			case 9:
+				DisassembleBikeMenu(cidade);
+				break;
+			case 10:
 				return;
 				break;
 		}
@@ -567,7 +623,7 @@ void PartOptionsMenu(Cidade &cidade)
 		break;
 	case 4:
 		cleanfunction();
-		cout << "Name of the part ?  " << endl;
+		cout << "Name of the part ? " << endl;
 		getline(cin,name);
 		try
 		{
@@ -589,6 +645,71 @@ void PartOptionsMenu(Cidade &cidade)
 	    return CityManagementMenu(cidade);
 		break;
 	}
+}
+
+
+
+void DisassembleBikeMenu(Cidade &cidade)
+{
+	int bikeid;
+	string date;
+
+	cout
+	<< "1- Disassemble bike" << endl
+	<< "2- Delete bike " << endl
+	<< "3- Print bikes for disassemble" << endl
+	<< "4- Go back" << endl
+	<< "Select one" << endl;
+
+	switch (getIntInInterval(1,4))
+	{
+	case 1:
+		cout << "Bike's id number ?" << endl;
+		bikeid = getInt();
+		cout << "Disassemble date ? " << endl;
+		cin >> date;
+
+		/*if (validDate(d1.getDay(),d1.getMonth(), d1.getYear() == false))
+		{
+			cout << "Invalid date !" << endl;
+			return CityManagementMenu(cidade);
+		}*/
+		try
+		{
+			cidade.disassembleBike(bikeid,date);
+		}
+		catch( BikeAlreadyDisassembled &o)
+		{
+			cout << "The bike has already been disassembled!" << endl;
+			return CityManagementMenu(cidade);
+		}
+		catch (BikeNotExist &t)
+		{
+			cout << "The bike does not exist ! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 2 :
+		cout << "Bike's id number ?" << endl;
+		bikeid = getInt();
+		try
+		{
+			cidade.deleteBike(bikeid);
+		}
+		catch(BikeNotExist &r)
+		{
+			cout << "The bike does not exist ! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 3:
+		cidade.consultBikes();
+		break;
+	case 4:
+		return CityManagementMenu(cidade);
+		break;
+	}
+
 }
 
 

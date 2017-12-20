@@ -54,11 +54,47 @@ string getFileName();
 
 
 /**
-* @brief Getts a bike type (string)
+* @brief Gets a bike type (string)
 *
 * @return The bike type string if it is in fact a bike type, throws an exception otherwise
 */
 string getBikeType();
+
+
+
+/**
+* @brief Checks is a year is a leap year (has 365 or 366 days)
+*
+* @param ano The year
+*
+* @return True  if the year is a leap year, False otherwise
+*/
+bool anobissexto(int ano);
+
+
+
+/*
+ * @brief Gets the number of days of a given month in a given year
+ *
+ * @param mes The month
+ * @param ano The year
+ *
+ * @return The number of days
+ */
+int ndiasmes(int mes, int ano);
+
+
+
+/*
+ * @brief Validates a date
+ *
+ * @param dia Day
+ * @param mes Month
+ * @param ano Year
+ *
+ * @return True if the date is valid, False otherwise
+ */
+bool validDate(int dia, int mes, int ano);
 
 
 
@@ -133,6 +169,15 @@ void StoreOptionsMenu(Cidade &cidade);
  * @param cidade City where the points are located
  */
 void PartOptionsMenu(Cidade &cidade);
+
+
+
+/*
+ * @brief Calls the functions needed to implement the presented functionalities
+ *
+ * @param cidade City where the points are located
+ */
+void DisassembleBikeMenu(Cidade &cidade);
 
 
 
