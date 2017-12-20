@@ -653,7 +653,6 @@ void DisassembleBikeMenu(Cidade &cidade)
 {
 	int bikeid;
 	string date;
-
 	cout
 	<< "1- Disassemble bike" << endl
 	<< "2- Delete bike " << endl
@@ -664,30 +663,7 @@ void DisassembleBikeMenu(Cidade &cidade)
 	switch (getIntInInterval(1,4))
 	{
 	case 1:
-		cout << "Bike's id number ?" << endl;
-		bikeid = getInt();
-		cout << "Disassemble date ? " << endl;
-		cin >> date;
-
-		/*if (validDate(d1.getDay(),d1.getMonth(), d1.getYear() == false))
-		{
-			cout << "Invalid date !" << endl;
-			return CityManagementMenu(cidade);
-		}*/
-		try
-		{
-			cidade.disassembleBike(bikeid,date);
-		}
-		catch( BikeAlreadyDisassembled &o)
-		{
-			cout << "The bike has already been disassembled!" << endl;
-			return CityManagementMenu(cidade);
-		}
-		catch (BikeNotExist &t)
-		{
-			cout << "The bike does not exist ! " << endl;
-			return CityManagementMenu(cidade);
-		}
+		DisassembleMenu(cidade);
 		break;
 	case 2 :
 		cout << "Bike's id number ?" << endl;
@@ -712,6 +688,36 @@ void DisassembleBikeMenu(Cidade &cidade)
 
 }
 
+void DisassembleMenu(Cidade & cidade)
+{
+	int bikeid;
+	string date;
+	cout << "Bike's id number ?" << endl;
+	bikeid = getInt();
+	cout << "Disassemble date ? " << endl;
+	cin >> date;
+	Date d1(date);
+
+	if (validDate(d1.getDay(),d1.getMonth(), d1.getYear() == false))
+	{
+		cout << "Invalid date !" << endl;
+		return CityManagementMenu(cidade);
+	}
+	try
+	{
+		cidade.disassembleBike(bikeid,date);
+	}
+	catch( BikeAlreadyDisassembled &o)
+	{
+		cout << "The bike has already been disassembled!" << endl;
+		return CityManagementMenu(cidade);
+	}
+	catch (BikeNotExist &t)
+	{
+		cout << "The bike does not exist ! " << endl;
+		return CityManagementMenu(cidade);
+	}
+}
 
 
 void SignInMenu(Cidade &cidade)
