@@ -652,7 +652,6 @@ void PartOptionsMenu(Cidade &cidade)
 void DisassembleBikeMenu(Cidade &cidade)
 {
 	int bikeid;
-	string date;
 	cout
 	<< "1- Disassemble bike" << endl
 	<< "2- Delete bike " << endl
@@ -694,7 +693,7 @@ void DisassembleMenu(Cidade & cidade)
 	string date;
 	cout << "Bike's id number ?" << endl;
 	bikeid = getInt();
-	cout << "Disassemble date ? " << endl;
+	cout << "Disassemble date ? (day/month/year) " << endl;
 	cin >> date;
 	Date d1(date);
 

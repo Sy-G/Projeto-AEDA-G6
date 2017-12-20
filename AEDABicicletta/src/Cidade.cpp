@@ -326,11 +326,13 @@ vector<Bicicleta*> Cidade::testOccupation()
 		return redistributeBikes();
 }
 
+
 void Cidade::printPoints(ostream& out)
 {
 	for(size_t i = 0; i < pontos.size(); i++)
 		out << pontos.at(i) << endl;
 }
+
 
 void Cidade::printPointsinMenu()
 {
@@ -360,6 +362,7 @@ void Cidade::printPointsinMenu()
 	}
 }
 
+
 void Cidade::printUsers()
 {
 	for(unsigned int i = 0; i < utentes.size(); i++){
@@ -369,6 +372,7 @@ void Cidade::printUsers()
 		}
 	}
 }
+
 
 void Cidade::printPointsFile(const string& file)
 {
@@ -482,6 +486,8 @@ void Cidade::readUsers(const string& file){
 	}
 }
 
+
+
 void Cidade::printUserstoFile(const string& file){
 	ofstream out(file.c_str());
 	if(out.is_open()){
@@ -495,6 +501,8 @@ void Cidade::printUserstoFile(const string& file){
 	}
 	out.close();
 }
+
+
 
 void Cidade::disassembleBike(unsigned int bikeID, string date){
 	HashTabBicycle::const_iterator it;
@@ -574,9 +582,6 @@ void Cidade::deleteBike(unsigned int bikeID){
 
 
 
-
-
-
 void Cidade::insertPart(Part& p1)
 {
 	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
@@ -593,6 +598,8 @@ void Cidade::insertPart(Part& p1)
 
 	this->parts.insert(p1);
 }
+
+
 
 void Cidade::removePart(const string& namePart, const string& supplier )
 {
@@ -612,6 +619,7 @@ void Cidade::removePart(const string& namePart, const string& supplier )
 }
 
 
+
 void Cidade::printTree(ostream& out)
 {
 	multiset<Part>::iterator iter = this->parts.begin();
@@ -622,6 +630,7 @@ void Cidade::printTree(ostream& out)
 		iter++;
 	}
 }
+
 
 void Cidade::buyPart(Part &p1)
 {
@@ -659,6 +668,8 @@ const Part Cidade::getLowestPrice(const string& namePart) const
 	throw InvalidPart();
 }
 
+
+
 vector<string>	Cidade::getSuppliers() const
 {
 	vector<string> res;
@@ -673,6 +684,7 @@ vector<string>	Cidade::getSuppliers() const
 
 	return res;
 }
+
 
 
 void Cidade::printSuppliers(ostream& out)
@@ -757,6 +769,8 @@ void Cidade::readParts(const string& fileName)
 	}
 }
 
+
+
 void Cidade::printParts(const string& fileName)
 {
 	ofstream out(fileName.c_str());
@@ -792,7 +806,6 @@ bool Cidade::findStore(string name)
 
 
 
-//done
 vector<Loja> Cidade::getTop5() const
 {
 	if (lojas.empty() == true)
@@ -813,8 +826,6 @@ vector<Loja> Cidade::getTop5() const
 
 
 
-
-//done
 string Cidade::BuyBikes(string type, int number, vector<Bicicleta*> & purchase)
 {
 	vector<Loja> tmp;
@@ -863,7 +874,7 @@ bool Cidade::AddPurchasedBikes(vector<Bicicleta*> & purchase)
 }
 
 
-//done
+
 void Cidade::setStoreReputation(string storeName, int newreputation)
 {
 	vector<Loja> tmp;
@@ -959,7 +970,7 @@ void Cidade::readStores(const string& file)
 }
 
 
-//done
+
 void Cidade::printStoresInMenu()
 {
 	HEAP_LOJAS copy = lojas;

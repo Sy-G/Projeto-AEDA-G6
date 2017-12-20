@@ -110,7 +110,7 @@ int main() {
    			validPTfile = false;
    		}
    	}while (validPTfile == false);
-/*
+
     do{
 		validBKfile = true;
 		cout << "Name of the file containing the bikes for disassemble ? " << endl;
@@ -125,7 +125,7 @@ int main() {
 		  validBKfile = false;
 		}
 
-	}while (validBKfile == false);*/
+	}while (validBKfile == false);
 
 	cout << endl;
   	FirstMenu(c1);
