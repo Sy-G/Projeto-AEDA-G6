@@ -1018,20 +1018,18 @@ void Cidade::readBikes(const string& fileName){
 				string idline;
 				getline(in, idline);
 
+				string date;
+				getline(in, date);
+
 				ss.str(idline);
 
 				int id;
 
 				ss >> id;
 
-				string date;
-				getline(in, date);
+				Date d1 = Date(date);
 
-				if(date == "Data: VAZIA\n"){
-					v_p.push_back(Bicicleta(id, "0/0/0"));
-				} else {
-					v_p.push_back(Bicicleta(id, date));
-				}
+				v_p.push_back(Bicicleta(id, d1));
 		}
 
 		for(size_t i = 0; i < v_p.size(); i++){
@@ -1056,12 +1054,7 @@ void Cidade::printBikes(const string& file){
 
 		for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
 			out << (*it).getID() << endl;
-
-			if((*it).getDate() == "0/0/0"){
-				out << "Data: VAZIA" << endl;
-			} else {
-				out << "Data: " << (*it).getDate() << endl;
-			}
+			out << (*it).getDate() << endl;
 		}
 
 		out.close();

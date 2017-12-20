@@ -697,11 +697,12 @@ void DisassembleMenu(Cidade & cidade)
 	cin >> date;
 	Date d1(date);
 
-	if (validDate(d1.getDay(),d1.getMonth(), d1.getYear() == false))
+	/*if (validDate(d1.getDay(),d1.getMonth(), d1.getYear() == false))
 	{
 		cout << "Invalid date !" << endl;
 		return CityManagementMenu(cidade);
-	}
+	}*/
+
 	try
 	{
 		cidade.disassembleBike(bikeid,date);

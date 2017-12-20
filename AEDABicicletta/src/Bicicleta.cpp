@@ -7,6 +7,7 @@
 
 #include "Bicicleta.h"
 #include <string>
+#include <sstream>
 using namespace std;
 
 unsigned int Bicicleta::ultimoID = 0;
@@ -20,9 +21,9 @@ Bicicleta::Bicicleta() : ID(++ultimoID)
 {
 }
 
-Bicicleta::Bicicleta(unsigned int ID, string date){
+Bicicleta::Bicicleta(unsigned int ID, Date date){
 	this->ID = ID;
-	this->date = Date(date);
+	this->date = date;
 }
 
 
@@ -143,11 +144,11 @@ string Corrida::getTipo()
 
 
 string Bicicleta::getDate() const{
-	string ss;
+	ostringstream ss;
 
-	ss = this->date.getDay() + '/' + this->date.getMonth() + '/' + this->date.getYear();
+	ss << this->date.getDay() << "/" << this->date.getMonth() << "/" << this->date.getYear();
 
-	return ss;
+	return ss.str();
 }
 
 void Bicicleta::setDate(Date d1){

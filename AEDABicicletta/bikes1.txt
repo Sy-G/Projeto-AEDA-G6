@@ -1,12 +1,12 @@
 1
-Data: VAZIA
+0/0/0
 2
-Data: 6/5/2016
+6/5/2016
 3
-Data: 4/3/2016 
+4/3/2016 
 4
-Data: VAZIA
+0/0/0
 29
-Data: VAZIA
+0/0/0
 59
-Data: VAZIA
+0/0/0
