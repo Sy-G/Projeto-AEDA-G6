@@ -1007,6 +1007,8 @@ void Cidade::printStoresFile(const string& file)
 void Cidade::readBikes(const string& fileName){
 	vector<Bicicleta> v_p;
 
+	istringstream ss;
+
 	ifstream in(fileName.c_str());
 
 	if(in.is_open())
@@ -1016,15 +1018,19 @@ void Cidade::readBikes(const string& fileName){
 				string idline;
 				getline(in, idline);
 
+				ss.str(idline);
+
+				int id;
+
+				ss >> id;
+
 				string date;
 				getline(in, date);
 
-				in.ignore();
-
-				if(date == "Data: VAZIA"){
-					v_p.push_back(Bicicleta(stoi(idline), "0/0/0"));
+				if(date == "Data: VAZIA\n"){
+					v_p.push_back(Bicicleta(id, "0/0/0"));
 				} else {
-					v_p.push_back(Bicicleta(stoi(idline), date));
+					v_p.push_back(Bicicleta(id, date));
 				}
 		}
 
