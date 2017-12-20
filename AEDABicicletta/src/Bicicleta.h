@@ -33,6 +33,12 @@ public:
      * @brief Creates a bike
 	 */
 	Bicicleta();
+
+	/**
+     * @brief Creates a bike with parameters
+	 */
+	Bicicleta(unsigned int ID, string date);
+
 	/**
      * @brief Destructor
 	 */

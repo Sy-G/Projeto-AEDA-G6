@@ -993,3 +993,62 @@ void Cidade::printStoresFile(const string& file)
 }
 
 
+void Cidade::readBikes(const string& fileName){
+	vector<Bicicleta> v_p;
+
+	ifstream in(fileName.c_str());
+
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+				string idline;
+				getline(in, idline);
+
+				string date;
+				getline(in, date);
+
+				in.ignore();
+
+				if(date == "Data: VAZIA"){
+					v_p.push_back(Bicicleta(stoi(idline), "0/0/0"));
+				} else {
+					v_p.push_back(Bicicleta(stoi(idline), date));
+				}
+		}
+
+		for(size_t i = 0; i < v_p.size(); i++){
+			brokenbikes.insert(v_p.at(i));
+		}
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(fileName);
+	}
+}
+
+void Cidade::printBikes(const string& file){
+
+	ofstream out(file.c_str());
+
+	if(out.is_open()){
+		HashTabBicycle::const_iterator it;
+
+		for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
+			out << (*it).getID() << endl;
+
+			if((*it).getDate() == "0/0/0"){
+				out << "Data: VAZIA" << endl;
+			} else {
+				out << "Data: " << (*it).getDate() << endl;
+			}
+		}
+
+		out.close();
+	}
+}
+
+
