@@ -40,9 +40,3 @@ int Date::getYear() const{
 Date::~Date() {
 	// TODO Auto-generated destructor stub
 }
-
-
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

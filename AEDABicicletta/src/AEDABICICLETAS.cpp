@@ -26,6 +26,7 @@ int main() {
 	bool validUfile = true;
 	bool validSfile = true;
 	bool validPTfile = true;
+	bool validBKfile = true;
 	do{
 		validPfile = true;
 		cout << "Name of the file containing the points ? " << endl;
@@ -109,6 +110,22 @@ int main() {
    			validPTfile = false;
    		}
    	}while (validPTfile == false);
+/*
+    do{
+		validBKfile = true;
+		cout << "Name of the file containing the bikes for disassemble ? " << endl;
+		pointfile = getFileName();
+		try
+		{
+		  c1.readBikes(pointfile);
+		}
+		catch(NotAFile &f)
+		{
+		  cout << "Not file." << endl;
+		  validBKfile = false;
+		}
+
+	}while (validBKfile == false);*/
 
 	cout << endl;
   	FirstMenu(c1);

@@ -1204,17 +1204,18 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 
 void SaveChangesMenu(Cidade &cidade)
 {
-	string pointfile, userfile, storefile, partfile;
+	string pointfile, userfile, storefile, partfile, bikefile;
 	cout
 	<< "1- Points" << endl
 	<< "2- Users"  << endl
 	<< "3- Stores" << endl
 	<< "4- Parts" << endl
-	<< "5- All" << endl
-	<< "6- Go back" << endl
+	<< "5- Bikes for disassemble" << endl
+	<< "6- All" << endl
+	<< "7- Go back" << endl
 	<< "Select one" << endl;
 
-	switch(getIntInInterval(1,6))
+	switch(getIntInInterval(1,7))
 	{
 	case 1:
 		cout << "Name of the file to save the points ?" << endl;
@@ -1237,6 +1238,11 @@ void SaveChangesMenu(Cidade &cidade)
 		cidade.printParts(storefile);
 		break;
 	case 5:
+		cout << "Name f the file to save the bikes for disassemble ? " << endl;
+		bikefile = getFileName();
+		cidade.printBikes(bikefile);
+		break;
+	case 6:
 		cout << "Name of the file to save the points ?" << endl;
 		pointfile = getFileName();
 		cidade.printPointsFile(pointfile);
@@ -1249,8 +1255,11 @@ void SaveChangesMenu(Cidade &cidade)
 		cout << "Name of the file to save the parts ? " << endl;
 		partfile = getFileName();
 		cidade.printParts(storefile);
+		cout << "Name f the file to save the bikes for disassemble ? " << endl;
+		bikefile = getFileName();
+		cidade.printBikes(bikefile);
 		break;
-	case 6:
+	case 7:
 		return;
 		break;
 	}
