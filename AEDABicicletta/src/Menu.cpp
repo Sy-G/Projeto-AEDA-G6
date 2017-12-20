@@ -156,10 +156,12 @@ void CityManagementMenu(Cidade &cidade)
 			<< "4- Print locations " << endl
 			<< "5- Print Users " << endl
 			<< "6- Change prices " << endl
-			<< "7- Go back" << endl
+			<< "7- Store options" << endl
+			<< "8- Part options " << endl
+			<< "9- Go back" << endl
 			<< "Select one" << endl;
 
-		switch (getIntInInterval(1, 7))
+		switch (getIntInInterval(1, 9))
 		{
 			case 1:
 				try
@@ -190,6 +192,12 @@ void CityManagementMenu(Cidade &cidade)
 				ChangePricesMenu(cidade);
 				break;
 			case 7:
+				StoreOptionsMenu(cidade);
+				break;
+			case 8:
+				PartOptionsMenu(cidade);
+				break;
+			case 9:
 				return;
 				break;
 		}
@@ -243,7 +251,7 @@ void AddNewLocationMenu(Cidade &cidade)
         return CityManagementMenu(cidade);
     }
 
- 	cout << "Location added  successfully." << endl;
+ 	cout << "Location added successfully." << endl;
 }
 
 
@@ -279,9 +287,9 @@ void ChangePricesMenu(Cidade &cidade)
 	switch(getIntInInterval(1,3))
 	{
 	case 1:
-		int mpayment;
+		double mpayment;
 		cout << "New monthly payment ? " << endl;
-		mpayment = getInt();
+		mpayment = getDouble();
 		if (mpayment == -1)
 			return CityManagementMenu(cidade);
 		Socio::setMensalidade(mpayment);
@@ -389,6 +397,197 @@ void UserOptionsMenu(Cidade &cidade)
 		case 3:
 			return;
 			break;
+	}
+}
+
+
+
+void StoreOptionsMenu(Cidade &cidade)
+{
+	string type;
+	int number;
+	string name;
+	vector<Loja> top5;
+	vector<Bicicleta*> purchase;
+	cout
+	<< "1- Get top 5 best reputed stores " << endl
+	<< "2- Buy Bikes " << endl
+	<< "3- Print Stores" << endl
+	<< "4- Go back" << endl
+	<< "Select one" << endl;
+
+	switch (getIntInInterval(1, 4))
+	{
+	case 1:
+		try
+		{
+			top5 = cidade.getTop5();
+		}
+		catch(NoStores &p)
+		{
+		    return CityManagementMenu(cidade);
+		}
+		for (unsigned int i = 0; i < top5.size(); i++)
+		{
+			top5.at(i).printStore();
+			cout << endl;
+		}
+		break;
+	case 2:
+		cout << "How many bikes do you want to buy ? " << endl;
+		number = getInt();
+		cout << "Type of bike ? " << endl;
+		try
+		{
+			type = getBikeType();
+		}
+		catch (NotAType &t)
+		{
+			cout << "Invalid type! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		try
+		{
+			name = cidade.BuyBikes(type,number, purchase);
+		}
+		catch(InvalidPurchase &i)
+		{
+		    cout << "Invalid purchase, there is no stores with the number and type of bike you desire." << endl;
+		    return CityManagementMenu(cidade);
+		}
+
+		cidade.AddPurchasedBikes(purchase);
+
+		cout << "Successful purchase! What is your value of satisfaction with the store services ?  (0-15) " << endl;
+		number = getIntInInterval(0,15);
+		try
+		{
+			cidade.setStoreReputation(name,number);
+		}
+		catch(InvalidStore &p)
+		{
+			cout << "Invalid operation." << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 3:
+		cidade.printStoresInMenu();
+		break;
+	case 4 :
+	    return CityManagementMenu(cidade);
+		break;
+	}
+}
+
+
+
+void PartOptionsMenu(Cidade &cidade)
+{
+	string name;
+	string supplier ;
+	double price;
+	double lowestprice;
+	string lowestsupplier;
+	Part p1 ("","",0);
+
+	cout
+	<< "1- Add part" << endl
+	<< "2- Remove part" << endl
+	<< "3- Buy part " << endl
+	<< "4- Lowest price" << endl
+	<< "5- Print suppliers" << endl
+	<< "6- Go back" << endl
+	<< "Select one" << endl;
+
+	switch (getIntInInterval(1, 6))
+	{
+
+	case 1:
+		cleanfunction();
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cout << "Price ? " << endl;
+		price = getDouble();
+		p1.setNamePart(name);
+		p1.setSupplier(supplier);
+		p1.setUnitPrice(price);
+		try
+		{
+			cidade.insertPart(p1);
+			cout << "Part added successfully !" << endl;
+		}
+		catch(InsertionError &p)
+		{
+			cout << "Error inserting the part !" << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 2:
+		cleanfunction();
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cout << "Price ? " << endl;
+		price = getDouble();
+		try
+		{
+			cidade.removePart(name,supplier);
+			cout << "Part removed successfully ! " << endl;
+		}
+		catch( RemovingError &p)
+		{
+			cout << "Error removing the part !" << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 3:
+		cleanfunction();
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		cout << "Name of the supplier ? " << endl;
+		getline(cin,supplier);
+		cout << "Price ? " << endl;
+		price = getDouble();
+		p1.setNamePart(name);
+		p1.setSupplier(supplier);
+		p1.setUnitPrice(price);
+		try
+		{
+			cidade.buyPart(p1);
+			cout << "Successful purchase ! " << endl;
+		}
+		catch(InvalidPartPurchase &p)
+		{
+			cout << "Invalid purchase ! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		break;
+	case 4:
+		cleanfunction();
+		cout << "Name of the part ?  " << endl;
+		getline(cin,name);
+		try
+		{
+			Part p2  = cidade.getLowestPrice(name);
+			lowestprice = p2.getUnitPrice();
+			lowestsupplier = p2.getSupplier();
+		}
+		catch(InvalidPart &p)
+		{
+			cout << "Invalid part ! " << endl;
+			return CityManagementMenu(cidade);
+		}
+		cout << "The lowest price for part " << name << " is " << lowestprice << " from supplier " << lowestsupplier << ". "<< endl;
+		break;
+	case 5 :
+		cidade.printSuppliers(cout);
+		break;
+	case 6:
+	    return CityManagementMenu(cidade);
+		break;
 	}
 }
 
@@ -878,15 +1077,17 @@ void MonthlyPaymentMenu(Cidade &cidade, Utente *utente)
 
 void SaveChangesMenu(Cidade &cidade)
 {
-	string pointfile, userfile;
+	string pointfile, userfile, storefile, partfile;
 	cout
 	<< "1- Points" << endl
 	<< "2- Users"  << endl
-	<< "3- All" << endl
-	<< "4- Go back" << endl
+	<< "3- Stores" << endl
+	<< "4- Parts" << endl
+	<< "5- All" << endl
+	<< "6- Go back" << endl
 	<< "Select one" << endl;
 
-	switch(getIntInInterval(1,4))
+	switch(getIntInInterval(1,6))
 	{
 	case 1:
 		cout << "Name of the file to save the points ?" << endl;
@@ -899,14 +1100,30 @@ void SaveChangesMenu(Cidade &cidade)
 		cidade.printUserstoFile(userfile);
 		break;
 	case 3:
+		cout << "Name of the file to save the stores ? " << endl;
+		storefile = getFileName();
+		cidade.printStoresFile(storefile);
+		break;
+	case 4:
+		cout << "Name of the file to save the parts ? " << endl;
+		partfile = getFileName();
+		cidade.printParts(storefile);
+		break;
+	case 5:
 		cout << "Name of the file to save the points ?" << endl;
 		pointfile = getFileName();
 		cidade.printPointsFile(pointfile);
 		cout << "Name of the file to save the users ? " << endl;
 		userfile = getFileName();
 		cidade.printUserstoFile(userfile);
+		cout << "Name of the file to save the stores ? " << endl;
+		storefile = getFileName();
+		cidade.printStoresFile(storefile);
+		cout << "Name of the file to save the parts ? " << endl;
+		partfile = getFileName();
+		cidade.printParts(storefile);
 		break;
-	case 4:
+	case 6:
 		return;
 		break;
 	}

@@ -1,6 +1,6 @@
 Trindade
-20 5--6 C C C U S S I 
+20 5 -6 C C C U U S 
 FEUP
-10 1-2 U U U C C C C U 
-S. Bento
-20 5-6 
+10 1 2 C U 
+S. Joao
+5 2 3 

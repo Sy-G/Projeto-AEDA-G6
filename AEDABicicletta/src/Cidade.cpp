@@ -430,6 +430,8 @@ void Cidade::readPoints(const string& file)
 	}
 }
 
+
+
 void Cidade::readUsers(const string& file){
 	vector<Utente *> v_p;
 	ifstream in(file.c_str());
@@ -466,7 +468,7 @@ void Cidade::readUsers(const string& file){
 		{
 			for(size_t i = 0; i < v_p.size(); i++){
 				//if (v_p.at(i) != NULL)
-					delete v_p.at(i);
+				delete v_p.at(i);
 			}
 			throw InvalidFile();
 		}
@@ -531,6 +533,8 @@ void Cidade::disassembleBike(unsigned int bikeID, string date){
 	}
 }
 
+
+
 void Cidade::consultBikes(){
 	HashTabBicycle::const_iterator it;
 
@@ -544,6 +548,8 @@ void Cidade::consultBikes(){
 		}
 	}
 }
+
+
 
 void Cidade::deleteBike(unsigned int bikeID){
 	HashTabBicycle::const_iterator it;
@@ -565,3 +571,425 @@ void Cidade::deleteBike(unsigned int bikeID){
 		throw BikeNotExist(bikeID);
 	}
 }
+
+
+
+
+
+
+void Cidade::insertPart(Part& p1)
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == p1.getNamePart())
+	{
+		if(iter->getSupplier() == p1.getSupplier())
+		{
+			throw InsertionError(*iter);
+		}
+		iter++;
+	}
+
+	this->parts.insert(p1);
+}
+
+void Cidade::removePart(const string& namePart, const string& supplier )
+{
+	multiset<Part>::iterator iter =  this->parts.lower_bound(Part(namePart));;
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
+	{
+		if(iter->getSupplier() == supplier && iter->getNamePart() == namePart)
+		{
+			this->parts.erase(iter);
+			return;
+		}
+		iter++;
+	}
+
+	throw RemovingError();
+}
+
+
+void Cidade::printTree(ostream& out)
+{
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		out << *iter << endl;
+		iter++;
+	}
+}
+
+void Cidade::buyPart(Part &p1)
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(p1.getNamePart()));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == p1.getNamePart())
+	{
+		if(iter->getSupplier() == p1.getSupplier())
+		{
+			this->parts.erase(iter);
+			this->parts.insert(p1);
+			return;
+		}
+		iter++;
+	}
+
+	throw InvalidPartPurchase();
+}
+
+
+const Part Cidade::getLowestPrice(const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart && iter->getUnitPrice() == 0)
+	{
+		iter++;
+	}
+
+	if(iter != this->parts.end() && iter->getNamePart() == namePart)
+		return *iter;
+
+	throw InvalidPart();
+}
+
+vector<string>	Cidade::getSuppliers() const
+{
+	vector<string> res;
+	multiset<Part>::iterator iter = this->parts.begin();
+
+	while(iter != this->parts.end())
+	{
+		if(find(res.begin(), res.end(), iter->getSupplier()) == res.end())
+			res.push_back(iter->getSupplier());
+		iter++;
+	}
+
+	return res;
+}
+
+
+void Cidade::printSuppliers(ostream& out)
+{
+	for (unsigned int i = 0; i < this->getSuppliers().size(); i++)
+	{
+		out << this->getSuppliers().at(i) << endl;
+	}
+}
+
+
+
+void Cidade::printLatestPrices(ostream& out, const string& namePart) const
+{
+	multiset<Part>::iterator iter = this->parts.lower_bound(Part(namePart));
+
+
+	while(iter != this->parts.end() && iter->getNamePart() == namePart)
+	{
+		if(iter->getUnitPrice() != 0)
+		{
+			out << *iter << endl;
+		}
+		iter++;
+	}
+}
+
+
+
+
+void Cidade::readParts(const string& fileName)
+{
+	vector<Part> v_p;
+	ifstream in(fileName.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				string supplier;
+				getline(in, supplier);
+				if(!in.good())
+				{
+					throw InvalidPoint();
+				}
+				double price;
+				in >> price;
+				in.ignore();
+				v_p.push_back(Part(name,supplier,price));
+
+			}
+			catch(InvalidPoint &e)
+			{
+				throw InvalidFile();
+			}
+
+		}
+
+		try
+		{
+			for(size_t i = 0; i < v_p.size(); i++)
+				insertPart(v_p.at(i));
+		}
+		catch(InsertionError& e)
+		{
+			throw InvalidFile();
+		}
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(fileName);
+	}
+}
+
+void Cidade::printParts(const string& fileName)
+{
+	ofstream out(fileName.c_str());
+	if(out.is_open()){
+		multiset<Part>::iterator iter = this->parts.begin();
+		while(iter != this->parts.end())
+		{
+			out << *iter << endl;
+			iter++;
+		}
+	}
+	out.close();
+}
+
+
+
+
+
+
+bool Cidade::findStore(string name)
+{
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		if (copy.top().getName() == name)
+		{
+			return true;
+		}
+		copy.pop();
+	}
+	return false;
+}
+
+
+
+//done
+vector<Loja> Cidade::getTop5() const
+{
+	if (lojas.empty() == true)
+		throw NoStores();
+	if(lojas.size() < 5)
+		throw NoStores();
+	vector<Loja> top5;
+	HEAP_LOJAS copy = this->lojas;
+	int counter = 0;
+	while (counter < 5)
+	{
+		top5.push_back(copy.top());
+		copy.pop();
+		counter++;
+	}
+	return top5;
+}
+
+
+
+
+//done
+string Cidade::BuyBikes(string type, int number, vector<Bicicleta*> & purchase)
+{
+	vector<Loja> tmp;
+	string name;
+	bool valid_operation = false;
+	while ((lojas.empty() == false) && (valid_operation == false))
+	{
+		Loja l1 = lojas.top();
+		if (l1.Buy(type,number,purchase) == true)
+		{
+			name = l1.getName();
+			valid_operation = true;
+			tmp.push_back(l1);
+			lojas.pop();
+			break;
+		}
+		tmp.push_back(lojas.top());
+		lojas.pop();
+	}
+
+	if (valid_operation == false)
+		throw InvalidPurchase();
+
+	for (unsigned int i = 0; i < tmp.size(); i++)
+	{
+		lojas.push(tmp.at(i));
+	}
+
+	return name;
+}
+
+
+bool Cidade::AddPurchasedBikes(vector<Bicicleta*> & purchase)
+{
+	for (unsigned int i = 0; i < this->pontos.size(); i++)
+	{
+		while((pontos.at(i).getBicicletas().size() < pontos.at(i).getCapacidade()) && (purchase.size() > 0))
+		{
+			pontos.at(i).addBicicleta(purchase.at(0));
+			purchase.erase(purchase.begin());
+		}
+	}
+	if (purchase.size() == 0)
+		return true;
+	return false;
+}
+
+
+//done
+void Cidade::setStoreReputation(string storeName, int newreputation)
+{
+	vector<Loja> tmp;
+	string name;
+	bool valid_operation = false;
+	while ((lojas.empty() == false) && (valid_operation == false))
+	{
+		Loja l1 = lojas.top();
+		if (l1.getName() == storeName)
+		{
+			valid_operation = true;
+			l1.setReputation(newreputation);
+			tmp.push_back(l1);
+			lojas.pop();
+			break;
+		}
+		tmp.push_back(lojas.top());
+		lojas.pop();
+	}
+
+	if (valid_operation == false)
+		throw InvalidStore();
+
+	for (unsigned int i = 0; i < tmp.size(); i++)
+	{
+		lojas.push(tmp.at(i));
+	}
+}
+
+
+Cidade& Cidade::addStore(Loja loja)
+{
+	if (this->findStore(loja.getName()) == true)
+		throw InvalidStore();
+
+	this->lojas.push(loja);
+	return *this;
+}
+
+
+
+void Cidade::readStores(const string& file)
+{
+	vector<Loja> v_p;
+	ifstream in(file.c_str());
+	if(in.is_open())
+	{
+		while(in.good())
+		{
+			try
+			{
+				string name;
+				getline(in, name);
+				if(!in.good())
+				{
+					throw InvalidStore();
+				}
+				string other;
+				getline(in, other);
+				v_p.push_back(Loja(name,other));
+
+			}
+			catch(InvalidStore &e)
+			{
+				//for(size_t i = 0; i < v_p.size(); i++)
+					//v_p.at(i).deleteBicycles();
+				throw InvalidFile();
+			}
+			catch(NotAType2 &t)
+			{
+				throw InvalidFile();
+			}
+
+		}
+
+	    for(size_t i = 0; i < v_p.size(); i++)
+		try
+	    {
+			 addStore(v_p.at(i));
+	    }
+	    catch(InvalidStore &r)
+	    {
+	    	throw InvalidFile();
+	    }
+
+		in.close();
+		return;
+	}
+	else
+	{
+		throw NotAFile(file);
+	}
+}
+
+
+//done
+void Cidade::printStoresInMenu()
+{
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		Loja l1 = copy.top();
+		l1.printStore();
+		copy.pop();
+		cout << endl;
+	}
+}
+
+
+void Cidade::printStores(ostream &out)
+{
+
+	HEAP_LOJAS copy = lojas;
+	while(copy.empty() == false)
+	{
+		out << copy.top() << endl;
+		copy.pop();
+	}
+}
+
+void Cidade::printStoresFile(const string& file)
+{
+	ofstream out(file.c_str());
+	if(out.is_open())
+		printStores(out);
+	out.close();
+}
+
+
