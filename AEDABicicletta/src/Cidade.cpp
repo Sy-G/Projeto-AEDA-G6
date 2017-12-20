@@ -504,6 +504,7 @@ void Cidade::disassembleBike(unsigned int bikeID, string date){
 
 			if((*it).getDate() != "0/0/0"){
 				//this one was already disassembled exception!
+				throw BikeAlreadyDisassembled(bikeID);
 			}
 
 			//set and unordered set keys are read only, so we're going to have to create another object with the change we want and insert that in this one's place
@@ -526,6 +527,7 @@ void Cidade::disassembleBike(unsigned int bikeID, string date){
 
 	if(foundit == false){
 		//exception! the bike you wanted to disassemble isn't in this dispersion table or does not exist!
+		throw BikeNotExist(bikeID);
 	}
 }
 
@@ -533,7 +535,7 @@ void Cidade::consultBikes(){
 	HashTabBicycle::const_iterator it;
 
 	for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
-		cout << "Bicicle of ID: " << (*it).getID();
+		cout << "Bicycle of ID: " << (*it).getID();
 
 		if((*it).getDate() == "0/0/0"){
 			cout << " is waiting to be disassembled." << endl;
@@ -560,5 +562,6 @@ void Cidade::deleteBike(unsigned int bikeID){
 
 	if(foundit == false){
 		//exception! the bike you wanted to erase isn't in this dispersion table or does not exist!
+		throw BikeNotExist(bikeID);
 	}
 }

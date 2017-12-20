@@ -23,8 +23,8 @@ using namespace std;
 struct BicicleHash {
 
 	int operator() (const Bicicleta& b1) const{
-		//hash function, quadratic sounding is used to promote efficient collision-resolution
-
+		//hash function, used to promote efficient collision-resolution
+		return b1.getID();
 	}
 
 	bool operator() (const Bicicleta& b1, const Bicicleta b2) const{
@@ -342,6 +342,30 @@ public:
 
 	PontoNaoExistente(string nome){
 		this->nome = nome;
+	}
+};
+
+/**
+ * @brief Exception
+ */
+class BikeNotExist{
+public:
+	unsigned int ID;
+
+	BikeNotExist(unsigned int ID){
+		this->ID = ID;
+	}
+};
+
+/**
+ * @brief Exception
+ */
+class BikeAlreadyDisassembled{
+public:
+	unsigned int ID;
+
+	BikeAlreadyDisassembled(unsigned int ID){
+		this->ID = ID;
 	}
 };
 
