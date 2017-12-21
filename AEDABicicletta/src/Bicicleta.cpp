@@ -21,8 +21,7 @@ Bicicleta::Bicicleta() : ID(++ultimoID)
 {
 }
 
-Bicicleta::Bicicleta(unsigned int ID, Date date){
-	this->ID = ID;
+Bicicleta::Bicicleta(Date date): ID(++ultimoID){
 	this->date = date;
 }
 

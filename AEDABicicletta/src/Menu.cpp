@@ -1244,7 +1244,7 @@ void SaveChangesMenu(Cidade &cidade)
 		cidade.printParts(storefile);
 		break;
 	case 5:
-		cout << "Name f the file to save the bikes for disassemble ? " << endl;
+		cout << "Name of the file to save the bikes for disassemble ? " << endl;
 		bikefile = getFileName();
 		cidade.printBikes(bikefile);
 		break;

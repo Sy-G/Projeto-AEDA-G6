@@ -36,8 +36,10 @@ public:
 
 	/**
      * @brief Creates a bike with parameters
+     *
+     * @param Date for the bike's disassembly
 	 */
-	Bicicleta(unsigned int ID, Date date);
+	Bicicleta(Date date);
 
 	/**
      * @brief Destructor
@@ -64,6 +66,8 @@ public:
 
 	/**
 	 * @brief This function sets the bike´s disassembly date
+	 *
+	 * @param Date to set
 	 */
 	void setDate(Date d1);
 };

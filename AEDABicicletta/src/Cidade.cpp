@@ -12,7 +12,6 @@
 #include <cmath>
 #include <fstream>
 
-
 Cidade::Cidade() {
 }
 
@@ -748,6 +747,7 @@ void Cidade::readParts(const string& fileName)
 			{
 				throw InvalidFile();
 			}
+
 		}
 
 		try
@@ -784,6 +784,9 @@ void Cidade::printParts(const string& fileName)
 	}
 	out.close();
 }
+
+
+
 
 
 
@@ -1004,29 +1007,19 @@ void Cidade::printStoresFile(const string& file)
 void Cidade::readBikes(const string& fileName){
 	vector<Bicicleta> v_p;
 
-	istringstream ss;
-
 	ifstream in(fileName.c_str());
 
 	if(in.is_open())
 	{
 		while(in.good())
 		{
-				string idline;
-				getline(in, idline);
 
 				string date;
 				getline(in, date);
 
-				ss.str(idline);
-
-				int id;
-
-				ss >> id;
-
 				Date d1 = Date(date);
 
-				v_p.push_back(Bicicleta(id, d1));
+				v_p.push_back(Bicicleta(d1));
 		}
 
 		for(size_t i = 0; i < v_p.size(); i++){
@@ -1042,8 +1035,6 @@ void Cidade::readBikes(const string& fileName){
 	}
 }
 
-
-
 void Cidade::printBikes(const string& file){
 
 	ofstream out(file.c_str());
@@ -1052,7 +1043,6 @@ void Cidade::printBikes(const string& file){
 		HashTabBicycle::const_iterator it;
 
 		for(it = brokenbikes.begin(); it != brokenbikes.end(); it++){
-			out << (*it).getID() << endl;
 			out << (*it).getDate() << endl;
 		}
 
