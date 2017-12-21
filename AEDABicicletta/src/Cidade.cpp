@@ -12,6 +12,7 @@
 #include <cmath>
 #include <fstream>
 
+
 Cidade::Cidade() {
 }
 
@@ -747,7 +748,6 @@ void Cidade::readParts(const string& fileName)
 			{
 				throw InvalidFile();
 			}
-
 		}
 
 		try
@@ -784,9 +784,6 @@ void Cidade::printParts(const string& fileName)
 	}
 	out.close();
 }
-
-
-
 
 
 
@@ -1044,6 +1041,8 @@ void Cidade::readBikes(const string& fileName){
 		throw NotAFile(fileName);
 	}
 }
+
+
 
 void Cidade::printBikes(const string& file){
 

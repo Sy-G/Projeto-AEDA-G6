@@ -113,6 +113,7 @@ string getBikeType()
 }
 
 
+
 bool anobissexto(int ano)
 {
 	if ((ano % 400) == 0)
@@ -164,6 +165,7 @@ bool validDate(int dia, int mes, int ano)
 		return false;
 	return true;
 }
+
 
 
 void FirstMenu(Cidade &cidade)
