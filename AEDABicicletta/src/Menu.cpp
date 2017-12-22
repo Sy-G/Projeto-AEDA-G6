@@ -558,7 +558,7 @@ void PartOptionsMenu(Cidade &cidade)
 	<< "7- Go back" << endl
 	<< "Select one" << endl;
 
-	switch (getIntInInterval(1, 6))
+	switch (getIntInInterval(1, 7))
 	{
 
 	case 1:
