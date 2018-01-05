@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tempouso',['tempouso',['../classUtente.html#a96e5720b6adb29609ad9d3b7f0aa958e',1,'Utente']]]
+  ['reputacao',['reputacao',['../classLoja.html#a44b7a0930e3a14fb56c914a7309068ad',1,'Loja']]]
 ];
